@@ -19,7 +19,8 @@
 
 
 	title	WARMAC -- MACRO support routines for DECWAR.FOR
-%deb%==-1
+
+	%deb%==-1
 
 	twoseg
 	search	UUOSYM,MACTEN
@@ -28,6 +29,22 @@
 
 
 	subttl	Macro definitions
+
+	;added date macro drforbin
+	define dacon(cndat,day,month,year)<
+	idivi	cndat,^D31
+	addi	t2,1
+	movem	t2,day
+	idivi	cndat,^D12
+	addi	t2,1
+	movem	t2,month
+	addi	cndat,^D1964
+	subi	cndat,^D2000
+	movem	cndat,year
+	>
+
+
+
 
 ;;;	ASCIL -- Define an ASCII string with <CR><LF><NUL> tacked on the end.
 ;
@@ -606,6 +623,8 @@ hi.fst==hfz
 
 	reloc	0
 
+hand:	block	2		;drforbin
+uscbh.:	block	2		;drforbin
 save$v:	block	1		; saves contents of $v in havenq
 hang$v:	block	1		; saves contents of $v in hang
 hangta:	block	1		; save for register ta
@@ -1082,6 +1101,11 @@ cbits:	phase 0
 	dephase
 	subttl	RESET./STOP./EXIT./EXIT/MONIT
 
+
+;all changes below made by drforbin(merlyn)
+;changes include ridding CIS variables and defining terminal wdth to 80 characters
+
+;to fix -drforbin---p.nam,p.ppn,p.dev
 ;;;	RESET. -- This routine is called automatically by the FORTRAN
 ;	generated code.  It initializes all the I/O, etc.  Most of the
 ;	actual initialization is done in SETUP, which is low segment
@@ -1105,12 +1129,12 @@ reset.:	reset
 	move	s,[iowd stksiz,stk] ;init data stack
 	addi	16,1		;return addr -1 is passed in AC16
 	push	p,16
-	pushj	p,rdusr.##		; if tmpcor:usr not found
-	skipe	0
-	pushj	p,makusr##		; then set it up now
-	ldb	t1,[point 9,1+uster.##,8]	; set up terminal width
-	skipn	t1
-	movei	t1,^d64			; default
+;	pushj	p,rdusr.##		; if tmpcor:usr not found
+;	skipe	0
+;	pushj	p,makusr##		; then set it up now
+;	ldb	t1,[point 9,1+uster.##,8]	; set up terminal width
+;	skipn	t1
+	movei	t1,^d80			; default
 	movem	t1,terwid
 
 	hrroi	t0,30			; if not 'WIZARD' running
@@ -1129,7 +1153,7 @@ iswiz:
 	setzm	inwait
 	setzm	hungup
 	setzm	addrck
-	pushj	p,cishng	; enable hangup detect and enq. interrupt
+;	pushj	p,cishng	; enable hangup detect and enq. interrupt
 	movei	t1,intblk	;enable interception of ^C and fatal errors
 	setzm	intblk+2
 	movem	t1,.JBINT
@@ -1175,11 +1199,19 @@ monit:	skipn	hungup
 	jrst	[movei	arg,[who]
 		 pushj	p,free##	; then free it
 		 jrst	.+1
+		skipe	t1,jsqwho ;drforbin		; if job has entry in jsqtab
+		setzm	jsqtab-1(t1) ;drforbin		; then clear it
 		]
-	skipe	t1,jsqwho		; if job has entry in jsqtab
-	setzm	jsqtab-1(t1)		; then clear it
-	jrst	rdwhst		; run "DWHOST"
-	subttl	PTY
+
+;2 lines below commented drforbin.
+;	skipe	t1,jsqwho		; if job has entry in jsqtab
+;	setzm	jsqtab-1(t1)		; then clear it
+	monrt.	;drforbin (add)
+
+;
+;	jrst	rdwhst		; run "DWHOST"
+
+	subttl	PTY
 
 ;;;	PTY -- Check to see if job is logged on to a PTY.  This is done
 ;	because a ^C received by such a job will unconditionally stop it,
@@ -2579,6 +2611,7 @@ stat.x:	aojg	x4,stat.1	;ship name
 
 	aojg	x4,stat.1	;captain's name
 	pushj	p,ospc.
+;	pushj	p,osix.
 	move	x1,job+KNPLAY*<KNAM1-1>-1(x3) ;first half of name
 	pushj	p,osix.
 	move	x1,job+KNPLAY*<KNAM2-1>-1(x3) ;second half of name
@@ -3626,7 +3659,7 @@ gmsg.2:	movei	x4,@1(arg)	;address of array to store message in
 	entry	jobsta
 	sixbit	/JOBSTA/
 	entry	usrprj
-usrprj:	hlrz	0,usppn.		; return user's project #
+usrprj:	hlrz	0,usppn.#		; return user's project #
 	cain	0,337			; watch for devel. ppn
 	movei	0,70000			; make it look like CIS staff
 	popj	p,
@@ -3677,27 +3710,61 @@ jobsta:
 	output	tty,			; flush tty buffer
 	pjob	t1,
 	movem	t1,@kjob-1(arg)	;job number
-	move	t1,[	2,,[	1016
+
+;commented by merlyn (drforbin)
+;	move	t1,[	2,,[	1016
+;				-1
+;			   ]
+;		]
+;	trmop.	t1,			; get terminal's baud code
+;	  movei	t1,4			; assume 300 baud
+;	caile	t1,8			; don't show higher than 2400 baud
+;	  movei	t1,6
+;	move	t1,[	^d300		; 0 = undefined; assume 300
+;			^d110		; 1
+;			^d134		; 2
+;			^d150		; 3
+;			^d300		; 4
+;			^d600		; 5
+;			^d1200		; 6
+;			^d1800		; 7
+;			^d2400		; 8
+;		](t1)
+;	movem	t1,@kttysp-1(arg)
+
+
+
+;rewrite by merlyn (drforbin)
+	move	t1,[	2,,[	.TORSP
 				-1
 			   ]
 		]
 	trmop.	t1,			; get terminal's baud code
-	  movei	t1,4			; assume 300 baud
-	caile	t1,8			; don't show higher than 2400 baud
-	  movei	t1,6
+	  movei	t1,7			; assume 300 baud
+	caile	t1,13			; don't show higher than 2400 baud
+	  movei	t1,11
 	move	t1,[	^d300		; 0 = undefined; assume 300
-			^d110		; 1
-			^d134		; 2
-			^d150		; 3
-			^d300		; 4
-			^d600		; 5
-			^d1200		; 6
-			^d1800		; 7
-			^d2400		; 8
+			^d50		; 1
+			^d75		; 2
+			^d110		; 3
+			^d134		; 4
+			^d150		; 5
+			^d200		; 6
+			^d300		; 7
+			^d0		; 8
+			^d0		; 9
+			^d600		; 10
+			^d1200		; 11
+			^d1800		; 12
+			^d2400		; 13
 		](t1)
 	movem	t1,@kttysp-1(arg)
+;end rewrite
+
+
 	skipe	t1,who			; if ship is assigned
-	jrst	[calli	t2,-46		; then set up the sequence #
+;	jrst	[calli	t2,-46		;commented drforbin;then set up the sequence #
+	jrst	[pjob	t2,		;added drforbin;then set up the sequence #
 		 jfcl
 		 movem	t1,jsqwho	; remember that we have it
 		 movem	t2,jsqtab-1(t1)
@@ -3713,7 +3780,13 @@ jobsta:
 	movei	t2,1
 	movem	t2,debflg
 
-	move	t1,usppn.##		; transfer user's ppn
+;changed by drforbin (merlyn)
+;replaced use of tmpcor ppn with standard monitor call
+;	move	t1,usppn.##		; transfer user's ppn
+
+
+	getppn	t1,			;added drforin
+	movem	t1,usppn.#		;added drforbin
 	movem	t1,@kppn-1(arg)
 	setzm	frebie
 	hlrz	t1,t1
@@ -3725,22 +3798,32 @@ jobsta:
 	andi	t1,7
 	cain	t1,3
 	setom	frebie
-	move	t1,usid1.##		; and account id
-	movem	t1,@knam1-1(arg)
-	move	t1,usid2.##
-	movem	t1,@knam2-1(arg)
-	getlin	t1,			; store tty name
+;drforbin below commented-Used by CIS for returing to fortran (user id #1 user id #2)
+;	move	t1,usid1.##		; and account id
+;	movem	t1,@knam1-1(arg)
+;	move	t1,usid2.##
+;	movem	t1,@knam2-1(arg)
+	getlin	t1, ;tofix			; store tty name
 	movem	t1,@4(arg)
-	move	t1,[point 7,uscbh.##]
-	ldb	t2,[point 7,uscbh.##,6]	; if there is a CB handle
+;all 3 commented below by drforbin(merlyn) was used by CIS for player name from cb handle uscbh. (user cb handle).
+;also remove usid1. (user id #1) CIS
+	move	t1,[point 7,uscbh.]
+;	ldb	t2,[point 7,uscbh.,6];drforbin(merlyn)deleted ##	; if there is a CB handle
+	ldb	t2,[point 7,uscbh.,7];changed 6 to 7 right most bit	; if there is a CB handle
 	jumpn	t2,gnm2			; then use it as player's name
-	skipe	usid1.##		; else if user has an acct ID
-	jrst	gnm5			; then use that
+;	skipe	usid1.##		; else if user has an acct ID
+;	jrst	gnm5			; then use that
 
 gnm:	skipn	hungup
+	setzm	uscbh.
+	setzm	uscbh.+1
+	setzm	hand
+	setzm	hand+1
+	setzm	@knam1-1(arg)
+	setzm	@knam2-1(arg)
 	outstr	[asciz "
 Your name please: "]			; else ask for his/her name
-	move	t1,[point 7,uscbh.##]
+;	move	t1,[point 7,uscbh.];deleted drforbin(merlyn) #
 	setzm	ccflg
 gnm0:	inchwl	t2
 	caie	t2,03			; if ^C
@@ -3759,9 +3842,9 @@ gnm0:	inchwl	t2
 
 gnm1:	movei	t2,0
 	idpb	t2,t1
-	move	t1,[point 7,uscbh.##]
+	move	t1,[point 7,uscbh.]	;deleted # drforbin
 
-gnm2:	move	t2,[point 6,tmp]
+gnm2:	move	t2,[point 6,hand]	;added 'hand' as variable (DF) drforbin
 	setzm	tmp
 	setzm	tmp+1
 
@@ -3771,13 +3854,13 @@ gnm3:	ildb	t3,t1
 	caile	t3,"z"
 	trc	t3,40
 	idpb	t3,t2
-	came	t2,[point 6,tmp+1,35]
+	came	t2,[point 6,hand+1,35]	;same as above(DF) drforbin
 	jrst	gnm3
 
-gnm4:	move	t1,tmp
+gnm4:	move	t1,hand			;same as above(DF) drforbin
 	jumpe	t1,gnm
 	movem	t1,@knam1-1(arg)
-	move	t1,tmp+1
+	move	t1,hand+1
 	movem	t1,@knam2-1(arg)
 gnm5:
 ;***	CIS change:
@@ -3919,6 +4002,11 @@ etim:	mstime	0,
 
 	entry	pause
 	sixbit	/PAUSE/
+
+
+;both comments and mstime calls added by merlyn
+
+
 pause:
 	skipg	@0(arg)		; if hibernate time .le. 0
 	popj	p,		; then don't hibernate!
@@ -3930,9 +4018,9 @@ pause:
 	jumple	t1,paus.3
 	caile	t1,^d10000		; if > 10 seconds, make it 10 seconds
 	movei	t1,^d10000
-	idivi	t1,^d333		; convert ms to (approx) unitics
-	calli	t3,-210			; get current UTC
-	  setz	t3,
+;	idivi	t1,^d333		; convert ms to (approx) unitics
+	mstime	t3,			; get current UTC
+;	  setz	t3,
 	add	t3,t1			; t3 holds end of time period
 	move	t1,@0(arg)		; get MS again
 	caile	t1,^d10000
@@ -3941,8 +4029,8 @@ pause:
 paus.4:	hiber	t1,
 	  halt
 
-	calli	t2,-210		; get current UTC
-	  setz	t2,
+	mstime	t2,		; get current UTC
+;	  setz	t2,
 	movei	t1,^d1000	; hibernate extra second
 	camge	t2,t3		; if not time to wake up yet
 	jrst	paus.4
@@ -4121,6 +4209,7 @@ abor.1:	pushj	p,kilhgh	;remove high segment from swapper
 	jrst	monit
 	subttl	KILHGH/KILLOW
 
+;to fix---drforbin-
 ;;;	KILHGH -- Remove DECWAR high segment from the swapper.
 ;
 	entry	kilhgh
@@ -5573,23 +5662,24 @@ This is mission #"]
 	skipn	hungup
 	outstr	@lngshp-1(t1)
 	skipn	hungup
-	outstr	[asciz "
-"]
+;	outstr	[asciz "
+;"]
 	skipn	hungup
 	popj	p,
 
-	entry	chkpay		; return .true. if user is paying customer
-chkpay:	seto	0,
-	hlrz	t1,usppn.
-	caige	t1,70010
-	setz	0,
-	andi	t1,7
-	cain	t1,3
-	setz	0,
-	move	t1,ustat.##
-	tlne	t1,(1b2)
-	setz	0,
-	popj	p,
+;ALL commented out by drforbin(merlyn). not needed used by CIS for user pay/nopay status
+;	entry	chkpay		; return .true. if user is paying customer
+;chkpay:	seto	0,
+;	hlrz	t1,usppn.
+;	caige	t1,70010
+;	setz	0,
+;	andi	t1,7
+;	cain	t1,3
+;	setz	0,
+;	move	t1,ustat.##
+;	tlne	t1,(1b2)
+;	setz	0,
+;	popj	p,
 
 	entry	pdwdoc
 pdwdoc:	output	tty,
@@ -5754,9 +5844,10 @@ updst8:	move	t3,@0(arg)	; else move new data
 	movem	t3,3(t2)	; Ship's name-1
 	move	t3,@4(arg)
 	movem	t3,4(t2)	;   "    name-2
-	movei	t3,400000	; get player's time & zone
-	calli	t3,-211		; GTADN. uuo (CIS)
-	  setzb	t3,t4
+;	movei	t3,400000	;drforbin(CIS remove); get player's time & zone
+;	calli	t3,-211		;drforbin(CIS remove); GTADN. uuo (CIS)
+	date	t3,		;added drforbin
+;	  setzb	t3,t4		;comment drforbin
 	movem	t3,5(t2)	; save time
 	move	t4,@9(arg)
 	move	t3,stacap(t4)	; preserve mission #
@@ -5914,13 +6005,13 @@ dspsta:
 	movei	x3,1			; begin with #1
 	move	x4,x1			; save pointer
 	movei	p1,[asciz "
-Captain     Service #   Credits"]
+Captain        Service # Credits"];pretty changes drforbin(merlyn)
 	pushj	p,ostr.
-	ldb	t1,[point 9,1+uster.##,8]
+;	ldb	t1,[point 9,1+uster.##,8];edit here drforbin(merlyn)
 	skipg	@0(arg)			; if doing *Zap then use long form
-	cail	t1,^d64
+;	cail	t1,^d64 ;drforbin
 	jrst	[
-		movei	p1,[asciz " Ship       Runtm Date"]
+		movei	p1,[asciz " Ship        Runtm Date"]
 		pushj	p,ostr.
 		jrst	.+1
 		]
@@ -5954,10 +6045,11 @@ dspst0:	skipn	0(x4)			; if no more to do
 	idivi	x1,^d1000
 	movei	x2,^d6
 	pushj	p,odec.
-	ldb	t1,[point 9,1+uster.##,8]	; if wide terminal
+;	ldb	t1,[point 9,1+uster.##,8]	; if wide terminal;edit drforbin(merlyn)
+	move	t1,terwid
 	skiple	@0(arg)				; or doing *Zap
 	jrst	.+3
-	caige	t1,^d64
+	caige	t1,^d80		;test;drforbin
 	jrst	dspst2		; then
 	pushj	p,ospc.
 	movei	p1,3(x4)		; output ship's name
@@ -5968,17 +6060,35 @@ dspst0:	skipn	0(x4)			; if no more to do
 	movei	x2,^d5
 	pushj	p,odec.
 	pushj	p,ospc.
-	movei	t1,400000		; get user's time zone
-	calli	t1,-211-200000
-	  setz	t1,
-	movns	t1
-	add	t1,5(x4)		; date/time
-	move	t2,[exp 1b10+1b11+1b17]	;convert to string
-	movei	t3,tmp
-	calli	t1,-213
-	  jrst	dspst2
-	movei	p1,tmp
+
+
+;	movei	t1,400000		; get user's time zone
+;	calli	t1,-211-200000
+;	  setz	t1,
+;	movns	t1
+;	add	t1,5(x4)		; date/time
+;	move	t2,[exp 1b10+1b11+1b17]	;convert to string
+;	movei	t3,tmp
+;	calli	t1,-213
+;	jrst	dspst2
+;	movei	p1,tmp
+;	pushj	p,ostr.
+
+	movei	p1,[asciz "   "];drforbin code
 	pushj	p,ostr.
+	move	t1,5(x4)
+	dacon	t1,day#,month#,year#
+	move	x1,day
+	pushj	p,o2dg.
+	movei	p1,[asciz "/"]
+	pushj	p,ostr.
+	move	x1,month
+	pushj	p,o2dg.
+	movei	p1,[asciz "/"]
+	pushj	p,ostr.
+	move	x1,year
+	pushj	p,o2dg.;drforbin end code
+	
 dspst2:	pushj	p,crlf
 dspst1:	addi	x4,knstat
 	aos	x3
@@ -6336,110 +6446,129 @@ loknam:	xwd	'PPP',plnlok
 	0
 
 	page
-subttl cishng - establish a hang-up intercept (CIS monitor)
 
-	Search SYSMAC
-opdef	getnam	[calli	-14]
-OPDEF	STINI.	[CALLI	-162]
-OPDEF	SCHNA.	[CALLI	-163]
-OPDEF	SCHND.	[CALLI	-164]
-OPDEF	SEVTA.	[CALLI	-165]
-OPDEF	SEVTD.	[CALLI	-166]
-OPDEF	DEBRK.	[CALLI	-174]
-OPDEF	SRISW.	[CALLI	-175]
-
-cishng:	DMOVE	TA,[	-1
-			[	2,,CHNTBL
-				2,,LVLTBL
-				0,,0
-			]
-		]
-	STINI.	TA,
-	  JRST	[OUTSTR	[ASCIZ "
-? STINI. failed!
-"]
-		 jrst	rdwhst]
-	DMOVE	TA,[	-1
-			3,,1
-		]
-	SEVTA.	TA,
-	  JRST	SEVFLD
-	dmove	ta,[	-1
-			104,,2
-		]
-	sevta.	ta,
-	  jrst	sevfld
-	DMOVE	TA,[	-1
-			700000,,0
-			]
-	SCHNA.	TA,
-	  JRST	SCHFLD
-	popj	p,
+;commented out COmpuserve's modifications (merlyn)
+;subttl cishng - establish a hang-up intercept (CIS monitor)
+;
+;	Search SYSMAC
+;opdef	getnam	[calli	-14]
+;OPDEF	STINI.	[CALLI	-162]
+;OPDEF	SCHNA.	[CALLI	-163]
+;OPDEF	SCHND.	[CALLI	-164]
+;OPDEF	SEVTA.	[CALLI	-165]
+;OPDEF	SEVTD.	[CALLI	-166]
+;OPDEF	DEBRK.	[CALLI	-174]
+;OPDEF	SRISW.	[CALLI	-175]
+;
+;cishng:	DMOVE	TA,[	-1
+;			[	2,,CHNTBL
+;				2,,LVLTBL
+;				0,,0
+;			]
+;		]
+;	STINI.	TA,
+;	  JRST	[OUTSTR	[ASCIZ "
+;? STINI. failed!
+;"]
+;		 jrst	rdwhst]
+;	DMOVE	TA,[	-1
+;			3,,1
+;		]
+;	SEVTA.	TA,
+;	  JRST	SEVFLD
+;	dmove	ta,[	-1
+;			104,,2
+;		]
+;	sevta.	ta,
+;	  jrst	sevfld
+;	DMOVE	TA,[	-1
+;			700000,,0
+;			]
+;	SCHNA.	TA,
+;	  JRST	SCHFLD
+;	popj	p,
 ;;;
-havenq:	setom	hv.lok		; tell lock. routine that we have resource
-	movem	$v,save$v
-	seto	$v,
-	wake	$v,		; wake the lock. routine immediately
-	  jfcl
-	move	$v,save$v
-	debrk.			; return to lock.
+;havenq:	setom	hv.lok		; tell lock. routine that we have resource
+;	movem	$v,save$v
+;	seto	$v,
+;	wake	$v,		; wake the lock. routine immediately
+;	  jfcl
+;	move	$v,save$v
+;	debrk.			; return to lock.
+;
+;hang:
+;	setom	hungup	; set hung up flag
+;	skipn	who		; if user has a ship, the he may have resource
+;	jrst	hang.4
+;	movem	$v,hang$v	; save a register
+;	movem	ta,hangta	; and another
+;	movei	$v,knloks-1	; if the user has an interlock set
+;	skipn	loktab($v)
+;	sojge	$v,.-1
+;	jumpl	$v,hang.2	; then
+;	move	$v,lvltbl	; if executing a ttcall
+;hang.0:	move	ta,0($v)	; get the current instruction being executed
+;	camn	ta,[output 0,]	; or "output tty,"
+;	jrst	hang.1
+;	and	ta,[777000,,0]	; mask everything but instruction bits
+;	camn	ta,[xct]	; if doing an execute
+;	jrst	[hrrz	$v,0($v)	; then get the address of that instr.
+;		 cain	$v,$v		; if one of the saved regs
+;		 movei	$v,hang$v	; then map it into proper one
+;		 cain	$v,ta
+;		 movei	$v,hangta
+;		 jrst	hang.0]		; and look at the xct'ed instr.
+;	camn	ta,[ttcall]	; if doing a ttcall
+;hang.1:	aos	lvltbl		; then return to the ttcall + 1
+;	seto	$v,		; wake any hibernate going on
+;	wake	$v,
+;	  jfcl
+;	move	$v,hang$v
+;	move	ta,hangta
+;	debrk.			; return to main code
+;
+;hang.2:	movei	re,[who]	; release the player
+;	pushj	p,free##	; ... but good!
+;rdwhst:
+;hang.4:	debrk.	1,		; clear the interrupt system
+;	  jfcl
+;	reset			; clear bufferd I/O
+;	movei	ra,[	sixbit 'DSK'	; return to DWHOST
+;			sixbit 'DWHOST'
+;			exp 0,0,0,0
+;		]
+;	run	ra,
+;	  halt
+;
+;SCHFLD:	OUTSTR	[ASCIZ "
+;? SCHNA. failed!
+;"]
+;	jrst	rdwhst
+;SEVFLD:	OUTSTR	[ASCIZ "
+;?SEVTA> failed!
+;"]
+;	jrst	rdwhst
+;
+;chntbl:
+;	XWD	1,HANG
+;	xwd	2,havenq
+;
+;	lit		; put lits in hiseg
 
-hang:
-	setom	hungup	; set hung up flag
-	skipn	who		; if user has a ship, the he may have resource
-	jrst	hang.4
-	movem	$v,hang$v	; save a register
-	movem	ta,hangta	; and another
-	movei	$v,knloks-1	; if the user has an interlock set
-	skipn	loktab($v)
-	sojge	$v,.-1
-	jumpl	$v,hang.2	; then
-	move	$v,lvltbl	; if executing a ttcall
-hang.0:	move	ta,0($v)	; get the current instruction being executed
-	camn	ta,[output 0,]	; or "output tty,"
-	jrst	hang.1
-	and	ta,[777000,,0]	; mask everything but instruction bits
-	camn	ta,[xct]	; if doing an execute
-	jrst	[hrrz	$v,0($v)	; then get the address of that instr.
-		 cain	$v,$v		; if one of the saved regs
-		 movei	$v,hang$v	; then map it into proper one
-		 cain	$v,ta
-		 movei	$v,hangta
-		 jrst	hang.0]		; and look at the xct'ed instr.
-	camn	ta,[ttcall]	; if doing a ttcall
-hang.1:	aos	lvltbl		; then return to the ttcall + 1
-	seto	$v,		; wake any hibernate going on
-	wake	$v,
-	  jfcl
-	move	$v,hang$v
-	move	ta,hangta
-	debrk.			; return to main code
 
-hang.2:	movei	re,[who]	; release the player
-	pushj	p,free##	; ... but good!
-rdwhst:
-hang.4:	debrk.	1,		; clear the interrupt system
-	  jfcl
-	reset			; clear bufferd I/O
-	movei	ra,[	sixbit 'DSK'	; return to DWHOST
-			sixbit 'DWHOST'
-			exp 0,0,0,0
-		]
-	run	ra,
-	  halt
+;below added by merlyn
 
-SCHFLD:	OUTSTR	[ASCIZ "
-? SCHNA. failed!
-"]
-	jrst	rdwhst
-SEVFLD:	OUTSTR	[ASCIZ "
-?SEVTA> failed!
-"]
-	jrst	rdwhst
-
-chntbl:
-	XWD	1,HANG
-	xwd	2,havenq
-
-	lit		; put lits in hiseg
+	entry	onexit
+	sixbit	/onexit/
+onexit:
+	monrt.
+	
+;not used drforbin(merlyn)
+	entry	pauses
+	sixbit	/pauses/
+pauses:
+	movei 1,@0(arg)	
+	sleep 1,
+	popj p,
+	
 	end

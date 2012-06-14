@@ -1,0 +1,61 @@
+Notes:
+
+changed files:
+  4 -rw-r--r-- 1 mercou    382 Jul  4 01:50 DECWAR.CMD
+  4 -rw-r--r-- 1 mercou   3896 Jul  9 08:19 GETCMD.FOR
+ 12 -rw-r--r-- 1 mercou   9503 Jul 13 01:59 DECWAR.FOR
+  4 -rw-r--r-- 1 mercou   1526 Jul 15 19:11 PASWRD.FOR
+ 16 -rw-r--r-- 1 mercou  13784 Jul 18 04:05 MSG.MAC
+ 20 -rw-r--r-- 1 mercou  16599 Jul 19 18:10 SETUP.FOR
+  8 -rw-r--r-- 1 mercou   6762 Jul 20 03:17 POINTS.FOR
+160 -rw-r--r-- 1 mercou 160801 Jul 24 04:07 WARMAC.MAC
+
+all changes commented and additions noted by DrForbin AKA Merlyn Cousins.
+search for (drforbin), all things yet to be fixed, search (tofix).
+email drforbin6@gmail.com to contact me.
+
+files added:
+-rw-r--r-- 1 mercou mercou 528 Jul 31 22:22 CAN1.CMD
+-rw-r--r-- 1 mercou mercou 549 Jul 31 22:22 CAN.MIC
+and DECCMP.CMD.
+
+CAN.MIC is linker control file for debug.
+CAN1.CMD is linker control file for building executable.
+DECCMP.CMD full compile control file.
+
+to compile unpack all files in directory, preferably a SFD (sub file directory).
+and do the following
+
+compile @deccmp
+
+This should compile ALL files without any (note WARMAC.MAC) errors.
+The compiler should issue 3 warnings for WARMAC. These warnings are understood and will be fixed.
+They should not affect anything. 
+This will compile each file into a *.REL file (relocatable file).
+
+
+next,
+
+r link
+@can1
+
+You should get an EXIT.
+than.
+
+get decwar
+ssave
+
+than create p,pn [1,27] and install 
+DECWAR.EXE
+DECWAR.GRP
+DECWAR.HLP 
+DECWAR.NWS
+
+in that p,pn
+
+
+than path [1,27]
+run decwar
+
+
+

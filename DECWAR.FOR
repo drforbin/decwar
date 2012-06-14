@@ -29,7 +29,7 @@ C	02110-1301, USA.
 
 	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	versio = 24					!version number
-	call royaln('CSIS86')
+C	call royaln('CSIS86') drforbin(merlyn)
 	oflg   = medium
 	call out (decver, 1)
 	call out ('Are you: ', 1)
@@ -161,7 +161,7 @@ d	call timin ('CMDPOI')
 d	call timout('CMDPOI')
 	goto 50
 1600	if (hungup) goto 3800	! don't ask if job is hungup
-	if (lofchk(0)) goto 3800	! also if his time is up
+C	if (lofchk(0)) goto 3800 drforbin (merlyn)	! also if his time is up
 	call out (sure00,0)		!quit
 	ccflg = .false.
 	call clear			! zap input buffer
@@ -344,9 +344,10 @@ d	call timout('BASBLD')
 	call points (.TRUE.)		!show final point totals
 	txtot = total (1)
 	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy,
-     +		txtem, who)
+     +	txtem, who)
 	call free (who)			! release the ship
 	who = 0
 	call exit
 
+C	call onexit ;drforbin added
 	end

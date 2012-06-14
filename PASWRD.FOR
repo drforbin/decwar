@@ -18,7 +18,7 @@ C	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
 C	02110-1301, USA.  
 
 
-C	This routine sets (and unsets) the password flag for use in
+C	This routine sets (and unsets) the password flag for use in
 C	debugging, cheating, etc.
 
 	subroutine PASWRD
@@ -29,8 +29,10 @@ C	debugging, cheating, etc.
 
 	PASFLG = equal(tknlst(2), KPASS, 1)	!match the password?
 	if (PASFLG .eq. -1)  PASFLG = 0		!not an exact match
+C	70725 project added by merlyn (drforbin)
 	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and.
-     +		(usrprj(0) .ne. "70006))
+     +		(usrprj(0) .ne. "70006)
+     +.and. (usrprj(0) .ne. "70725))		!added
      +		pasflg = 0
 	if (PASFLG)  return			!is he ok?
 	call out (unkcom, 0)			!WHAT password routine!?!

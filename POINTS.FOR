@@ -71,9 +71,10 @@ C	02110-1301, USA.
 
  900	call crlf
 	if (oflg)  1000, 1100, 1200
-1000	call tab (11)  ;  goto 1300
-1100	call tab (22)  ;  goto 1300
-1200	call tab (29)
+C	drforbin mod following lines
+1000	call tab (14)  ;  goto 1300		!plus 3
+1100	call tab (24)  ;  goto 1300		!plus 1
+1200	call tab (31)				!plus 2
 1300	if (.not. iflg)  goto 1400
 	call space
 	call out2w (names(who,1), names(who,2))

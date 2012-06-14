@@ -37,9 +37,9 @@ C	hit and message queues between commands.
 
 	call prgnam ('DECWSL')
 	call dmpbuf			!dump output buffer
-        call CCTRAP
+	call CCTRAP
 	if (.not. PASFLG)
-     +    call pause (ptime)		!pause after previous command
+     +    call pause (ptime)		!pause (mark) after previous command
 	ptime = 0			!assume no pause for next cmd.
 
  100	call crlf
@@ -74,7 +74,7 @@ c--	call dship
 
  400	active(who) = 0
 	if (hungup) goto 500		! job hung up?
-	if (lofchk(0))	goto 500	! dump user whose time limit is over
+C	if (lofchk(0))	goto 500	! drforbin(merlyn) dump user whose time limit is over
 	comknt = comknt + 1
 	call gtkn
 	if (.not. CCFLG) goto 600	!^C wasn't typed

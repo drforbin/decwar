@@ -39,10 +39,11 @@ C	CC2 is called instead if he has already chosen a side.
 	call exit
 
 	end
-C	This routine is called by SETUP if a player types CTL-C before
+C	This routine is called by SETUP if a player types CTL-C before
 C	he has been completely 'created'.  This prevents the player
 C	from attempting a 'continue' using the existing code.
-C	CC1 is called instead if he hasn't already chosen a side.
+C	CC1 is called instead if he hasnt already chosen a side.
+
 
 	subroutine CC2
 	include 'param/nolist'
@@ -109,7 +110,7 @@ C	time, or are implementors of the game and know the password.
  300	call gtkn
 	call echon
 	if (equal(tknlst(1),KPASS) .eq. -2)  return
-	if (lofchk(0)) call monit
+C	if (lofchk(0)) call monit drforbin(merlyn)
 	call cc1
 
 	end
@@ -122,12 +123,13 @@ C	time, or are implementors of the game and know the password.
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
 
 	call jobsta (jobnum, nam1, nam2, ppn, ttynum, ttyspd)
+	if(ccflg) call monit		!added by drforbin for ctrl-C bug
 
   10	call ttyon
 	call out (strtup, 0)		!PREGAME or <CR>
 	call gtkn
-	if (CCFLG .or. hungup)  call monit
-	if (lofchk(0)) call monit
+	if (CCFLG .or. hungup)  call monit 
+C	if (lofchk(0)) call monit drforbin(merlyn)-watch above line
 	if (ntok .eq. 0)  return
 
 	if (.not. equal (tknlst(1), 'HONORROLL')) goto 25
@@ -144,7 +146,7 @@ C	time, or are implementors of the game and know the password.
 	call out (pgame1, 1)		!inform player he is in Pre-game
 					!tell him of ACTIVATE command
 	call out ('Use the HO command to view the honor roll.', 1)
-	if (.not. chkpay(0)) goto 50
+C	if (.not. chkpay(0)) goto 50 drforbin(merlyn)
 	call out('Use the DO command to purchase', 1)
 	call out('documentation for DECWAR.', 1)
 
@@ -160,7 +162,10 @@ C	time, or are implementors of the game and know the password.
 	goto 50
  300	call help			!help
 	goto 50
-305	if (chkpay(0)) call pdwdoc		! print DECWAR.DOC
+C	305	call pdwdoc		!drforbin edit
+305	call out ('This is where CompuServe rips you off for
+     + Documentation!',1)
+C	305	if (chkpay(0)) call pdwdoc drforbin(merlyn)		! print DECWAR.DOC
 	goto 50				! purchase DECWAR documentation
  310	call shosta (.true.)		! Honor Roll
 	goto 50
@@ -194,7 +199,7 @@ C	are discussed, and the Universe and other high-segment variables
 C	are initialized.  Later players are told whether the Romulan or
 C	black holes are present in the game, and their high-segment
 C	areas are setup for play.  It is not possible to continue a
-C	game which was CTL-C'd while still in SETUP.
+C	game which was CTL-C while still in SETUP.
 
 	subroutine SETUP
 	include 'param/nolist'
@@ -239,12 +244,12 @@ C	game which was CTL-C'd while still in SETUP.
 *.......Regular or Tournament game?
 
 	call setqh  ;  call setqm	!set up the hit and message queues
-	goto 600
+C	goto 600			!set to enable choice (drforbin)
  300	call out (setu02, 0)
 	call gtkn
 	if (CCFLG) goto 700	!in case the user typed ^C
 	if (hungup) call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. KEOL)  goto 600
 	if (equal (tknlst(1), 'TOURNAMENT'))  goto 400
 	if (equal (tknlst(1), 'REGULAR'))  600, 300
@@ -255,19 +260,19 @@ C	game which was CTL-C'd while still in SETUP.
 	call gtkn
 	if (CCFLG)  goto 700
 	if (hungup) call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
  500	call setran (iabs(tknlst(i)))
 
 *.......Romulan option?
 
- 600	ROMOPT = .TRUE.
-601	call out (setu06, 1)
-	goto 700
+600	ROMOPT = .TRUE.		
+C	601	call out (setu06, 1)	!added drforbin
+C	goto 700			!added by drforbin
 	call out (setu04, 0)
 	call gtkn
 	if (CCFLG)  goto 700
 	if (hungup) call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. KEOL)  goto 700
 	if ((.not. equal(tknlst(1), 'YES')) .and.
      +	(.not. equal(tknlst(1), 'NO')))  goto 600
@@ -305,17 +310,17 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 	if (CCFLG .or. hungup)  goto 1400
 
 *.......Black hole option?
-
-	BLHOPT = .FALSE.
-	if (ran(0) .lt. 0.75) goto 1400
-	blhopt = .true.
-	call out (setu07, 1)
-	goto 1400
+C	all comments below inserted by drforbin
+C	BLHOPT = .FALSE.
+C	if (ran(0) .lt. 0.75) goto 1400
+C	blhopt = .true.
+C	call out (setu07, 1)
+C	goto 1400
 
 1100	call out (setu05, 0)
 	call gtkn
 	if (CCFLG .or. hungup)  goto 1400
-	if (lofchk(0)) goto 1400
+C	if (lofchk(0)) goto 1400 drforbin(merlyn)
 	if (typlst(1) .eq. KEOL)  goto 1400
 	if (.not. (equal(tknlst(1), 'YES') .or.
      +	equal(tknlst(1), 'NO')))  goto 1100
@@ -353,7 +358,7 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 	call out ('Do you wish to defect? ',0)
 	call gtkn
 	if (ccflg .or. hungup) call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. keol) call cc1
 	if (equal (tknlst(1), 'YES')) goto 1401
 		call cc1
@@ -369,7 +374,7 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 	call out ('Do you wish to choose another ship? ', 0)
 	call gtkn
 	if (ccflg .or. hungup) call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. keol) call cc1
 	if (equal (tknlst(1), 'YES')) goto 1900
 		call cc1
@@ -393,7 +398,7 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 1700	call out (setu18,0)
 	call gtkn
 	if (CCFLG .or. hungup)  call cc1
-	if (lofchk(0)) call cc1
+C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (.not. (typlst(1) .eq. KEOL))  goto 1800
 	team = 1
 	if (numsid(1) .gt. numsid(2))  team = 2
@@ -424,7 +429,7 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 	call out (setu14,0)
 	call gtkn
 	if (CCFLG .or. hungup)  call cc2
-	if (lofchk(0)) call cc2
+C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	do 2300 who = 1, KNPLAY
 	  if (equal (tknlst(1), names(who,1)))  goto 2400
 2300	continue
@@ -524,7 +529,7 @@ C	(before a side and ship have been chosen).
 
  400	call gtkn
 	if (CCFLG .or. hungup)  call monit		!^C was typed
-	if (lofchk(0)) call monit			! time is up!
+C	if (lofchk(0)) call monit drforbin(merlyn)			! time is up!
 	if (typlst(1) .eq. KEOL)  goto 100
 	cmd = 0
 

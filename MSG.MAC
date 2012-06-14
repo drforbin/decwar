@@ -392,7 +392,7 @@ units1::asciz / units/
 unkcom::asciz /Unknown command/
 unkshp::asciz /Unknown ship name./
 unkswi::asciz /Unknown switch/
-users1::asciz /Ship        Captain       Baud User ID      TTY Job/
+users1::asciz /Ship       Captain       Baud  User ID     TTY       Job/;pretty changes drforbin(Merlyn)
 users2::asciz /  Location/
 users3::asciz /
 ----        -------    -----     ---   --- ---/
