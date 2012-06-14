@@ -1,0 +1,18 @@
+limit sru 0
+compile/x/c lofchk,warmac,cishng
+compile/s/c msg,setmsg
+compile/s/c (nowarn)/f10 setup,@decwar,low,high
+r link
+@l
+r link
+@ldeb
+^C
+$cref dsk:=
+printnh *.lst
+;--printnh /r *.lst
+;--Bill Louden
+;--Building Four
+;--First Floor
+;--===============
+;--* D E C W A R *
+;--

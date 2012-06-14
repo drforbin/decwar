@@ -1,0 +1,252 @@
+[asciz	/
+C <>
+1 C<HELP.1>.
+/]
+
+BA.CMD:	[asciz	/
+C <BASES>
+1 <>.
+1 *<Coordinates>.
+1 <Nearest>.
+/]
+
+CA.CMD:	[asciz	/
+C <CAPTURE>
+1 *<Coordinates>.
+/]
+
+CO.DET:	[asciz	/
+* <COORDINATES>
+1 <>
+1 <Absolute>
+1 <Relative>
+1 <Computed>
+2 <Vertical coordinate>
+3 <Horizontal number>.
+/]
+
+DA.CMD:	[asciz	/
+C <DAMAGES>
+1 .
+1 <Device Names>.
+/]
+
+%D.CMD:	[asciz	/
+C <*DEBUG>.
+/]
+
+DE.CMD:	[asciz	/
+C <DEFINE>
+1 <Group Name>
+2 .
+2 <Group Members>.
+/]
+
+DO.CMD:	[asciz	/
+C <DOCK>
+1 .
+1 C<STATUS>.
+/]
+
+EN.CMD:	[asciz	/
+C <ENERGY>
+1 <Ship Name>
+2 <Amount to Transfer>.
+/]
+
+GR.CMD:	[asciz	/
+C <GRIPE>.
+/]
+
+HE.CMD:	[asciz	/
+C <HELP>
+1 <>.
+1 <*>.
+1 <ALL>.
+1 <Command>.
+/]
+
+IM.CMD:	[asciz	/
+C <IMPULSE>
+1 *<Coordinates>.
+/]
+
+%K.CMD:	[asciz	/
+C <*KILL>.
+/]
+
+MO.CMD:	[asciz	/
+C <MOVE>
+1 *<Coordinates>.
+/]
+
+%P.CMD:	[asciz	/
+C <*PASSWORD>
+1 <Password>.
+/]
+
+PH.CMD:	[asciz	/
+C <PHASERS>
+1 *<Coordinates>.
+1 <Amount>
+2 *<Coordinates>.
+/]
+
+PL.CMD:	[asciz	/
+C <PLANETS>
+1 <All>
+1 <Sum>
+1 <Cap>
+1 <Fed>
+1 <Kli>
+1 <Emp>
+1 <Range>
+1 *<Coordinates>
+2 .
+2 <And>
+3 1
+/]
+
+PO.CMD:	[asciz	/
+C <POINTS>
+1 .
+1 <Me>.
+1 <All>.
+1 <Federation>
+2 .
+2 <Klingon>.
+1 <Empire>
+1 <Klingon>
+2 .
+2 <Federation>.
+1 <Romulan>.
+/]
+
+RA.CMD:	[asciz	/
+C <RADIO>
+1 <On>.
+1 <Off>.
+/]
+
+RE.CMD:	[asciz	/
+C <REPAIR>
+1 .
+1 <Damage>.
+/]
+
+SC.CMD:	[asciz	/
+C <SCAN>
+1 .
+1 <>
+1 <Up>
+1 <Down>
+1 <Right>
+1 <Left>
+2 <Range>
+2 <Vertical Range>
+3 <Horizontal Range>
+4 .
+4 <Warning>.
+1 <Corner>
+2 <Vertical Range>
+3 <Horzontal Range>
+4 .
+4 <Warning>.
+/]
+
+SE.CMD:	[asciz	/
+C <SEND TO>
+1 <All>
+1 <Klingons>
+1 <Empire>
+1 <Humans>
+1 <Federation>
+1 <Ship Name>
+1 <Group>
+2 <>
+2 1
+3 <;>
+4 <Message>
+/]
+
+SH.CMD:	[asciz	/
+C <SHIELDS>
+1 <Up>.
+1 <Down>.
+1 <Transfer>
+2 <Amount to transfer>.
+/]
+
+SR.CMD:	[asciz	/
+C <SRSCAN>
+1 .
+1 <>
+1 <Up>
+1 <Down>
+1 <Right>
+1 <Left>
+2 <Range>
+2 <Vertical Range>
+3 <Horizontal Range>
+4 .
+4 <Warning>.
+1 <Corner>
+2 <Vertical Range>
+3 <Horzontal Range>
+4 .
+4 <Warning>.
+/]
+
+ST.CMD:	[asciz	/
+C <STATUS>
+1 .
+2 <Condition>
+2 <Location>
+2 <Torpedoes>
+2 <Energy>
+2 <Damage>
+2 <Shields>
+2 <Radio>
+3 .
+3 2
+/]
+
+TA.CMD:	[asciz	/
+C <TARGETS>
+1 .
+1 <Range>.
+/]
+
+TE.CMD:	[asciz	/
+C <TERMINATE>.
+/]
+
+TO.CMD:	[asciz	/
+C <TORPEDOES>
+1 <>
+1 <Absolute>
+1 <Relative>
+1 <Computed>
+2 <Number to Fire>
+3 <Coordinate>
+4 .
+4 <Coordinate>
+5 .
+5 <Coordinate>.
+/]
+
+TR.CMD:	[asciz	/
+C <TRACTOR>
+1 .
+1 <Ship Name>.
+1 <Off>.
+/]
+
+US.CMD:	[asciz	/
+C <USERS>.
+/]
+
+%W.CMD:	[asciz	/
+C <*WEB>
+1 <Coordinates>.
+/]

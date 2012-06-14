@@ -1,0 +1,72 @@
+Page 1		program decwar
+Page 3		BLOCK DATA
+Page 4		subroutine BASBLD
+Page 5		subroutine BASKIL (itype)
+Page 6		subroutine BASPHA
+Page 7		subroutine BUILD (*)
+Page 8		subroutine CAPTUR (*)
+Page 9		subroutine CHECK (H, V, dH, dV, dist, displ)
+Page 10		subroutine CHKPNT (c, c1, c2)
+Page 11		subroutine CLRBUF
+Page 12		subroutine DAMAGE (stoken)
+Page 13		subroutine DIST (ip, np, num)
+Page 14		subroutine DOCK (*)
+Page 15		subroutine DSHIP
+Page 16		subroutine ENDGAM
+Page 17		subroutine ENERGY
+Page 18		subroutine FREE (snum)
+Page 18		entry RSTART (snum)
+Page 19		subroutine GETCMD (cmd)
+Page 20		subroutine JUMP (nplc, j)
+Page 21		subroutine KQSRCH (ttynum, jobnum, ppn, kindex)
+Page 22		subroutine LIST
+Page 22		entry SUMMAR			!command is SUMMARY
+Page 22		entry BASES
+Page 22		entry PLANET
+Page 22		entry TARGET
+Page 23		function LOCATE (n)
+Page 23		entry RELOC (n)
+Page 24		subroutine LSTSCN (*)
+Page 25		subroutine LSTFLG (*)
+Page 26		subroutine LSTUPD (lstmsk, objctr, scnbts, xxf)
+Page 27		subroutine LSTOUT
+Page 28		subroutine LSTSUM (n, str, f)
+Page 29		subroutine LSTOBJ
+Page 30		subroutine MOVE (*)
+Page 30		entry IMPULS (*)
+Page 31		subroutine NOVA (nplc, j)
+Page 32		subroutine OUTHIT
+Page 33		subroutine OUTMSG
+Page 34		subroutine PASWRD
+Page 35		subroutine PHACON (*)
+Page 36		subroutine PLACE (object, n, V, H)
+Page 37		subroutine PLNATK
+Page 38		subroutine PLNRMV (i,pteam)
+Page 39		subroutine POINTS (DFLG)
+Page 40		subroutine PRIDIS (iV, iH, ilim, iflag, zero)
+Page 41		subroutine PRLOC (v, h, prcflg, w, prlflg, proflg)
+Page 42		subroutine PROMPT
+Page 43		subroutine RADIO
+Page 44		subroutine REPAIR (il,*)
+Page 45		subroutine ROMDRV (phit, id)
+Page 45		entry PHAROM (phit, id)
+Page 45		entry DEADRO (phit, id)
+Page 45		entry TOROM (phit, id)
+Page 46		subroutine ROMSTR (iV, iH)
+Page 47		subroutine ROMTOR (iV1, iH1)
+Page 48		subroutine SCAN
+Page 48		entry SRSCAN
+Page 49		subroutine SET
+Page 50		subroutine SHIELD
+Page 51		subroutine SNOVA
+Page 52		subroutine STATUS (stoken)
+Page 53		subroutine TELL
+Page 54		subroutine TIME
+Page 55		subroutine TORDAM (nplc, j, id, phit, ship)
+Page 55		entry PHADAM (nplc, j, id, phit, ship)
+Page 56		subroutine TORP (*)
+Page 57		subroutine TRACTR (ip)
+Page 57		entry TRCOFF (ip)
+Page 58		subroutine TRAP
+Page 59		subroutine TYPE
+Page 60		subroutine USERS

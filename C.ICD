@@ -1,0 +1,8 @@
+limit sru 0
+compile/c lofchk
+compile/c setmmn
+compile/c warmac,warver,cishng,msg,setmsg,(nowarn)/f10 setup,@decwar,low,high
+r link
+@l
+r link
+@ldeb

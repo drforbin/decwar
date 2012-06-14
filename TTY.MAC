@@ -1,0 +1,208 @@
+;	This file is part of Decwar.
+;	Copyright 1979, 2011 Bob Hysick, Jeff Potter, The University of Texas
+;	Computation Center and Harris Newman.
+
+;	This program is free software; you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation; either version 3, or (at your option)
+;	any later version.
+
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+
+;	You should have received a copy of the GNU General Public License
+;	along with this program; if not, write to the Free Software
+;	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+;	02110-1301, USA.  
+
+
+	title	tty
+	twoseg
+	search	UUOSYM
+	sall
+
+	t1=1
+	t2=2
+	t3=3
+	c=4
+	fnc=14
+	udx=15
+	arg=16
+	p=17
+
+	reloc	400000
+
+opnblk:	.IOPIM+IO.LEM
+	sixbit	/TTY/
+	z
+
+tty:	reset
+
+	seto	udx,
+	trmno.	udx,		;get UDX of TTY
+	  jrst	tty1		;can't; don't try to set TTY NO PAGE
+	movei	fnc,.TOPAG+1000
+	movei	arg,0
+	move	t1,[3,,fnc]
+	trmop.	t1,		;set TTY NO PAGE
+	  jfcl
+
+tty1:	open	0,opnblk
+	  jfcl
+
+tty2:	outchr	["<"]
+	inchrw	c
+	outstr	ctbl(c)
+	outchr	[" "]
+	movei	t1,(c)
+	idivi	t1,100
+	idivi	t2,10
+	addi	t1,"0"
+	outchr	t1
+	addi	t2,"0"
+	outchr	t2
+	addi	t3,"0"
+	outchr	t3
+	outstr	[byte (7) 15,12]
+	caie	c,003		;^C?
+	jrst	tty2
+
+	movei	arg,1
+	move	t1,[3,,fnc]
+	trmop.	t1,		;set TTY PAGE
+	  jfcl
+	exit	1,
+	jrst	tty
+
+ctbl:	asciz	'NUL>'
+	asciz	'SOH>'
+	asciz	'STX>'
+	asciz	'ETX>'
+	asciz	'EOT>'
+	asciz	'ENQ>'
+	asciz	'ACK>'
+	asciz	'BEL>'
+	asciz	'BS> '
+	asciz	'HT> '
+	asciz	'LF> '
+	asciz	'VT> '
+	asciz	'FF> '
+	asciz	'CR> '
+	asciz	'SO> '
+	asciz	'SI> '
+	asciz	'DLE>'
+	asciz	'DC1>'
+	asciz	'DC2>'
+	asciz	'DC3>'
+	asciz	'DC4>'
+	asciz	'NAK>'
+	asciz	'SYN>'
+	asciz	'ETB>'
+	asciz	'CAN>'
+	asciz	'EM> '
+	asciz	'SUB>'
+	asciz	'ESC>'
+	asciz	'FS> '
+	asciz	'GS> '
+	asciz	'RS> '
+	asciz	'US> '
+	asciz	'SP> '
+	asciz	'!>  '
+	asciz	'">  '
+	asciz	'#>  '
+	asciz	'$>  '
+	asciz	'%>  '
+	asciz	'&>  '
+	asciz	"'>  "
+	asciz	'(>  '
+	asciz	')>  '
+	asciz	'*>  '
+	asciz	'+>  '
+	asciz	',>  '
+	asciz	'->  '
+	asciz	'.>  '
+	asciz	'/>  '
+	asciz	'0>  '
+	asciz	'1>  '
+	asciz	'2>  '
+	asciz	'3>  '
+	asciz	'4>  '
+	asciz	'5>  '
+	asciz	'6>  '
+	asciz	'7>  '
+	asciz	'8>  '
+	asciz	'9>  '
+	asciz	':>  '
+	asciz	';>  '
+	asciz	'<>  '
+	asciz	'=>  '
+	asciz	'>>  '
+	asciz	'?>  '
+	asciz	'@>  '
+	asciz	'A>  '
+	asciz	'B>  '
+	asciz	'C>  '
+	asciz	'D>  '
+	asciz	'E>  '
+	asciz	'F>  '
+	asciz	'G>  '
+	asciz	'H>  '
+	asciz	'I>  '
+	asciz	'J>  '
+	asciz	'K>  '
+	asciz	'L>  '
+	asciz	'M>  '
+	asciz	'N>  '
+	asciz	'O>  '
+	asciz	'P>  '
+	asciz	'Q>  '
+	asciz	'R>  '
+	asciz	'S>  '
+	asciz	'T>  '
+	asciz	'U>  '
+	asciz	'V>  '
+	asciz	'W>  '
+	asciz	'X>  '
+	asciz	'Y>  '
+	asciz	'Z>  '
+	asciz	'[>  '
+	asciz	'\>  '
+	asciz	']>  '
+	asciz	'^>  '
+	asciz	'_>  '
+	asciz	'`>  '
+	asciz	'a>  '
+	asciz	'b>  '
+	asciz	'c>  '
+	asciz	'd>  '
+	asciz	'e>  '
+	asciz	'f>  '
+	asciz	'g>  '
+	asciz	'h>  '
+	asciz	'i>  '
+	asciz	'j>  '
+	asciz	'k>  '
+	asciz	'l>  '
+	asciz	'm>  '
+	asciz	'n>  '
+	asciz	'o>  '
+	asciz	'p>  '
+	asciz	'q>  '
+	asciz	'r>  '
+	asciz	's>  '
+	asciz	't>  '
+	asciz	'u>  '
+	asciz	'v>  '
+	asciz	'w>  '
+	asciz	'x>  '
+	asciz	'y>  '
+	asciz	'z>  '
+	asciz	'{>  '
+	asciz	'|>  '
+	asciz	'}>  '
+	asciz	'~>  '
+	asciz	'DEL>'
+
+	end	tty

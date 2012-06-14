@@ -1,0 +1,11 @@
+.if ($a # "") .goto OK
+!@CONTEN file
+!to build a table of contents for a MACRO program
+.mic exit
+OK:: .revive
+.ru conten[10,30
+*'a
+*'a
+*Y
+*eb'a.MAC^[
+*a ^E"f a'' hk gc ex^[^[

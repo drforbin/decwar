@@ -1,0 +1,3 @@
+.if ($a="s") .let a = "/var:system"
+.revive
+.r new:runoff (decwar.hlp/cr/und:sep'a=decwar.rnh)

@@ -1,0 +1,21 @@
+
+
+
+_.DEFINE
+.
+DEFINition of TELL groups
+.skip 1
+Syntax:  DEfine <group name> <ship names>
+.skip 1
+This command is used to assign groups of ships to a specific name, thus
+simplifying the sending of messages to multiple players.  All players
+begin the game with certain standard group names defined, as described
+in the TELL help file.  Groups may be redefined or eliminated as
+desired.  Group names will be truncated to five (5) characters.
+.skip 1
+Examples:
+.skip 1.nf
+DE fools i e l	TELL FOOLS now equivalent to TELL I E L.
+DE fools	Eliminates FOOLS as a valid group name.
+_.
+.skip 1.f

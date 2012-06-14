@@ -1,0 +1,77 @@
+;	This file is part of Decwar.
+;	Copyright 1979, 2011 Bob Hysick, Jeff Potter, The University of Texas
+;	Computation Center and Harris Newman.
+
+;	This program is free software; you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation; either version 3, or (at your option)
+;	any later version.
+
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+
+;	You should have received a copy of the GNU General Public License
+;	along with this program; if not, write to the Free Software
+;	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+;	02110-1301, USA.  
+
+
+;;;	WRED. -- Wait until a core area may be read.
+;	If a job is writing a core area, no other jobs may have
+;	read or write access to that area.
+;	Any number of jobs may be reading an area at the same time.
+;
+;	Input	T1 = pointer to read flag.
+;		T2 = pointer to write flag.
+;	Output	Read flag is incremented.
+;
+	sixbit	/WRED./
+wred.:	aose	(t2)		;anyone writing?
+	pushj	p,wait.		;yes, wait until done
+	aos	(t1)		;one more person reading
+	setom	(t2)		;not really planning on writing
+	popj	p,
+
+
+
+;;;	WWRT. -- Wait until a core area may be written.
+;	If a job is writing a core area, no other jobs may have
+;	read or write access to that area.
+;
+;	Input	T1 = pointer to read flag.
+;		T2 = pointer to write flag.
+;	Output	Write flag is set.
+;
+	sixbit	/WWRT./
+wwrt.:	aose	(t2)		;anyone writing?
+	pushj	p,wait.		;yes, wait until done
+	skipn	(t1)		;anyone reading?
+	jrst	wwrt.2		;no, ok t write
+
+	movei	t3,ntry		;# of cycles before breaking lock
+	movei	t4,stry		;time to sleep between tries
+wwrt.1:	skipn	(t1)		;anyone reading core now?
+	jrst	wwrt.2		;no, ok to start writing
+	hiber	t4,		;yes, wait a while for reads to finish
+	  halt
+	sojg	t3,wwrt.1	;and try again
+	msg	<%Read lock time out>,crlf
+wwrt.2:	popj	p,
+
+
+
+;;;	WAIT. -- Wait until no jobs are writing a particular core
+;	area, then lock it for this job.
+
+	sixbit	/WAIT./
+wait.:	movei	t3,ntry		;# of cycles before breaking lock
+	movei	t4,stry		;time to sleep between tries
+wait.1:	aosn	(t2)		;anyone writing the core area?
+	jrst	wait.2		;no, this job has it
+	hiber	t4,		;yes, wait a while
+	  halt
+	sojg	t3,wait.1	;and try again
+	msg	<%Write lock time out>,crlf
+wait.2:	popj	p,

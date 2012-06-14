@@ -1,0 +1,72 @@
+	options twoseg,literals(high),control
+	program	pdwdoc
+c	Print documentation for DECWAR
+
+	implicit integer (a-z)
+	string line
+	dimension route(7, 7)
+
+	call rstusr			! get tmpcor:usr in place
+	call gwdusr(0, ppn)		! get user's ppn
+	call gwdusr(16, status)		! and his status bits
+	if ((status .and. %100000000000) .ne. 0) then
+		type "('0Sorry, but you are NOT authorized to')"
+		type "(' make purchases at this time.')"
+		goto $exit
+	endif
+	type "('0The DECWAR documentation will be')"
+	type "(' printed at our standard line printer')"
+	type "(' rates of 10 cents/page plus $1.50')"
+	type "(' postage and handling.  The net cost')"
+	type "(' will be approximately $4.00 and will')"
+	type "(' be added to your account.')"
+	type "('0Do you wish to receive this document? '$)"
+	accept "([L])", line
+	if (upper(line) .ne. "Y") goto $exit
+	open (unit=20, file='DECWAR.DOC', device='DSK', mode='ASCII',
+	& 	access='SEQIN', err=$exit)
+
+$gad:	type "('0Please enter mailing information,')"
+	type "(' enter a blank line to terminate:'/)"
+	do $clr, i = 1, 7
+	do $clr, j = 1, 7
+		route(i,j) = '     '
+$clr:	continue
+	pj = ppn/%1000000
+	pg = ppn .and. %777777
+	encode (32, "(o6','o6)", route(1,1)) pj, pg
+	i = 1
+$nad:	accept "(6a5,a2)", (route(j, i+1), j=1,7)
+	do $zch, j = 1, 7
+		if (route(j,i+1) .ne. '     ') goto $nad0
+$zch:	continue
+	goto $hvadr
+$nad0:	i = i + 1
+	if (i .eq. 7) goto $hvadr
+	goto $nad
+
+$hvadr:	if (i .eq. 0) then
+		type "('0I can''t mail it to you unless')"
+		type "(' I have your address!')"
+		goto $gad
+	endif
+	type "('0Please wait while I print the file....')"
+
+	call devwhe ('LPT', curloc)
+	call devloc ('LPT', 'COL', lstat)
+	open (unit=21, file='DECWAR.tmp', device='LPT', mode='FCC',
+	&	access='SEQOUT')
+	call forms (21, 1, 117, 7, route(1,1), route(1,2), route(1,3),
+	& route(1,4), route(1,5), route(1,6), route(1,7))
+
+$cpy:	read (20, "([V])", end=$cpye) line
+	write (21, "(x[V])") line
+	goto $cpy
+
+$cpye:	close (unit=21)
+	close (unit=20)
+	call devloc('LPT', curloc, lstat)
+	type "('0Thank you for waiting!'/)"
+
+$exit:	call runit (20, 'DECWAR')
+	end

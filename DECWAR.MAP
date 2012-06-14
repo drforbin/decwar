@@ -1,0 +1,1668 @@
+		LINK symbol map of	DECWAR /KI	version (20)		page 1
+	Produced by LINK version 4A(1227) on 19-May-82 at 12:24:46
+
+	Low  segment starts at	     0 ends at	 12426 length	 12427 = 11P
+	High segment starts at	400000 ends at	470676 length	 70677 = 57P
+	233 words free in Low segment, 65 words free in high segment
+	636 Global symbols loaded, therefore min. hash size is 707
+	Start address is 406157, located in program DECWAR
+
+		*************
+
+JOBDAT-INITIAL-SYMBOLS
+
+	Zero length module
+
+		*************
+
+LOW	from DSK:LOW.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	   140 ends at	   650 length	   511 (octal),   329. (decimal)
+	High segment starts at	   651 ends at	   652 length	     2 (octal),     2. (decimal)
+
+	LOWSEG	         140	Common	length	   128.		LOCAL	         340	Common	length	   200.	
+	LOW	         652	Entry	Relocatable 	
+
+		*************
+
+HIGH	from DSK:HIGH.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	400010 ends at	406154 length	  6145 (octal),  3173. (decimal)
+	High segment starts at	406155 ends at	406156 length	     2 (octal),     2. (decimal)
+
+	HISEG	      400010	Common	length	  2922.		TIMERS	      405562	Common	length	   250.	
+	HIGH	      406156	Entry	Relocatable 	
+
+		*************
+
+DECWAR	from DSK:DECWAR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	   653 ends at	  1343 length	   471 (octal),   313. (decimal)
+	High segment starts at	406157 ends at	407337 length	  1161 (octal),   625. (decimal)
+
+	POLOCL	         653	Common	length	     9.		MAIN.	      406157	Global	Relocatable 	
+
+		*************
+
+.BLOCK	from DSK:BLKDAT.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  1344 ends at	  1346 length	     3 (octal),     3. (decimal)
+
+
+		*************
+
+BASBLD	from DSK:BASBLD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  1347 ends at	  1361 length	    13 (octal),    11. (decimal)
+	High segment starts at	407340 ends at	407416 length	    57 (octal),    47. (decimal)
+
+	BASBLD	      407341	Entry	Relocatable 	
+
+		*************
+		LINK symbol map of	DECWAR /KI	version (20)		page 2
+
+
+BASKIL	from DSK:BASKIL.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1362 ends at	  1401 length	    20 (octal),    16. (decimal)
+	High segment starts at	407417 ends at	407567 length	   151 (octal),   105. (decimal)
+
+	BASKIL	      407420	Entry	Relocatable 	
+
+		*************
+
+BASPHA	from DSK:BASPHA.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1402 ends at	  1427 length	    26 (octal),    22. (decimal)
+	High segment starts at	407570 ends at	410211 length	   422 (octal),   274. (decimal)
+
+	BASPHA	      407571	Entry	Relocatable 	
+
+		*************
+
+BUILD	from DSK:BUILD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1430 ends at	  1476 length	    47 (octal),    39. (decimal)
+	High segment starts at	410212 ends at	410707 length	   476 (octal),   318. (decimal)
+
+	BUILD	      410213	Entry	Relocatable 	
+
+		*************
+
+CAPTUR	from DSK:CAPTUR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1477 ends at	  1540 length	    42 (octal),    34. (decimal)
+	High segment starts at	410710 ends at	411551 length	   642 (octal),   418. (decimal)
+
+	CAPTUR	      410711	Entry	Relocatable 	
+
+		*************
+
+CHECK	from DSK:CHECK.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1541 ends at	  1574 length	    34 (octal),    28. (decimal)
+	High segment starts at	411552 ends at	412074 length	   323 (octal),   211. (decimal)
+
+	CHKOUT	        1541	Common	length	     7.		CHECK	      411553	Entry	Relocatable 	
+
+		*************
+
+CHKPNT	from DSK:CHKPNT.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1575 ends at	  1601 length	     5 (octal),     5. (decimal)
+	High segment starts at	412075 ends at	412135 length	    41 (octal),    33. (decimal)
+
+	CHKPNT	      412076	Entry	Relocatable 	
+
+		*************
+
+CLRBUF	from DSK:CLRBUF.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1602 ends at	  1605 length	     4 (octal),     4. (decimal)
+	High segment starts at	412136 ends at	412152 length	    15 (octal),    13. (decimal)
+
+	CLRBUF	      412137	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 3
+CLRBUF
+
+		*************
+
+DAMAGE	from DSK:DAMAGE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1606 ends at	  1631 length	    24 (octal),    20. (decimal)
+	High segment starts at	412153 ends at	412453 length	   301 (octal),   193. (decimal)
+
+	DAMAGE	      412154	Entry	Relocatable 	
+
+		*************
+
+DIST	from DSK:DIST.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1632 ends at	  1700 length	    47 (octal),    39. (decimal)
+	High segment starts at	412454 ends at	413010 length	   335 (octal),   221. (decimal)
+
+	DISTLC	        1632	Common	length	    16.		DIST	      412455	Entry	Relocatable 	
+
+		*************
+
+DOCK	from DSK:DOCK.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:15:00
+	Low  segment starts at	  1701 ends at	  1722 length	    22 (octal),    18. (decimal)
+	High segment starts at	413011 ends at	413304 length	   274 (octal),   188. (decimal)
+
+	DOCK	      413012	Entry	Relocatable 	
+
+		*************
+
+DSHIP	from DSK:DSHIP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  1723 ends at	  1727 length	     5 (octal),     5. (decimal)
+	High segment starts at	413305 ends at	413331 length	    25 (octal),    21. (decimal)
+
+	DSHIP	      413306	Entry	Relocatable 	
+
+		*************
+
+ENDGAM	from DSK:ENDGAM.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  1730 ends at	  1746 length	    17 (octal),    15. (decimal)
+	High segment starts at	413332 ends at	413561 length	   230 (octal),   152. (decimal)
+
+	ENDGAM	      413333	Entry	Relocatable 	
+
+		*************
+
+ENERGY	from DSK:ENERGY.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  1747 ends at	  1776 length	    30 (octal),    24. (decimal)
+	High segment starts at	413562 ends at	414075 length	   314 (octal),   204. (decimal)
+
+	ENERGY	      413563	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 4
+
+
+FREE	from DSK:FREE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  1777 ends at	  2106 length	   110 (octal),    72. (decimal)
+	High segment starts at	414076 ends at	414527 length	   432 (octal),   282. (decimal)
+
+	FRLOCL	        1777	Common	length	    45.		FREE	      414077	Entry	Relocatable 	
+	RSTART	      414315	Entry	Relocatable 	
+
+		*************
+
+GETCMD	from DSK:GETCMD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  2107 ends at	  2145 length	    37 (octal),    31. (decimal)
+	High segment starts at	414530 ends at	415133 length	   404 (octal),   260. (decimal)
+
+	GETCMD	      414531	Entry	Relocatable 	
+
+		*************
+
+JUMP	from DSK:JUMP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  2146 ends at	  2160 length	    13 (octal),    11. (decimal)
+	High segment starts at	415134 ends at	415372 length	   237 (octal),   159. (decimal)
+
+	JUMP	      415135	Entry	Relocatable 	
+
+		*************
+
+KQSRCH	from DSK:KQSRCH.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  2161 ends at	  2171 length	    11 (octal),     9. (decimal)
+	High segment starts at	415373 ends at	415437 length	    45 (octal),    37. (decimal)
+
+	KQSRCH	      415374	Entry	Relocatable 	
+
+		*************
+
+LIST	from DSK:LIST.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  2172 ends at	  2177 length	     6 (octal),     6. (decimal)
+	High segment starts at	415440 ends at	415607 length	   150 (octal),   104. (decimal)
+
+	LIST	      415441	Entry	Relocatable 		SUMMAR	      415453	Entry	Relocatable 	
+	BASES	      415466	Entry	Relocatable 		PLANET	      415501	Entry	Relocatable 	
+	TARGET	      415514	Entry	Relocatable 	
+
+		*************
+
+LOCATE	from DSK:LOCATE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 12:13:00
+	Low  segment starts at	  2200 ends at	  2252 length	    53 (octal),    43. (decimal)
+	High segment starts at	415610 ends at	416477 length	   670 (octal),   440. (decimal)
+
+	LOCATE	      415611	Entry	Relocatable 		RELOC	      415657	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 5
+
+
+LSTSCN	from DSK:LSTSCN.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:16:00
+	Low  segment starts at	  2253 ends at	  2352 length	   100 (octal),    64. (decimal)
+	High segment starts at	416500 ends at	417534 length	  1035 (octal),   541. (decimal)
+
+	LSTSCN	      416501	Entry	Relocatable 	
+
+		*************
+
+LSTFLG	from DSK:LSTFLG.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2353 ends at	  2410 length	    36 (octal),    30. (decimal)
+	High segment starts at	417535 ends at	420777 length	  1243 (octal),   675. (decimal)
+
+	LSTFLG	      417536	Entry	Relocatable 	
+
+		*************
+
+LSTUPD	from DSK:LSTUPD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2411 ends at	  2417 length	     7 (octal),     7. (decimal)
+	High segment starts at	421000 ends at	421125 length	   126 (octal),    86. (decimal)
+
+	LSTUPD	      421001	Entry	Relocatable 	
+
+		*************
+
+LSTOUT	from DSK:LSTOUT.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2420 ends at	  2443 length	    24 (octal),    20. (decimal)
+	High segment starts at	421126 ends at	421566 length	   441 (octal),   289. (decimal)
+
+	LSTOUT	      421127	Entry	Relocatable 	
+
+		*************
+
+LSTSUM	from DSK:LSTSUM.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2444 ends at	  2455 length	    12 (octal),    10. (decimal)
+	High segment starts at	421567 ends at	421700 length	   112 (octal),    74. (decimal)
+
+	LSTSUM	      421570	Entry	Relocatable 	
+
+		*************
+
+LSTOBJ	from DSK:LSTOBJ.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2456 ends at	  2510 length	    33 (octal),    27. (decimal)
+	High segment starts at	421701 ends at	422176 length	   276 (octal),   190. (decimal)
+
+	LSTOBJ	      421702	Entry	Relocatable 	
+
+		*************
+
+MOVE	from DSK:MOVE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2511 ends at	  2545 length	    35 (octal),    29. (decimal)
+	High segment starts at	422177 ends at	423137 length	   741 (octal),   481. (decimal)
+
+	MOVE	      422200	Entry	Relocatable 		IMPULS	      422227	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 6
+MOVE
+
+		*************
+
+NOVA	from DSK:NOVA.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2546 ends at	  2572 length	    25 (octal),    21. (decimal)
+	High segment starts at	423140 ends at	424222 length	  1063 (octal),   563. (decimal)
+
+	NOVA	      423141	Entry	Relocatable 	
+
+		*************
+
+OUTHIT	from DSK:OUTHIT.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2573 ends at	  2661 length	    67 (octal),    55. (decimal)
+	High segment starts at	424223 ends at	425560 length	  1336 (octal),   734. (decimal)
+
+	OUTHIT	      424224	Entry	Relocatable 	
+
+		*************
+
+OUTMSG	from DSK:OUTMSG.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:17:00
+	Low  segment starts at	  2662 ends at	  2712 length	    31 (octal),    25. (decimal)
+	High segment starts at	425561 ends at	425663 length	   103 (octal),    67. (decimal)
+
+	OMLOCL	        2662	Common	length	    16.		OUTMSG	      425562	Entry	Relocatable 	
+
+		*************
+
+PASWRD	from DSK:PASWRD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  2713 ends at	  2720 length	     6 (octal),     6. (decimal)
+	High segment starts at	425664 ends at	425742 length	    57 (octal),    47. (decimal)
+
+	PASWRD	      425665	Entry	Relocatable 	
+
+		*************
+
+PHACON	from DSK:PHACON.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  2721 ends at	  2744 length	    24 (octal),    20. (decimal)
+	High segment starts at	425743 ends at	426735 length	   773 (octal),   507. (decimal)
+
+	PHACON	      425744	Entry	Relocatable 	
+
+		*************
+
+PLACE	from DSK:PLACE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  2745 ends at	  2767 length	    23 (octal),    19. (decimal)
+	High segment starts at	426736 ends at	427116 length	   161 (octal),   113. (decimal)
+
+	PLACE	      426737	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 7
+
+
+PLNATK	from DSK:PLNATK.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  2770 ends at	  3015 length	    26 (octal),    22. (decimal)
+	High segment starts at	427117 ends at	427543 length	   425 (octal),   277. (decimal)
+
+	PLNATK	      427120	Entry	Relocatable 	
+
+		*************
+
+PLNRMV	from DSK:PLNRMV.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3016 ends at	  3031 length	    14 (octal),    12. (decimal)
+	High segment starts at	427544 ends at	427742 length	   177 (octal),   127. (decimal)
+
+	PLNRMV	      427545	Entry	Relocatable 	
+
+		*************
+
+POINTS	from DSK:POINTS.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3032 ends at	  3103 length	    52 (octal),    42. (decimal)
+	High segment starts at	427743 ends at	431326 length	  1364 (octal),   756. (decimal)
+
+	POINTS	      427744	Entry	Relocatable 	
+
+		*************
+
+PRIDIS	from DSK:PRIDIS.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3104 ends at	  3121 length	    16 (octal),    14. (decimal)
+	High segment starts at	431327 ends at	431417 length	    71 (octal),    57. (decimal)
+
+	PRIDIS	      431330	Entry	Relocatable 	
+
+		*************
+
+PRLOC	from DSK:PRLOC.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3122 ends at	  3142 length	    21 (octal),    17. (decimal)
+	High segment starts at	431420 ends at	431566 length	   147 (octal),   103. (decimal)
+
+	PRLOC	      431421	Entry	Relocatable 	
+
+		*************
+
+PROMPT	from DSK:PROMPT.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3143 ends at	  3160 length	    16 (octal),    14. (decimal)
+	High segment starts at	431567 ends at	431663 length	    75 (octal),    61. (decimal)
+
+	PROMPT	      431570	Entry	Relocatable 	
+
+		*************
+
+RADIO	from DSK:RADIO.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3161 ends at	  3206 length	    26 (octal),    22. (decimal)
+	High segment starts at	431664 ends at	432136 length	   253 (octal),   171. (decimal)
+
+	RADIO	      431665	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 8
+RADIO
+
+		*************
+
+REPAIR	from DSK:REPAIR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:18:00
+	Low  segment starts at	  3207 ends at	  3232 length	    24 (octal),    20. (decimal)
+	High segment starts at	432137 ends at	432336 length	   200 (octal),   128. (decimal)
+
+	REPAIR	      432140	Entry	Relocatable 	
+
+		*************
+
+ROMDRV	from DSK:ROMDRV.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3233 ends at	  3326 length	    74 (octal),    60. (decimal)
+	High segment starts at	432337 ends at	433565 length	  1227 (octal),   663. (decimal)
+
+	ROMDRV	      432340	Entry	Relocatable 		PHAROM	      433212	Entry	Relocatable 	
+	DEADRO	      433247	Entry	Relocatable 		TOROM	      433273	Entry	Relocatable 	
+
+		*************
+
+ROMSTR	from DSK:ROMSTR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3327 ends at	  3343 length	    15 (octal),    13. (decimal)
+	High segment starts at	433566 ends at	433663 length	    76 (octal),    62. (decimal)
+
+	ROMSTR	      433567	Entry	Relocatable 	
+
+		*************
+
+ROMTOR	from DSK:ROMTOR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3344 ends at	  3401 length	    36 (octal),    30. (decimal)
+	High segment starts at	433664 ends at	434426 length	   543 (octal),   355. (decimal)
+
+	ROMTOR	      433665	Entry	Relocatable 	
+
+		*************
+
+SCAN	from DSK:SCAN.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3402 ends at	  3457 length	    56 (octal),    46. (decimal)
+	High segment starts at	434427 ends at	435111 length	   463 (octal),   307. (decimal)
+
+	SCAN	      434430	Entry	Relocatable 		SRSCAN	      434446	Entry	Relocatable 	
+
+		*************
+
+SET	from DSK:SET.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3460 ends at	  3530 length	    51 (octal),    41. (decimal)
+	High segment starts at	435112 ends at	435757 length	   646 (octal),   422. (decimal)
+
+	SET	      435113	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 9
+
+
+SHIELD	from DSK:SHIELD.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3531 ends at	  3555 length	    25 (octal),    21. (decimal)
+	High segment starts at	435760 ends at	436264 length	   305 (octal),   197. (decimal)
+
+	SHIELD	      435761	Entry	Relocatable 	
+
+		*************
+
+SNOVA	from DSK:SNOVA.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  3556 ends at	  4077 length	   322 (octal),   210. (decimal)
+	High segment starts at	436265 ends at	436530 length	   244 (octal),   164. (decimal)
+
+	SNLOCL	        3556	Common	length	   192.		SNOVA	      436266	Entry	Relocatable 	
+
+		*************
+
+STATUS	from DSK:STATUS.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  4100 ends at	  4170 length	    71 (octal),    57. (decimal)
+	High segment starts at	436531 ends at	437437 length	   707 (octal),   455. (decimal)
+
+	STATUS	      436532	Entry	Relocatable 	
+
+		*************
+
+TELL	from DSK:TELL.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  4171 ends at	  4260 length	    70 (octal),    56. (decimal)
+	High segment starts at	437440 ends at	440173 length	   534 (octal),   348. (decimal)
+
+	TELL	      437441	Entry	Relocatable 	
+
+		*************
+
+TIME	from DSK:TIME.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:19:00
+	Low  segment starts at	  4261 ends at	  4266 length	     6 (octal),     6. (decimal)
+	High segment starts at	440174 ends at	440320 length	   125 (octal),    85. (decimal)
+
+	TIME	      440175	Entry	Relocatable 	
+
+		*************
+
+TORDAM	from DSK:TORDAM.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	  4267 ends at	  4321 length	    33 (octal),    27. (decimal)
+	High segment starts at	440321 ends at	441466 length	  1146 (octal),   614. (decimal)
+
+	TORDAM	      440322	Entry	Relocatable 		PHADAM	      441003	Entry	Relocatable 	
+
+		*************
+
+TORP	from DSK:TORP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	  4322 ends at	  4410 length	    67 (octal),    55. (decimal)
+	High segment starts at	441467 ends at	443037 length	  1351 (octal),   745. (decimal)
+
+	TOLOCL	        4322	Common	length	     7.		TORP	      441470	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 10
+TORP
+
+		*************
+
+TRACTR	from DSK:TRACTR.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	  4411 ends at	  4432 length	    22 (octal),    18. (decimal)
+	High segment starts at	443040 ends at	443407 length	   350 (octal),   232. (decimal)
+
+	TRACTR	      443041	Entry	Relocatable 		TRCOFF	      443274	Entry	Relocatable 	
+
+		*************
+
+TRAP	from DSK:TRAP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	  4433 ends at	  4434 length	     2 (octal),     2. (decimal)
+	High segment starts at	443410 ends at	443432 length	    23 (octal),    19. (decimal)
+
+	TRAP	      443411	Entry	Relocatable 	
+
+		*************
+
+TYPE	from DSK:TYPE.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:20:00
+	Low  segment starts at	  4435 ends at	  4455 length	    21 (octal),    17. (decimal)
+	High segment starts at	443433 ends at	444007 length	   355 (octal),   237. (decimal)
+
+	TYPE	      443434	Entry	Relocatable 	
+
+		*************
+
+USERS	from DSK:USERS.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 12:16:00
+	Low  segment starts at	  4456 ends at	  4472 length	    15 (octal),    13. (decimal)
+	High segment starts at	444010 ends at	444117 length	   110 (octal),    72. (decimal)
+
+	USERS	      444011	Entry	Relocatable 	
+
+		*************
+
+MSG	from DSK:MSG.REL[337,2030]	created by MACRO on 19-May-82 at 12:13:00
+	High segment starts at	444120 ends at	447325 length	  3206 (octal),  1670. (decimal)
+
+	ABSFRM	      444120	Global	Relocatable 		ALLDOK	      444122	Global	Relocatable 	
+	AMBCOM	      444127	Global	Relocatable 		AMBSWI	      444133	Global	Relocatable 	
+	BEGYRP	      444141	Global	Relocatable 		BTHFRM	      444147	Global	Relocatable 	
+	BUILD1	      444151	Global	Relocatable 		BUILD2	      444154	Global	Relocatable 	
+	BUILD3	      444156	Global	Relocatable 		BUILD4	      444160	Global	Relocatable 	
+	BUILD5	      444162	Global	Relocatable 		BUILD7	      444170	Global	Relocatable 	
+	CAPTU0	      444176	Global	Relocatable 		CAPTU1	      444201	Global	Relocatable 	
+	CAPTU2	      444216	Global	Relocatable 		CAPTU4	      444242	Global	Relocatable 	
+	CAPTU5	      444252	Global	Relocatable 		CAPTU6	      444257	Global	Relocatable 	
+	CAPTU7	      444276	Global	Relocatable 		CAPTU8	      444306	Global	Relocatable 	
+	COMLIN	      444330	Global	Relocatable 		COORD1	      444332	Global	Relocatable 	
+	DAMCOM	      444335	Global	Relocatable 		DAMREP	      444347	Global	Relocatable 	
+	DECVER	      444353	Global	Relocatable 		DESTRY	      444362	Global	Relocatable 	
+	DISPLC	      444365	Global	Relocatable 		DMHDR1	      444342	Global	Relocatable 	
+	DMHDR2	      444345	Global	Relocatable 		DOCK01	      444370	Global	Relocatable 	
+	DOCKIN	      444375	Global	Relocatable 		EMPBAS	      444402	Global	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 11
+MSG
+	EMPIRE	      444377	Global	Relocatable 		EMPPLN	      444405	Global	Relocatable 	
+	EMPSHP	      444410	Global	Relocatable 		ENDGM0	      444413	Global	Relocatable 	
+	ENDGM1	      444417	Global	Relocatable 		ENDGM3	      444435	Global	Relocatable 	
+	ENDGM4	      444445	Global	Relocatable 		ENDGM5	      444462	Global	Relocatable 	
+	ENDGM6	      444475	Global	Relocatable 		ENDGM7	      444510	Global	Relocatable 	
+	ENDGM8	      444525	Global	Relocatable 		ENER1L	      444545	Global	Relocatable 	
+	ENER1S	      444542	Global	Relocatable 		ENER4L	      444604	Global	Relocatable 	
+	ENER4S	      444576	Global	Relocatable 		ENERG2	      444557	Global	Relocatable 	
+	ENERG3	      444567	Global	Relocatable 		ENERG5	      444617	Global	Relocatable 	
+	ENERG6	      444623	Global	Relocatable 		ENERG7	      444631	Global	Relocatable 	
+	ENERG8	      444636	Global	Relocatable 		ENGOFF	      444644	Global	Relocatable 	
+	ERLOC1	      444651	Global	Relocatable 		ERLOC2	      444661	Global	Relocatable 	
+	ERLOC3	      444670	Global	Relocatable 		ERLOC4	      444675	Global	Relocatable 	
+	ERLOC7	      444702	Global	Relocatable 		ERLOC8	      444707	Global	Relocatable 	
+	ERLOC9	      444716	Global	Relocatable 		ERROR1	      444725	Global	Relocatable 	
+	ERROR2	      444745	Global	Relocatable 		FEDBAS	      444756	Global	Relocatable 	
+	FEDERA	      444753	Global	Relocatable 		FEDPLN	      444762	Global	Relocatable 	
+	FEDSHP	      444766	Global	Relocatable 		FORHLP	      444772	Global	Relocatable 	
+	FREE01	      444777	Global	Relocatable 		FREE02	      445006	Global	Relocatable 	
+	IMPDAM	      445017	Global	Relocatable 		INFORM	      445024	Global	Relocatable 	
+	INGAME	      445027	Global	Relocatable 		INRANG	      445031	Global	Relocatable 	
+	INSPRA	      445033	Global	Relocatable 		KNOWN	      445037	Global	Relocatable 	
+	LIFDAM	      445041	Global	Relocatable 		LNGFRM	      445053	Global	Relocatable 	
+	LSTF01	      445077	Global	Relocatable 		LSTF02	      445110	Global	Relocatable 	
+	LSTF03	      445112	Global	Relocatable 		LSTF04	      445115	Global	Relocatable 	
+	LSTF05	      445120	Global	Relocatable 		LSTF06	      445124	Global	Relocatable 	
+	LSTF07	      445131	Global	Relocatable 		LSTF08	      445132	Global	Relocatable 	
+	LSTF09	      445134	Global	Relocatable 		LSTF10	      445137	Global	Relocatable 	
+	LSTF11	      445141	Global	Relocatable 		LSTF12	      445143	Global	Relocatable 	
+	LSTF13	      445145	Global	Relocatable 		LSTF14	      445147	Global	Relocatable 	
+	LSTF15	      445151	Global	Relocatable 		LSTF16	      445153	Global	Relocatable 	
+	LSTF17	      445155	Global	Relocatable 		LSTS01	      445055	Global	Relocatable 	
+	LSTS02	      445061	Global	Relocatable 		LSTS03	      445065	Global	Relocatable 	
+	LSTS04	      445073	Global	Relocatable 		MAIN02	      445157	Global	Relocatable 	
+	MEDFRM	      445164	Global	Relocatable 		MESS01	      445166	Global	Relocatable 	
+	MESS02	      445172	Global	Relocatable 		MOVE06	      445277	Global	Relocatable 	
+	MOVE08	      445314	Global	Relocatable 		MOVE09	      445320	Global	Relocatable 	
+	MOVE10	      445331	Global	Relocatable 		MOVE1A	      445173	Global	Relocatable 	
+	MOVE1B	      445205	Global	Relocatable 		MOVE2L	      445212	Global	Relocatable 	
+	MOVE2S	      445230	Global	Relocatable 		MOVE3L	      445236	Global	Relocatable 	
+	MOVE3S	      445257	Global	Relocatable 		MOVE5L	      445262	Global	Relocatable 	
+	MOVE5S	      445272	Global	Relocatable 		NEUPLN	      445344	Global	Relocatable 	
+	NOCOMP	      445347	Global	Relocatable 		NOPLNT	      445363	Global	Relocatable 	
+	NOQUIT	      445376	Global	Relocatable 		NORMAL	      445374	Global	Relocatable 	
+	NOSHIP	      445407	Global	Relocatable 		NOSUR1	      445413	Global	Relocatable 	
+	NOSUR2	      445424	Global	Relocatable 		NOSUR3	      445437	Global	Relocatable 	
+	NOSUR4	      445450	Global	Relocatable 		OUTH01	      445462	Global	Relocatable 	
+	OUTH02	      445464	Global	Relocatable 		OUTH03	      445466	Global	Relocatable 	
+	OUTH04	      445470	Global	Relocatable 		OUTH05	      445472	Global	Relocatable 	
+	OUTH06	      445476	Global	Relocatable 		OUTH07	      445501	Global	Relocatable 	
+	OUTH08	      445503	Global	Relocatable 		OUTH09	      445504	Global	Relocatable 	
+	OUTH10	      445514	Global	Relocatable 		OUTH12	      445516	Global	Relocatable 	
+	OUTH13	      445520	Global	Relocatable 		OUTH14	      445522	Global	Relocatable 	
+	OUTH15	      445530	Global	Relocatable 		OUTH16	      445532	Global	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 12
+MSG
+	OUTH17	      445540	Global	Relocatable 		OUTH18	      445542	Global	Relocatable 	
+	OUTH19	      445550	Global	Relocatable 		OUTH20	      445552	Global	Relocatable 	
+	OUTH21	      445554	Global	Relocatable 		OUTH22	      445557	Global	Relocatable 	
+	OUTH23	      445564	Global	Relocatable 		OUTH24	      445573	Global	Relocatable 	
+	OUTH25	      445576	Global	Relocatable 		OUTH26	      445605	Global	Relocatable 	
+	OUTH27	      445610	Global	Relocatable 		OUTH28	      445617	Global	Relocatable 	
+	OUTH29	      445622	Global	Relocatable 		OUTH30	      445625	Global	Relocatable 	
+	OUTH31	      445633	Global	Relocatable 		OUTH32	      445643	Global	Relocatable 	
+	OUTH33	      445660	Global	Relocatable 		OUTH34	      445666	Global	Relocatable 	
+	PHACN0	      445700	Global	Relocatable 		PHACN1	      445706	Global	Relocatable 	
+	PHACN2	      445713	Global	Relocatable 		PHACN3	      445723	Global	Relocatable 	
+	PHACN4	      445732	Global	Relocatable 		PHACN5	      445742	Global	Relocatable 	
+	PHACN7	      445760	Global	Relocatable 		PHACN8	      445773	Global	Relocatable 	
+	PHACN9	      446012	Global	Relocatable 		POI03L	      446032	Global	Relocatable 	
+	POI03S	      446027	Global	Relocatable 		POI05L	      446051	Global	Relocatable 	
+	POI05S	      446046	Global	Relocatable 		POI06L	      446061	Global	Relocatable 	
+	POI06S	      446056	Global	Relocatable 		POI07L	      446071	Global	Relocatable 	
+	POI07S	      446066	Global	Relocatable 		POI11L	      446077	Global	Relocatable 	
+	POI11S	      446075	Global	Relocatable 		POI12L	      446105	Global	Relocatable 	
+	POI12S	      446103	Global	Relocatable 		POI13L	      446113	Global	Relocatable 	
+	POI13S	      446111	Global	Relocatable 		POI14L	      446121	Global	Relocatable 	
+	POI14S	      446117	Global	Relocatable 		POI15L	      446127	Global	Relocatable 	
+	POI15S	      446125	Global	Relocatable 		POI16L	      446135	Global	Relocatable 	
+	POI16S	      446133	Global	Relocatable 		POI17L	      446143	Global	Relocatable 	
+	POI17S	      446141	Global	Relocatable 		POI18L	      446151	Global	Relocatable 	
+	POI18S	      446147	Global	Relocatable 		POIN04	      446037	Global	Relocatable 	
+	POIN19	      446155	Global	Relocatable 		POIN20	      446157	Global	Relocatable 	
+	POIN21	      446161	Global	Relocatable 		POIN22	      446163	Global	Relocatable 	
+	POIN23	      446165	Global	Relocatable 		RADGAG	      446211	Global	Relocatable 	
+	RADIO0	      446167	Global	Relocatable 		RADIO1	      446202	Global	Relocatable 	
+	RADIO2	      446204	Global	Relocatable 		RADIO3	      446207	Global	Relocatable 	
+	RADOFF	      446216	Global	Relocatable 		RADON0	      446224	Global	Relocatable 	
+	RADUNG	      446232	Global	Relocatable 		RELFRM	      446237	Global	Relocatable 	
+	ROMADV	      446241	Global	Relocatable 		ROMULA	      446244	Global	Relocatable 	
+	SET001	      446247	Global	Relocatable 		SET002	      446272	Global	Relocatable 	
+	SET003	      446276	Global	Relocatable 		SET004	      446305	Global	Relocatable 	
+	SET005	      446316	Global	Relocatable 		SET006	      446323	Global	Relocatable 	
+	SET007	      446336	Global	Relocatable 		SET008	      446351	Global	Relocatable 	
+	SET009	      446355	Global	Relocatable 		SET010	      446362	Global	Relocatable 	
+	SETU06	      446367	Global	Relocatable 		SETU07	      446376	Global	Relocatable 	
+	SHLD01	      446406	Global	Relocatable 		SHLD02	      446413	Global	Relocatable 	
+	SHLD03	      446424	Global	Relocatable 		SHLD04	      446437	Global	Relocatable 	
+	SHLD05	      446444	Global	Relocatable 		SHLD06	      446452	Global	Relocatable 	
+	SHLD07	      446457	Global	Relocatable 		SHLD08	      446470	Global	Relocatable 	
+	SHLD09	      446476	Global	Relocatable 		SHTFRM	      446512	Global	Relocatable 	
+	STA10L	      446562	Global	Relocatable 		STA10M	      446564	Global	Relocatable 	
+	STAR02	      446514	Global	Relocatable 		STAT05	      446535	Global	Relocatable 	
+	STAT11	      446566	Global	Relocatable 		STAT2L	      446523	Global	Relocatable 	
+	STAT2M	      446525	Global	Relocatable 		STAT3L	      446527	Global	Relocatable 	
+	STAT3M	      446533	Global	Relocatable 		STAT6L	      446537	Global	Relocatable 	
+	STAT6M	      446541	Global	Relocatable 		STAT7L	      446543	Global	Relocatable 	
+	STAT7M	      446546	Global	Relocatable 		STAT8L	      446550	Global	Relocatable 	
+	STAT8M	      446553	Global	Relocatable 		STAT9L	      446555	Global	Relocatable 	
+	STAT9M	      446560	Global	Relocatable 		STRDAT	      446570	Global	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 13
+MSG
+	SURE00	      446573	Global	Relocatable 		SYNTAX	      446602	Global	Relocatable 	
+	TELL01	      446605	Global	Relocatable 		TELL02	      446613	Global	Relocatable 	
+	TELL03	      446616	Global	Relocatable 		TELL04	      446626	Global	Relocatable 	
+	TELL05	      446634	Global	Relocatable 		TELL06	      446642	Global	Relocatable 	
+	TELL07	      446651	Global	Relocatable 		TELL08	      446663	Global	Relocatable 	
+	TELL09	      446667	Global	Relocatable 		TIME01	      446701	Global	Relocatable 	
+	TIME02	      446706	Global	Relocatable 		TIME03	      446713	Global	Relocatable 	
+	TIME04	      446720	Global	Relocatable 		TIME05	      446725	Global	Relocatable 	
+	TORMIS	      446732	Global	Relocatable 		TORP00	      446742	Global	Relocatable 	
+	TORP01	      446751	Global	Relocatable 		TORP02	      446763	Global	Relocatable 	
+	TORP03	      446771	Global	Relocatable 		TORP04	      447000	Global	Relocatable 	
+	TORP05	      447002	Global	Relocatable 		TORP06	      447005	Global	Relocatable 	
+	TORP07	      447012	Global	Relocatable 		TRACT1	      447016	Global	Relocatable 	
+	TRACT2	      447025	Global	Relocatable 		TRACT3	      447040	Global	Relocatable 	
+	TRACT4	      447050	Global	Relocatable 		TRACT5	      447070	Global	Relocatable 	
+	TRACT6	      447101	Global	Relocatable 		TRACT7	      447110	Global	Relocatable 	
+	TRACT8	      447123	Global	Relocatable 		TTYS00	      447136	Global	Relocatable 	
+	TYPE01	      447157	Global	Relocatable 		TYPE02	      447172	Global	Relocatable 	
+	TYPE03	      447201	Global	Relocatable 		TYPE04	      447204	Global	Relocatable 	
+	TYPE05	      447210	Global	Relocatable 		TYPE06	      447213	Global	Relocatable 	
+	TYPE07	      447222	Global	Relocatable 		TYPE08	      447231	Global	Relocatable 	
+	TYPE09	      447240	Global	Relocatable 		UNITS1	      447250	Global	Relocatable 	
+	UNKCOM	      447252	Global	Relocatable 		UNKSHP	      447256	Global	Relocatable 	
+	UNKSWI	      447262	Global	Relocatable 		USERS1	      447265	Global	Relocatable 	
+	USERS2	      447300	Global	Relocatable 		USERS3	      447303	Global	Relocatable 	
+	USERS4	      447315	Global	Relocatable 		USERS5	      447320	Global	Relocatable 	
+	WRPDAM	      447321	Global	Relocatable 	
+
+		*************
+
+WARMAC	from DSK:WARMAC.REL[337,2030]	created by MACRO on 19-May-82 at 12:22:00
+	Low  segment starts at	  4473 ends at	  6546 length	  2054 (octal),  1068. (decimal)
+	High segment starts at	447326 ends at	470034 length	 20507 (octal),  8519. (decimal)
+
+	ADDRCK	         335	Global	Absolute    		APRSET	      464012	Entry	Relocatable 	
+	BLKMOV	      460626	Entry	Relocatable 		BLKSET	      460614	Entry	Relocatable 	
+	CCFLG	         302	Global	Absolute    		CCFLG.	        4627	Global	Relocatable 	
+	CCTRAP	      460763	Entry	Relocatable 		CHKPAY	      463302	Entry	Relocatable 	
+	CHKSEQ	      460370	Global	Relocatable 		CLEAR	      460607	Entry	Relocatable 	
+	CRLF	      456154	Entry	Relocatable 		D.	      461026	Global	Relocatable 	
+	DAYTIM	      460640	Entry	Relocatable 		DEBUG	      461151	Entry	Relocatable 	
+	DECINI	      455134	Entry	Relocatable 		DISP	      462654	Entry	Relocatable 	
+	DISPC	      462672	Entry	Relocatable 		DISPX	      462676	Entry	Relocatable 	
+	DMPBUF	      455251	Entry	Relocatable 		ECHOFF	      455243	Entry	Relocatable 	
+	ECHON	      455235	Entry	Relocatable 		EQUAL	      461207	Entry	Relocatable 	
+	ETIM	      460651	Entry	Relocatable 		EXIT	      455110	Entry	Relocatable 	
+	EXIT.	      455110	Entry	Relocatable 		FRCCHK	      460365	Global	Relocatable 	
+	GETHIT	      460105	Entry	Relocatable 		GETMSG	      460322	Entry	Relocatable 	
+	GRIPE	      461626	Entry	Relocatable 		GTKN	      455536	Entry	Relocatable 	
+	HELP	      462222	Entry	Relocatable 		HLPALL	      462353	Entry	Relocatable 	
+	HLPXTR	      462270	Entry	Relocatable 		HUNGUP	         334	Global	Absolute    	
+	INGAL	      461312	Entry	Relocatable 		INPUT	      460553	Entry	Relocatable 	
+	INWAIT	         333	Global	Absolute    		IRAN	      457211	Entry	Relocatable 	
+	JOBSTA	      460430	Entry	Relocatable 		KILALL	      461466	Global	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 14
+WARMAC
+	KILHGH	      461036	Entry	Relocatable 		KILLOW	      461066	Entry	Relocatable 	
+	LDIS	      461275	Entry	Relocatable 		LOCF	      460635	Entry	Relocatable 	
+	LOCK	      461335	Entry	Relocatable 		MAKHIT	      457725	Entry	Relocatable 	
+	MAKMSG	      460221	Entry	Relocatable 		MARK	      457401	Entry	Relocatable 	
+	MONIT	      455112	Entry	Relocatable 		NEWS	      461541	Entry	Relocatable 	
+	OCOND	      456717	Entry	Relocatable 		ODEC	      456474	Entry	Relocatable 	
+	ODEV	      456652	Entry	Relocatable 		ODISP	      456561	Entry	Relocatable 	
+	OFLT	      456522	Entry	Relocatable 		OSDEC	      456473	Entry	Relocatable 	
+	OSFLT	      456516	Entry	Relocatable 		OTIM	      456220	Entry	Relocatable 	
+	OUT	      456112	Entry	Relocatable 		OUT2C	      456172	Entry	Relocatable 	
+	OUT2W	      456207	Entry	Relocatable 		OUTC	      456166	Entry	Relocatable 	
+	OUTW	      456200	Entry	Relocatable 		PAUSE	      460661	Entry	Relocatable 	
+	PDIST	      461323	Entry	Relocatable 		PDWDOC	      463315	Entry	Relocatable 	
+	PRGNAM	      460715	Entry	Relocatable 		PTY	      455125	Entry	Relocatable 	
+	PWR	      457233	Entry	Relocatable 		RAN	      457216	Entry	Relocatable 	
+	RESET.	      455016	Entry	Relocatable 		ROMSPK	      464052	Entry	Relocatable 	
+	RSRVHQ	      457626	Global	Relocatable 		RUNTIM	      460644	Entry	Relocatable 	
+	SETDSP	      462703	Entry	Relocatable 		SETQH	      457555	Entry	Relocatable 	
+	SETQM	      457563	Entry	Relocatable 		SETRAN	      457204	Entry	Relocatable 	
+	SETSCN	      457310	Entry	Relocatable 		SHOSTA	      463524	Entry	Relocatable 	
+	SHWSCN	      457476	Entry	Relocatable 		SKIP	      456123	Entry	Relocatable 	
+	SPACE	      456150	Entry	Relocatable 		SPACES	      456142	Entry	Relocatable 	
+	STABUF	        5243	Global	Relocatable 		START	      461077	Global	Relocatable 	
+	STAT	      457047	Entry	Relocatable 		STAZAP	      464015	Entry	Relocatable 	
+	STOP.	      455110	Entry	Relocatable 		TAB	      456133	Entry	Relocatable 	
+	TIMIN	      461113	Entry	Relocatable 		TIMOUT	      461122	Entry	Relocatable 	
+	TTYON	      455255	Entry	Relocatable 		UNLOCK	      461462	Entry	Relocatable 	
+	UPDCAP	      463213	Entry	Relocatable 		UPDSTA	      463322	Entry	Relocatable 	
+	USRNAM	      460717	Entry	Relocatable 		USRPRJ	      460360	Entry	Relocatable 	
+	ZAPLOK	      461476	Global	Relocatable 	
+
+		*************
+
+WARVER	from DSK:WARVER.REL[337,2030]	created by MACRO on 19-May-82 at 11:13:00
+
+	Zero length module
+
+		*************
+
+CISHNG	from DSK:CISHNG.REL[337,2030]	created by MACRO on 19-May-82 at 11:13:00
+	Low  segment starts at	  6547 ends at	  6554 length	     6 (octal),     6. (decimal)
+	High segment starts at	470035 ends at	470157 length	   123 (octal),    83. (decimal)
+
+	CISHNG	      470035	Global	Relocatable 		HV.LOK	        6552	Global	Relocatable 	
+
+		*************
+
+USRTMP	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	Low  segment starts at	  6555 ends at	  6655 length	   101 (octal),    65. (decimal)
+
+	FLG.US	        6555	Entry	Relocatable 		NTMP.	           4	Global	Absolute    Suppressed
+	ULOFT.	        6624	Entry	Relocatable 		ULOG.	        6603	Entry	Relocatable 	
+	UPASS.	        6577	Entry	Relocatable 		US.PPN	        6571	Entry	Relocatable 	
+	USBLK.	        6574	Entry	Relocatable 		USCBH.	        6617	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 15
+USRTMP
+	USCIP.	        6604	Entry	Relocatable 		USDEV.	        6566	Entry	Relocatable 	
+	USEXT.	        6570	Entry	Relocatable 		USFIL.	        6567	Entry	Relocatable 	
+	USHST.	        6575	Entry	Relocatable 		USID1.	        6557	Entry	Relocatable 	
+	USID2.	        6560	Entry	Relocatable 		USLEN.	         100	Global	Absolute    Suppressed
+	USLPN.	        6615	Entry	Relocatable 		USMDV.	        6613	Entry	Relocatable 	
+	USMEN.	        6610	Entry	Relocatable 		USMIP.	        6607	Entry	Relocatable 	
+	USMNM.	        6614	Entry	Relocatable 		USMXT.	        6625	Entry	Relocatable 	
+	USNTP.	        6561	Entry	Relocatable 		USNXT.	        6612	Entry	Relocatable 	
+	USPGM.	        6616	Entry	Relocatable 		USPPN.	        6556	Entry	Relocatable 	
+	USPRI.	        6611	Entry	Relocatable 		USSTP.	        6573	Entry	Relocatable 	
+	USTAT.	        6576	Entry	Relocatable 		USTER.	        6562	Entry	Relocatable 	
+	USTIP.	        6605	Entry	Relocatable 		USTOP.	        6606	Entry	Relocatable 	
+	USTRM.	        6572	Entry	Relocatable 		USYOLN	          51	Global	Absolute    Suppressed
+	UTNOD.	        6626	Entry	Relocatable 	
+
+		*************
+
+RDUSR.	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470160 ends at	470177 length	    20 (octal),    16. (decimal)
+
+	RDUSR.	      470160	Entry	Relocatable 	
+
+		*************
+
+WTUSR.	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470200 ends at	470217 length	    20 (octal),    16. (decimal)
+
+	WTUSR.	      470200	Entry	Relocatable 	
+
+		*************
+
+TRMOPS	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470220 ends at	470247 length	    30 (octal),    24. (decimal)
+
+	TERGET	      470220	Entry	Relocatable 		TERSET	      470233	Entry	Relocatable 	
+
+		*************
+
+TRMTB.	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470250 ends at	470354 length	   105 (octal),    69. (decimal)
+
+	TRMTB.	      470250	Entry	Relocatable 	
+
+		*************
+
+MAKUSR	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470355 ends at	470416 length	    42 (octal),    34. (decimal)
+
+	MAKUSR	      470355	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 16
+
+
+RSTUSR	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470417 ends at	470427 length	    11 (octal),     9. (decimal)
+
+	RSTUSR	      470417	Entry	Relocatable 	
+
+		*************
+
+GWDUSR	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470430 ends at	470437 length	    10 (octal),     8. (decimal)
+
+	GWDUSR	      470430	Entry	Relocatable 		SWDUSR	      470434	Entry	Relocatable 	
+
+		*************
+
+ENCODE	from DSK:USRTMP.REL[337,2030]	created by MACRO on 12-Feb-82 at 14:37:00
+	High segment starts at	470440 ends at	470511 length	    52 (octal),    42. (decimal)
+
+	D.CODE	      470467	Entry	Relocatable 		E.CODE	      470443	Entry	Relocatable 	
+
+		*************
+
+LOFCHK	from DSK:LOFCHK.REL[337,2030]	created by MACRO on 19-May-82 at 11:12:00
+	High segment starts at	470512 ends at	470676 length	   165 (octal),   117. (decimal)
+
+	LOFCHK	      470512	Entry	Relocatable 	
+
+		*************
+
+MAX.	from SYS:FORLIB.REL[1,4]	created by MACRO on 16-Mar-81 at 21:16:00
+	Low  segment starts at	  6656 ends at	  6722 length	    45 (octal),    37. (decimal)
+
+	AMAX0.	        6677	Entry	Relocatable 		AMAX1.	        6657	Entry	Relocatable 	
+	MAX0.	        6664	Entry	Relocatable 		MAX1.	        6671	Entry	Relocatable 	
+
+		*************
+
+CFRXIT	from SYS:FORLIB.REL[1,4]	created by MACRO on 16-Mar-81 at 21:16:00
+	Low  segment starts at	  6723 ends at	  6730 length	     6 (octal),     6. (decimal)
+
+	CEXIT.	        6723	Entry	Relocatable 	
+
+		*************
+
+A	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  6731 ends at	  6731 length	     1 (octal),     1. (decimal)
+	High segment starts at	  6732 ends at	  6733 length	     2 (octal),     2. (decimal)
+
+	A	        6733	Entry	Relocatable 	
+
+		*************
+
+		LINK symbol map of	DECWAR /KI	version (20)		page 17
+
+
+CC1	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  6734 ends at	  6735 length	     2 (octal),     2. (decimal)
+	High segment starts at	  6736 ends at	  6753 length	    16 (octal),    14. (decimal)
+
+	CC1	        6737	Entry	Relocatable 	
+
+		*************
+
+CC2	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  6754 ends at	  6755 length	     2 (octal),     2. (decimal)
+	High segment starts at	  6756 ends at	  6776 length	    21 (octal),    17. (decimal)
+
+	CC2	        6757	Entry	Relocatable 	
+
+		*************
+
+KILCHK	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  6777 ends at	  7012 length	    14 (octal),    12. (decimal)
+	High segment starts at	  7013 ends at	  7252 length	   240 (octal),   160. (decimal)
+
+	KILCHK	        7014	Entry	Relocatable 	
+
+		*************
+
+PREGAM	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  7253 ends at	  7323 length	    51 (octal),    41. (decimal)
+	High segment starts at	  7324 ends at	  7605 length	   262 (octal),   178. (decimal)
+
+	PREGAM	        7325	Entry	Relocatable 	
+
+		*************
+
+SETUP	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	  7606 ends at	 10002 length	   175 (octal),   125. (decimal)
+	High segment starts at	 10003 ends at	 11656 length	  1654 (octal),   940. (decimal)
+
+	SETUP	       10004	Entry	Relocatable 	
+
+		*************
+
+XGTCMD	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	 11657 ends at	 11737 length	    61 (octal),    49. (decimal)
+	High segment starts at	 11740 ends at	 12105 length	   146 (octal),   102. (decimal)
+
+	XGTCMD	       11741	Entry	Relocatable 	
+
+		*************
+
+Z	from DSK:SETUP.REL[337,2030]	created by FORTRAN /KI on 19-May-82 at 11:14:00
+	Low  segment starts at	 12106 ends at	 12106 length	     1 (octal),     1. (decimal)
+	High segment starts at	 12107 ends at	 12110 length	     2 (octal),     2. (decimal)
+
+	Z	       12110	Entry	Relocatable 	
+		LINK symbol map of	DECWAR /KI	version (20)		page 18
+Z
+
+		*************
+
+SETMSG	from DSK:SETMSG.REL[337,2030]	created by MACRO on 19-May-82 at 11:14:00
+	Low  segment starts at	 12111 ends at	 12377 length	   267 (octal),   183. (decimal)
+
+	BACKUP	       12111	Global	Relocatable 		KILCH4	       12113	Global	Relocatable 	
+	KILCH5	       12123	Global	Relocatable 		KILCH6	       12126	Global	Relocatable 	
+	KILCH8	       12130	Global	Relocatable 		MAICOM	       12133	Global	Relocatable 	
+	NOGAL1	       12143	Global	Relocatable 		PGAME1	       12167	Global	Relocatable 	
+	PTYWRN	       12204	Global	Relocatable 		SETU01	       12214	Global	Relocatable 	
+	SETU02	       12230	Global	Relocatable 		SETU03	       12240	Global	Relocatable 	
+	SETU04	       12246	Global	Relocatable 		SETU05	       12262	Global	Relocatable 	
+	SETU11	       12271	Global	Relocatable 		SETU12	       12300	Global	Relocatable 	
+	SETU13	       12310	Global	Relocatable 		SETU14	       12317	Global	Relocatable 	
+	SETU15	       12326	Global	Relocatable 		SETU16	       12336	Global	Relocatable 	
+	SETU17	       12343	Global	Relocatable 		SETU18	       12354	Global	Relocatable 	
+	STRTUP	       12370	Global	Relocatable 		STU17A	       12350	Global	Relocatable 	
+
+		*************
+
+ROYALN	from UNV:LAYOR1.REL[1,26]	created by MACRO on 15-Mar-82 at 12:35:00
+	Low  segment starts at	 12400 ends at	 12426 length	    27 (octal),    23. (decimal)
+
+	ROYALN	       12401	Entry	Relocatable 	
+
+		*************
+
+
+	Index to LINK symbol map of	DECWAR /KI	version (20)		page 19
+
+	Name	Page	Name	Page	Name	Page	Name	Page
+
+	A	16	GETCMD	 4	OUTMSG	 6	SETUP	17
+	BASBLD	 1	GWDUSR	16	PASWRD	 6	SHIELD	 9
+	BASKIL	 2	HIGH	 1	PHACON	 6	SNOVA	 9
+	BASPHA	 2	JUMP	 4	PLACE	 6	STATUS	 9
+	BUILD	 2	KILCHK	17	PLNATK	 7	TELL	 9
+	CAPTUR	 2	KQSRCH	 4	PLNRMV	 7	TIME	 9
+	CC1	17	LIST	 4	POINTS	 7	TORDAM	 9
+	CC2	17	LOCATE	 4	PREGAM	17	TORP	 9
+	CFRXIT	16	LOFCHK	16	PRIDIS	 7	TRACTR	10
+	CHECK	 2	LOW	 1	PRLOC	 7	TRAP	10
+	CHKPNT	 2	LSTFLG	 5	PROMPT	 7	TRMOPS	15
+	CISHNG	14	LSTOBJ	 5	RADIO	 7	TRMTB.	15
+	CLRBUF	 2	LSTOUT	 5	RDUSR.	15	TYPE	10
+	DAMAGE	 3	LSTSCN	 5	REPAIR	 8	USERS	10
+	DECWAR	 1	LSTSUM	 5	ROMDRV	 8	USRTMP	14
+	DIST	 3	LSTUPD	 5	ROMSTR	 8	WARMAC	13
+	DOCK	 3	MAKUSR	15	ROMTOR	 8	WARVER	14
+	DSHIP	 3	MAX.	16	ROYALN	18	WTUSR.	15
+	ENCODE	16	MOVE	 5	RSTUSR	16	XGTCMD	17
+	ENDGAM	 3	MSG	10	SCAN	 8	Z	17
+	ENERGY	 3	NOVA	 6	SET	 8	.BLOCK	 1
+	FREE	 4	OUTHIT	 6	SETMSG	18
+
+
+Global Cross Reference for DECWAR version (20)		page 20
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	A	         6733	A		WARMAC
+	ABSFRM	       444120	MSG		LOCATE	SET	TYPE
+	ADDRCK	          335	WARMAC	
+	ALLDOK	       444122	MSG		DAMAGE
+	AMAX0.	         6677	MAX.	
+	AMAX1.	         6657	MAX.	
+	AMBCOM	       444127	MSG		GETCMD	XGTCMD
+	AMBSWI	       444133	MSG		TYPE
+	APRSET	       464012	WARMAC		DECWAR
+	BACKUP	        12111	SETMSG		KILCHK
+	BASBLD	       407341	BASBLD		DECWAR	ROMDRV
+	BASES	       415466	LIST		DECWAR
+	BASKIL	       407420	BASKIL		CAPTUR	NOVA	PLNRMV	TORDAM
+	BASPHA	       407571	BASPHA		DECWAR	ROMDRV
+	BEGYRP	       444141	MSG		ENERGY
+	BLKMOV	       460626	WARMAC		PLNRMV
+	BLKSET	       460614	WARMAC		DECWAR	DIST	FREE	LIST	OUTHIT	POINTS	TORP	SETUP
+	BTHFRM	       444147	MSG		SET	TYPE
+	BUILD	       410213	BUILD		DECWAR
+	BUILD1	       444151	MSG		BUILD
+	BUILD2	       444154	MSG		BUILD
+	BUILD3	       444156	MSG		BUILD	LSTOBJ
+	BUILD4	       444160	MSG		BUILD
+	BUILD5	       444162	MSG		BUILD
+	BUILD7	       444170	MSG		BUILD
+	CAPTUR	       410711	CAPTUR		DECWAR
+	CAPTU0	       444176	MSG		CAPTUR
+	CAPTU1	       444201	MSG		CAPTUR
+	CAPTU2	       444216	MSG		CAPTUR
+	CAPTU4	       444242	MSG		CAPTUR
+	CAPTU5	       444252	MSG		BUILD	CAPTUR
+	CAPTU6	       444257	MSG		CAPTUR
+	CAPTU7	       444276	MSG		CAPTUR
+	CAPTU8	       444306	MSG		CAPTUR
+	CCFLG	          302	WARMAC	
+	CCFLG.	         4627	WARMAC	
+	CCTRAP	       460763	WARMAC		DECWAR	GETCMD	TRAP	KILCHK	SETUP
+	CC1	         6737	CC1		KILCHK	SETUP
+	CC2	         6757	CC2		SETUP
+	CEXIT.	         6723	CFRXIT		MAX.
+	CHECK	       411553	CHECK		MOVE	ROMDRV	ROMTOR	TORP
+C	CHKOUT	         1541	CHECK		CHECK	JUMP	MOVE	NOVA	ROMDRV	ROMTOR	SNOVA	TORP
+	CHKPAY	       463302	WARMAC		PREGAM
+	CHKPNT	       412076	CHKPNT		CHECK
+	CHKSEQ	       460370	WARMAC		GETCMD
+	CISHNG	       470035	CISHNG	
+	CLEAR	       460607	WARMAC		DECWAR	CLRBUF	GETCMD
+	CLRBUF	       412137	CLRBUF		SETUP
+	COMLIN	       444330	MSG		PROMPT
+	COORD1	       444332	MSG		LOCATE
+	CRLF	       456154	WARMAC		DECWAR	BUILD	CAPTUR	DAMAGE	DOCK	ENERGY	GETCMD	LIST	LSTSCN	LSTFLG
+						LSTOUT	LSTSUM	LSTOBJ	OUTHIT	OUTMSG	POINTS	PRLOC	RADIO	SET	SHIELD
+
+Global Cross Reference for DECWAR version (20)		page 21
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+						STATUS	TELL	TIME	TORP	TRACTR	TYPE	USERS	KILCHK	SETUP	XGTCMD
+	DAMAGE	       412154	DAMAGE		DECWAR	REPAIR
+	DAMCOM	       444335	MSG		LOCATE
+	DAMREP	       444347	MSG		DAMAGE
+	DAYTIM	       460640	WARMAC		FREE	TIME	SETUP
+	DEADRO	       433247	ROMDRV	
+	DEBUG	       461151	WARMAC		DECWAR	PREGAM
+	DECINI	       455134	WARMAC	
+	DECVER	       444353	MSG		DECWAR	TYPE
+	DESTRY	       444362	MSG		OUTHIT
+	DISP	       462654	WARMAC		BASPHA	BUILD	CAPTUR	CHECK	DAMAGE	DIST	DOCK	FREE	LOCATE	LSTFLG
+						MOVE	PHACON	PLACE	PLNATK	PLNRMV	ROMDRV	ROMTOR	SNOVA	TELL	TORP
+	DISPC	       462672	WARMAC		BASKIL	BUILD	CAPTUR	DOCK	JUMP	LSTFLG	LSTOUT	NOVA	PHACON	PLACE
+						PLNATK	ROMSTR	SCAN	SET	SNOVA
+	DISPLC	       444365	MSG		OUTHIT
+	DISPX	       462676	WARMAC		BUILD	CAPTUR	PHACON
+	DIST	       412455	DIST		ROMDRV	ROMTOR
+C	DISTLC	         1632	DIST		DIST
+	DMHDR1	       444342	MSG		DAMAGE
+	DMHDR2	       444345	MSG		DAMAGE
+	DMPBUF	       455251	WARMAC		GETCMD	KILCHK	XGTCMD
+	DOCK	       413012	DOCK		DECWAR
+	DOCKIN	       444375	MSG		DOCK
+	DOCK01	       444370	MSG		DOCK
+	DSHIP	       413306	DSHIP	
+	D.	       461026	WARMAC	
+	D.CODE	       470467	ENCODE		RDUSR.	WTUSR.
+	ECHOFF	       455243	WARMAC		KILCHK
+	ECHON	       455235	WARMAC		KILCHK
+	EMPBAS	       444402	MSG		LSTOUT
+	EMPIRE	       444377	MSG		POINTS
+	EMPPLN	       444405	MSG		LSTOUT
+	EMPSHP	       444410	MSG		LSTOUT
+	ENDGAM	       413333	ENDGAM		GETCMD	PLNRMV	SET	KILCHK
+	ENDGM0	       444413	MSG		ENDGAM
+	ENDGM1	       444417	MSG		ENDGAM
+	ENDGM3	       444435	MSG		ENDGAM
+	ENDGM4	       444445	MSG		ENDGAM
+	ENDGM5	       444462	MSG		ENDGAM
+	ENDGM6	       444475	MSG		ENDGAM
+	ENDGM7	       444510	MSG		ENDGAM
+	ENDGM8	       444525	MSG		ENDGAM
+	ENERGY	       413563	ENERGY		DECWAR
+	ENERG2	       444557	MSG		ENERGY
+	ENERG3	       444567	MSG		ENERGY	TRACTR
+	ENERG5	       444617	MSG		ENERGY
+	ENERG6	       444623	MSG		ENERGY
+	ENERG7	       444631	MSG		ENERGY
+	ENERG8	       444636	MSG		ENERGY
+	ENER1L	       444545	MSG		ENERGY
+	ENER1S	       444542	MSG		ENERGY
+	ENER4L	       444604	MSG		ENERGY
+
+Global Cross Reference for DECWAR version (20)		page 22
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	ENER4S	       444576	MSG		ENERGY
+	ENGOFF	       444644	MSG		MOVE
+	EQUAL	       461207	WARMAC		DECWAR	DAMAGE	DOCK	ENERGY	GETCMD	LOCATE	LSTSCN	PASWRD	POINTS	RADIO
+						REPAIR	SCAN	SET	SHIELD	STATUS	TELL	TRACTR	TYPE	KILCHK	PREGAM
+						SETUP	XGTCMD
+	ERLOC1	       444651	MSG		LOCATE	PHACON
+	ERLOC2	       444661	MSG		LOCATE
+	ERLOC3	       444670	MSG		LOCATE
+	ERLOC4	       444675	MSG		LOCATE
+	ERLOC7	       444702	MSG		LOCATE
+	ERLOC8	       444707	MSG		LOCATE
+	ERLOC9	       444716	MSG		LOCATE
+	ERROR1	       444725	MSG		MOVE	PHACON	TORP
+	ERROR2	       444745	MSG		MOVE	PHACON	TORP
+	ETIM	       460651	WARMAC		DECWAR	BUILD	CAPTUR	DOCK	ENDGAM	GETCMD	MOVE	PHACON	REPAIR	ROMDRV
+						ROMTOR	TIME	TORP	KILCHK
+	EXIT	       455110	WARMAC		DECWAR	ENDGAM	CC1	CC2	SETUP
+	EXIT.	       455110	WARMAC		DECWAR
+	E.CODE	       470443	ENCODE		WTUSR.
+	FEDBAS	       444756	MSG		LSTOUT
+	FEDERA	       444753	MSG		POINTS
+	FEDPLN	       444762	MSG		LSTOUT
+	FEDSHP	       444766	MSG		LSTOUT
+	FLG.US	         6555	USRTMP		RDUSR.	MAKUSR
+	FORHLP	       444772	MSG		GETCMD	PASWRD	WARMAC	XGTCMD
+	FRCCHK	       460365	WARMAC		SETUP
+	FREE	       414077	FREE		DECWAR	DSHIP	ENDGAM	GETCMD	TRAP	WARMAC
+	FREE01	       444777	MSG		FREE
+	FREE02	       445006	MSG		FREE
+C	FRLOCL	         1777	FREE		FREE
+	GETCMD	       414531	GETCMD		DECWAR
+	GETHIT	       460105	WARMAC		FREE	OUTHIT
+	GETMSG	       460322	WARMAC		FREE	OUTMSG
+	GRIPE	       461626	WARMAC		DECWAR	PREGAM
+	GTKN	       455536	WARMAC		DECWAR	ENERGY	GETCMD	LOCATE	RADIO	SET	SHIELD	TELL	TRACTR	TYPE
+						KILCHK	PREGAM	SETUP	XGTCMD
+	GWDUSR	       470430	GWDUSR	
+	HELP	       462222	WARMAC		DECWAR	PREGAM
+	HIGH	       406156	HIGH	
+C	HISEG	       400010	HIGH		HIGH	DECWAR	.BLOCK	BASBLD	BASKIL	BASPHA	BUILD	CAPTUR	CHECK	DAMAGE
+						DIST	DOCK	DSHIP	ENDGAM	ENERGY	FREE	GETCMD	JUMP	KQSRCH	LIST
+						LOCATE	LSTSCN	LSTFLG	LSTUPD	LSTOUT	LSTSUM	LSTOBJ	MOVE	NOVA	OUTHIT
+						OUTMSG	PASWRD	PHACON	PLACE	PLNATK	PLNRMV	POINTS	PRIDIS	PRLOC	PROMPT
+						RADIO	REPAIR	ROMDRV	ROMSTR	ROMTOR	SCAN	SET	SHIELD	SNOVA	STATUS
+						TELL	TIME	TORDAM	TORP	TRACTR	TRAP	TYPE	USERS	WARMAC	CC1
+						CC2	KILCHK	PREGAM	SETUP	XGTCMD
+	HLPALL	       462353	WARMAC		PREGAM
+	HLPXTR	       462270	WARMAC		PREGAM
+	HUNGUP	          334	WARMAC		CISHNG
+	HV.LOK	         6552	CISHNG	
+	IMPDAM	       445017	MSG		MOVE
+	IMPULS	       422227	MOVE		DECWAR
+
+Global Cross Reference for DECWAR version (20)		page 23
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	INFORM	       445024	MSG		SET	TYPE
+	INGAL	       461312	WARMAC		CHECK	JUMP	LOCATE	LSTSCN	ROMDRV	TELL
+	INGAME	       445027	MSG		LSTFLG	LSTSUM
+	INPUT	       460553	WARMAC		GETCMD	KILCHK	XGTCMD
+	INRANG	       445031	MSG		LSTFLG	LSTSUM
+	INSPRA	       445033	MSG		LSTFLG	LSTSUM
+	INWAIT	          333	WARMAC	
+	IRAN	       457211	WARMAC		DECWAR	DIST	MOVE	NOVA	PHACON	PLACE	PLNATK	ROMDRV	ROMTOR	SNOVA
+						TELL	TORDAM	TORP
+	JOBSTA	       460430	WARMAC		FREE	PREGAM	SETUP
+	JUMP	       415135	JUMP		NOVA	TORDAM	TORP
+	KILALL	       461466	WARMAC	
+	KILCHK	         7014	KILCHK	
+	KILCH4	        12113	SETMSG		KILCHK
+	KILCH5	        12123	SETMSG		KILCHK
+	KILCH6	        12126	SETMSG		KILCHK
+	KILCH8	        12130	SETMSG		KILCHK
+	KILHGH	       461036	WARMAC		ENDGAM	SETUP
+	KILLOW	       461066	WARMAC	
+	KNOWN	       445037	MSG		LSTFLG	LSTSUM
+	KQSRCH	       415374	KQSRCH		FREE	KILCHK	SETUP
+	LDIS	       461275	WARMAC		BASKIL	BASPHA	BUILD	CAPTUR	DOCK	ENERGY	PLACE	PLNATK	PRIDIS	SCAN
+						TORP	TRACTR
+	LIFDAM	       445041	MSG		DECWAR
+	LIST	       415441	LIST		DECWAR
+	LNGFRM	       445053	MSG		SET	TYPE
+C	LOCAL	          340	LOW		LOW	DECWAR	ENDGAM	GETCMD	LIST	LSTSCN	LSTFLG	LSTUPD	LSTOUT	LSTOBJ
+						SCAN	USERS	WARMAC	KILCHK	PREGAM	SETUP
+	LOCATE	       415611	LOCATE		BUILD	CAPTUR	MOVE	PHACON	TORP
+	LOCF	       460635	WARMAC		DECWAR	LIST	LSTFLG	LSTSUM	SETUP
+	LOCK	       461335	WARMAC		BUILD	CAPTUR	FREE	MOVE	NOVA	ROMTOR	TORP	SETUP
+	LOFCHK	       470512	LOFCHK		DECWAR	GETCMD	KILCHK	PREGAM	SETUP	XGTCMD
+	LOW	          652	LOW	
+C	LOWSEG	          140	LOW		LOW	DECWAR	.BLOCK	BASBLD	BASKIL	BASPHA	BUILD	CAPTUR	CHECK	DAMAGE
+						DIST	DOCK	DSHIP	ENDGAM	ENERGY	FREE	GETCMD	JUMP	KQSRCH	LIST
+						LOCATE	LSTSCN	LSTFLG	LSTUPD	LSTOUT	LSTSUM	LSTOBJ	MOVE	NOVA	OUTHIT
+						OUTMSG	PASWRD	PHACON	PLACE	PLNATK	PLNRMV	POINTS	PRIDIS	PRLOC	PROMPT
+						RADIO	REPAIR	ROMDRV	ROMSTR	ROMTOR	SCAN	SET	SHIELD	SNOVA	STATUS
+						TELL	TIME	TORDAM	TORP	TRACTR	TRAP	TYPE	USERS	WARMAC	CC1
+						CC2	KILCHK	PREGAM	SETUP	XGTCMD
+	LSTFLG	       417536	LSTFLG		LIST
+	LSTF01	       445077	MSG		LSTFLG
+	LSTF02	       445110	MSG		LSTFLG
+	LSTF03	       445112	MSG		LSTFLG
+	LSTF04	       445115	MSG		LSTFLG
+	LSTF05	       445120	MSG		LSTFLG
+	LSTF06	       445124	MSG		LSTFLG
+	LSTF07	       445131	MSG		LSTFLG
+	LSTF08	       445132	MSG		LSTFLG
+	LSTF09	       445134	MSG		LSTFLG
+	LSTF10	       445137	MSG		LSTFLG
+	LSTF11	       445141	MSG		LSTFLG
+
+Global Cross Reference for DECWAR version (20)		page 24
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	LSTF12	       445143	MSG		LSTFLG
+	LSTF13	       445145	MSG		LSTFLG
+	LSTF14	       445147	MSG		LSTFLG
+	LSTF15	       445151	MSG		LSTFLG
+	LSTF16	       445153	MSG		LSTFLG
+	LSTF17	       445155	MSG		LSTFLG
+	LSTOBJ	       421702	LSTOBJ		LSTFLG	LSTOUT
+	LSTOUT	       421127	LSTOUT		LIST
+	LSTSCN	       416501	LSTSCN		LIST
+	LSTSUM	       421570	LSTSUM		LSTOUT
+	LSTS01	       445055	MSG		LSTSCN
+	LSTS02	       445061	MSG		LSTSCN
+	LSTS03	       445065	MSG		LSTSCN
+	LSTS04	       445073	MSG		LSTSCN
+	LSTUPD	       421001	LSTUPD		LSTFLG
+	MAICOM	        12133	SETMSG		XGTCMD
+	MAIN02	       445157	MSG		GETCMD
+	MAIN.	       406157	DECWAR	
+	MAKHIT	       457725	WARMAC		BASPHA	CAPTUR	ENERGY	NOVA	PHACON	PLNATK	ROMDRV	ROMTOR	SNOVA	TORP
+						TRACTR
+	MAKMSG	       460221	WARMAC		TELL
+	MAKUSR	       470355	MAKUSR		WARMAC
+	MARK	       457401	WARMAC		SCAN
+	MAX0.	         6664	MAX.		ENDGAM
+	MAX1.	         6671	MAX.	
+	MEDFRM	       445164	MSG		SET	TYPE
+	MESS01	       445166	MSG		OUTMSG
+	MESS02	       445172	MSG		OUTMSG
+	MONIT	       455112	WARMAC		FREE	TRAP	KILCHK	PREGAM	XGTCMD
+	MOVE	       422200	MOVE		DECWAR
+	MOVE06	       445277	MSG		MOVE
+	MOVE08	       445314	MSG		MOVE
+	MOVE09	       445320	MSG		MOVE
+	MOVE1A	       445173	MSG		MOVE
+	MOVE1B	       445205	MSG		MOVE
+	MOVE10	       445331	MSG		MOVE
+	MOVE2L	       445212	MSG		MOVE
+	MOVE2S	       445230	MSG		MOVE
+	MOVE3L	       445236	MSG		MOVE
+	MOVE3S	       445257	MSG		MOVE
+	MOVE5L	       445262	MSG		MOVE
+	MOVE5S	       445272	MSG		MOVE
+	NEUPLN	       445344	MSG		LSTOUT
+	NEWS	       461541	WARMAC		DECWAR	PREGAM
+	NOCOMP	       445347	MSG	
+	NOGAL1	        12143	SETMSG		SETUP
+	NOPLNT	       445363	MSG		BUILD	CAPTUR
+	NOQUIT	       445376	MSG		GETCMD
+	NORMAL	       445374	MSG		SET	TYPE
+	NOSHIP	       445407	MSG		ENERGY	LOCATE	TRACTR
+	NOSUR1	       445413	MSG		CAPTUR
+	NOSUR2	       445424	MSG		CAPTUR
+
+Global Cross Reference for DECWAR version (20)		page 25
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	NOSUR3	       445437	MSG		CAPTUR
+	NOSUR4	       445450	MSG		CAPTUR
+	NOVA	       423141	NOVA		SNOVA
+S	NTMP.	            4	USRTMP+		TRMTB.+	MAKUSR
+	OCOND	       456717	WARMAC		STATUS
+	ODEC	       456474	WARMAC		DECWAR	BUILD	LSTSUM	LSTOBJ	OUTHIT	POINTS	PRLOC	PROMPT	STATUS	TORP
+						KILCHK	SETUP
+	ODEV	       456652	WARMAC		DAMAGE	OUTHIT
+	ODISP	       456561	WARMAC		BUILD	CAPTUR	DAMAGE	DOCK	GETCMD	LSTFLG	LSTOBJ	OUTHIT	OUTMSG	RADIO
+						ROMDRV	TELL	TRACTR
+	OFLT	       456522	WARMAC		DAMAGE	LSTOBJ	MOVE	OUTHIT	POINTS	STATUS
+C	OMLOCL	         2662	OUTMSG		OUTMSG
+	OSDEC	       456473	WARMAC		PRLOC
+	OSFLT	       456516	WARMAC		LSTOBJ	OUTHIT	STATUS
+	OTIM	       456220	WARMAC		TIME	KILCHK
+	OUT	       456112	WARMAC		DECWAR	BUILD	CAPTUR	CLRBUF	DAMAGE	DOCK	ENDGAM	ENERGY	FREE	GETCMD
+						LOCATE	LSTSCN	LSTFLG	LSTSUM	LSTOBJ	MOVE	OUTHIT	OUTMSG	PASWRD	PHACON
+						POINTS	PROMPT	RADIO	ROMDRV	SCAN	SET	SHIELD	STATUS	TELL	TIME
+						TORP	TRACTR	TYPE	USERS	KILCHK	PREGAM	SETUP	XGTCMD
+	OUTC	       456166	WARMAC		BUILD	LSTSUM	LSTOBJ	OUTHIT	PRLOC	PROMPT	STATUS
+	OUTHIT	       424224	OUTHIT		GETCMD
+	OUTH01	       445462	MSG		OUTHIT
+	OUTH02	       445464	MSG		OUTHIT
+	OUTH03	       445466	MSG		OUTHIT
+	OUTH04	       445470	MSG		OUTHIT
+	OUTH05	       445472	MSG		OUTHIT
+	OUTH06	       445476	MSG		OUTHIT
+	OUTH07	       445501	MSG		OUTHIT
+	OUTH08	       445503	MSG		OUTHIT
+	OUTH09	       445504	MSG		OUTHIT
+	OUTH10	       445514	MSG		OUTHIT
+	OUTH12	       445516	MSG		OUTHIT
+	OUTH13	       445520	MSG		OUTHIT
+	OUTH14	       445522	MSG		OUTHIT
+	OUTH15	       445530	MSG		OUTHIT
+	OUTH16	       445532	MSG		OUTHIT
+	OUTH17	       445540	MSG		OUTHIT
+	OUTH18	       445542	MSG		OUTHIT
+	OUTH19	       445550	MSG		OUTHIT
+	OUTH20	       445552	MSG		OUTHIT
+	OUTH21	       445554	MSG		OUTHIT
+	OUTH22	       445557	MSG		OUTHIT
+	OUTH23	       445564	MSG		OUTHIT
+	OUTH24	       445573	MSG		OUTHIT
+	OUTH25	       445576	MSG		OUTHIT
+	OUTH26	       445605	MSG		OUTHIT
+	OUTH27	       445610	MSG		OUTHIT
+	OUTH28	       445617	MSG		OUTHIT
+	OUTH29	       445622	MSG		OUTHIT
+	OUTH30	       445625	MSG		OUTHIT
+	OUTH31	       445633	MSG		OUTHIT
+	OUTH32	       445643	MSG		OUTHIT
+
+Global Cross Reference for DECWAR version (20)		page 26
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	OUTH33	       445660	MSG		OUTHIT
+	OUTH34	       445666	MSG		OUTHIT
+	OUTMSG	       425562	OUTMSG		GETCMD
+	OUTW	       456200	WARMAC		LSTSCN	TELL
+	OUT2C	       456172	WARMAC		MOVE	OUTHIT	OUTMSG	POINTS	PROMPT	STATUS	XGTCMD
+	OUT2W	       456207	WARMAC		POINTS	TYPE	SETUP
+	PASWRD	       425665	PASWRD		DECWAR	PREGAM
+	PAUSE	       460661	WARMAC		GETCMD	LOCATE	PHACON	TORP
+	PDIST	       461323	WARMAC		BASPHA	CAPTUR	DIST	JUMP	LSTFLG	LSTUPD	PHACON	PLNATK	PRLOC	ROMDRV
+	PDWDOC	       463315	WARMAC		PREGAM
+	PGAME1	        12167	SETMSG		PREGAM
+	PHACN0	       445700	MSG		PHACON
+	PHACN1	       445706	MSG		PHACON	TORP
+	PHACN2	       445713	MSG		PHACON
+	PHACN3	       445723	MSG	
+	PHACN4	       445732	MSG		PHACON
+	PHACN5	       445742	MSG		PHACON
+	PHACN7	       445760	MSG		PHACON
+	PHACN8	       445773	MSG		PHACON
+	PHACN9	       446012	MSG		PHACON
+	PHACON	       425744	PHACON		DECWAR
+	PHADAM	       441003	TORDAM		BASPHA	CAPTUR	PHACON	PLNATK	ROMDRV
+	PHAROM	       433212	ROMDRV		BASPHA	PHACON	PLNATK
+	PLACE	       426737	PLACE		DECWAR	ROMDRV	SETUP
+	PLANET	       415501	LIST		DECWAR
+	PLNATK	       427120	PLNATK		DECWAR	ROMDRV
+	PLNRMV	       427545	PLNRMV		BUILD	NOVA	ROMTOR	TORP
+	POINTS	       427744	POINTS		DECWAR	ENDGAM	GETCMD	PREGAM
+	POIN04	       446037	MSG		POINTS
+	POIN19	       446155	MSG		POINTS
+	POIN20	       446157	MSG		POINTS
+	POIN21	       446161	MSG		POINTS
+	POIN22	       446163	MSG		POINTS
+	POIN23	       446165	MSG		POINTS
+	POI03L	       446032	MSG		POINTS
+	POI03S	       446027	MSG		POINTS
+	POI05L	       446051	MSG		POINTS
+	POI05S	       446046	MSG		POINTS
+	POI06L	       446061	MSG		POINTS
+	POI06S	       446056	MSG		POINTS
+	POI07L	       446071	MSG		POINTS
+	POI07S	       446066	MSG		POINTS
+	POI11L	       446077	MSG		POINTS
+	POI11S	       446075	MSG		POINTS
+	POI12L	       446105	MSG		POINTS
+	POI12S	       446103	MSG		POINTS
+	POI13L	       446113	MSG		POINTS
+	POI13S	       446111	MSG		POINTS
+	POI14L	       446121	MSG		POINTS
+	POI14S	       446117	MSG		POINTS
+	POI15L	       446127	MSG		POINTS
+	POI15S	       446125	MSG		POINTS
+
+Global Cross Reference for DECWAR version (20)		page 27
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	POI16L	       446135	MSG		POINTS
+	POI16S	       446133	MSG		POINTS
+	POI17L	       446143	MSG		POINTS
+	POI17S	       446141	MSG		POINTS
+	POI18L	       446151	MSG		POINTS
+	POI18S	       446147	MSG		POINTS
+C	POLOCL	          653	DECWAR		DECWAR	ENDGAM	GETCMD	POINTS
+	PREGAM	         7325	PREGAM		DECWAR
+	PRGNAM	       460715	WARMAC		GETCMD	PREGAM
+	PRIDIS	       431330	PRIDIS		BASPHA	CAPTUR	NOVA	PHACON	PLNATK	ROMDRV	ROMTOR	SNOVA	TORP
+	PRLOC	       431421	PRLOC		BUILD	CAPTUR	LSTSCN	LSTFLG	LSTOBJ	OUTHIT	ROMDRV	STATUS	USERS
+	PROMPT	       431570	PROMPT		GETCMD
+	PTY	       455125	WARMAC	
+	PTYWRN	        12204	SETMSG	
+	PWR	       457233	WARMAC		TORDAM
+	RADGAG	       446211	MSG		RADIO
+	RADIO	       431665	RADIO		DECWAR
+	RADIO0	       446167	MSG		RADIO
+	RADIO1	       446202	MSG		STATUS
+	RADIO2	       446204	MSG		RADIO
+	RADIO3	       446207	MSG		STATUS
+	RADOFF	       446216	MSG		RADIO
+	RADON0	       446224	MSG		RADIO
+	RADUNG	       446232	MSG		RADIO
+	RAN	       457216	WARMAC		CHECK	MOVE	NOVA	ROMTOR	TORDAM	TORP	SETUP
+	RDUSR.	       470160	RDUSR.		WARMAC	MAKUSR	RSTUSR
+	RELFRM	       446237	MSG		LOCATE	SET	TYPE
+	RELOC	       415657	LOCATE		BUILD	CAPTUR	MOVE	PHACON	TORP
+	REPAIR	       432140	REPAIR		DECWAR
+	RESET.	       455016	WARMAC		DECWAR
+	ROMADV	       446241	MSG		ROMDRV
+	ROMDRV	       432340	ROMDRV		DECWAR
+	ROMSPK	       464052	WARMAC		TELL
+	ROMSTR	       433567	ROMSTR		ROMDRV	ROMTOR
+	ROMTOR	       433665	ROMTOR		ROMDRV
+	ROMULA	       446244	MSG		POINTS
+	ROYALN	        12401	ROYALN		DECWAR
+	RSRVHQ	       457626	WARMAC	
+	RSTART	       414315	FREE		TRAP
+	RSTUSR	       470417	RSTUSR	
+	RUNTIM	       460644	WARMAC		TIME	SETUP
+	SCAN	       434430	SCAN		DECWAR
+	SET	       435113	SET		DECWAR	PREGAM
+	SETDSP	       462703	WARMAC		BUILD	CAPTUR	FREE	JUMP	MOVE	NOVA	PLACE	PLNRMV	ROMDRV	ROMTOR
+						SET	SNOVA	TELL	TORDAM	TORP
+	SETQH	       457555	WARMAC		SETUP
+	SETQM	       457563	WARMAC		SETUP
+	SETRAN	       457204	WARMAC		SETUP
+	SETSCN	       457310	WARMAC		SCAN
+	SETUP	        10004	SETUP		DECWAR	WARMAC
+	SETU01	        12214	SETMSG		SETUP
+	SETU02	        12230	SETMSG		SETUP
+
+Global Cross Reference for DECWAR version (20)		page 28
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	SETU03	        12240	SETMSG		SETUP
+	SETU04	        12246	SETMSG		SETUP
+	SETU05	        12262	SETMSG		SETUP
+	SETU06	       446367	MSG		TYPE	SETUP
+	SETU07	       446376	MSG		TYPE	SETUP
+	SETU11	        12271	SETMSG		SETUP
+	SETU12	        12300	SETMSG		SETUP
+	SETU13	        12310	SETMSG		SETUP
+	SETU14	        12317	SETMSG		SETUP
+	SETU15	        12326	SETMSG		SETUP
+	SETU16	        12336	SETMSG		SETUP
+	SETU17	        12343	SETMSG		SETUP
+	SETU18	        12354	SETMSG		SETUP
+	SET001	       446247	MSG		SET
+	SET002	       446272	MSG		SET
+	SET003	       446276	MSG		SET
+	SET004	       446305	MSG		SET
+	SET005	       446316	MSG		SET
+	SET006	       446323	MSG		SET
+	SET007	       446336	MSG		SET
+	SET008	       446351	MSG		SET	TYPE
+	SET009	       446355	MSG		SET
+	SET010	       446362	MSG		SET
+	SHIELD	       435761	SHIELD		DECWAR
+	SHLD01	       446406	MSG		SHIELD
+	SHLD02	       446413	MSG		SHIELD
+	SHLD03	       446424	MSG		SHIELD
+	SHLD04	       446437	MSG		SHIELD
+	SHLD05	       446444	MSG		SHIELD
+	SHLD06	       446452	MSG		SHIELD
+	SHLD07	       446457	MSG		SHIELD
+	SHLD08	       446470	MSG		SHIELD
+	SHLD09	       446476	MSG		SHIELD
+	SHOSTA	       463524	WARMAC		PREGAM
+	SHTFRM	       446512	MSG		SET	TYPE
+	SHWSCN	       457476	WARMAC		SCAN
+	SKIP	       456123	WARMAC		DAMAGE
+C	SNLOCL	         3556	SNOVA		SNOVA
+	SNOVA	       436266	SNOVA		ROMTOR	TORP
+	SPACE	       456150	WARMAC		DAMAGE	LSTSUM	LSTOBJ	OUTHIT	POINTS	PRLOC	STATUS
+	SPACES	       456142	WARMAC		DAMAGE	POINTS	USERS
+	SRSCAN	       434446	SCAN		DECWAR
+	STABUF	         5243	WARMAC	
+	START	       461077	WARMAC		SETUP
+	STAR02	       446514	MSG		OUTHIT
+	STAT	       457047	WARMAC		USERS
+	STATUS	       436532	STATUS		DECWAR	DOCK
+	STAT05	       446535	MSG		STATUS
+	STAT11	       446566	MSG		STATUS
+	STAT2L	       446523	MSG		STATUS
+	STAT2M	       446525	MSG		STATUS
+	STAT3L	       446527	MSG		STATUS
+
+Global Cross Reference for DECWAR version (20)		page 29
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	STAT3M	       446533	MSG		STATUS
+	STAT6L	       446537	MSG		STATUS
+	STAT6M	       446541	MSG		STATUS
+	STAT7L	       446543	MSG		STATUS
+	STAT7M	       446546	MSG		STATUS
+	STAT8L	       446550	MSG		STATUS
+	STAT8M	       446553	MSG		STATUS
+	STAT9L	       446555	MSG		STATUS
+	STAT9M	       446560	MSG		STATUS
+	STAZAP	       464015	WARMAC		PREGAM
+	STA10L	       446562	MSG		STATUS
+	STA10M	       446564	MSG		STATUS
+	STOP.	       455110	WARMAC	
+	STRDAT	       446570	MSG		DECWAR	MOVE
+	STRTUP	        12370	SETMSG		PREGAM
+	STU17A	        12350	SETMSG		SETUP
+	SUMMAR	       415453	LIST		DECWAR	PREGAM
+	SURE00	       446573	MSG		DECWAR
+	SWDUSR	       470434	GWDUSR	
+	SYNTAX	       446602	MSG		SCAN	STATUS
+	TAB	       456133	WARMAC		DAMAGE	LSTOBJ	POINTS
+	TARGET	       415514	LIST		DECWAR
+	TELL	       437441	TELL		DECWAR	ROMDRV
+	TELL01	       446605	MSG		TELL
+	TELL02	       446613	MSG		TELL
+	TELL03	       446616	MSG		TELL
+	TELL04	       446626	MSG		TELL
+	TELL05	       446634	MSG		TELL
+	TELL06	       446642	MSG		TELL
+	TELL07	       446651	MSG		TELL
+	TELL08	       446663	MSG		TELL
+	TELL09	       446667	MSG		TELL
+	TERGET	       470220	TRMOPS		MAKUSR
+	TERSET	       470233	TRMOPS		RSTUSR
+	TIME	       440175	TIME		DECWAR	PREGAM
+C	TIMERS	       405562	HIGH		HIGH	WARMAC
+	TIME01	       446701	MSG		TIME
+	TIME02	       446706	MSG		TIME
+	TIME03	       446713	MSG		TIME
+	TIME04	       446720	MSG		TIME
+	TIME05	       446725	MSG		TIME
+	TIMIN	       461113	WARMAC		ROMDRV
+	TIMOUT	       461122	WARMAC		ROMDRV
+C	TOLOCL	         4322	TORP		TORP
+	TORDAM	       440322	TORDAM		ROMTOR	TORP
+	TORMIS	       446732	MSG		OUTHIT
+	TOROM	       433273	ROMDRV		TORP
+	TORP	       441470	TORP		DECWAR
+	TORP00	       446742	MSG		TORP
+	TORP01	       446751	MSG		TORP
+	TORP02	       446763	MSG		TORP
+	TORP03	       446771	MSG		TORP
+
+Global Cross Reference for DECWAR version (20)		page 30
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	TORP04	       447000	MSG		TORP
+	TORP05	       447002	MSG		TORP
+	TORP06	       447005	MSG		TORP
+	TORP07	       447012	MSG		TORP
+	TRACTR	       443041	TRACTR		DECWAR
+	TRACT1	       447016	MSG		TRACTR
+	TRACT2	       447025	MSG		TRACTR
+	TRACT3	       447040	MSG		TRACTR
+	TRACT4	       447050	MSG		TRACTR
+	TRACT5	       447070	MSG		TRACTR
+	TRACT6	       447101	MSG		TRACTR
+	TRACT7	       447110	MSG		TRACTR
+	TRACT8	       447123	MSG		TRACTR
+	TRAP	       443411	TRAP	
+	TRCOFF	       443274	TRACTR		FREE	NOVA	ROMTOR	SHIELD	TORP
+	TRMTB.	       470250	TRMTB.		TRMOPS
+	TTYON	       455255	WARMAC		DECWAR	GETCMD	PREGAM
+	TTYS00	       447136	MSG		SET
+	TYPE	       443434	TYPE		DECWAR	PREGAM
+	TYPE01	       447157	MSG		TYPE
+	TYPE02	       447172	MSG		TYPE
+	TYPE03	       447201	MSG		TYPE
+	TYPE04	       447204	MSG		TYPE
+	TYPE05	       447210	MSG		TYPE
+	TYPE06	       447213	MSG		LSTFLG	TYPE
+	TYPE07	       447222	MSG		TYPE
+	TYPE08	       447231	MSG		TYPE
+	TYPE09	       447240	MSG		TYPE
+	ULOFT.	         6624	USRTMP		LOFCHK
+	ULOG.	         6603	USRTMP		ENCODE
+	UNITS1	       447250	MSG		DAMAGE	OUTHIT
+	UNKCOM	       447252	MSG		GETCMD	PASWRD	WARMAC	XGTCMD
+	UNKSHP	       447256	MSG		ENERGY	RADIO	TRACTR
+	UNKSWI	       447262	MSG	
+	UNLOCK	       461462	WARMAC		BUILD	CAPTUR	FREE	MOVE	NOVA	ROMTOR	TORP	CC1	CC2	SETUP
+	UPASS.	         6577	USRTMP		ENCODE
+	UPDCAP	       463213	WARMAC		SETUP
+	UPDSTA	       463322	WARMAC		DECWAR	ENDGAM	GETCMD
+	USBLK.	         6574	USRTMP		MAKUSR
+	USCBH.	         6617	USRTMP		WARMAC
+	USCIP.	         6604	USRTMP	
+	USDEV.	         6566	USRTMP		MAKUSR
+	USERS	       444011	USERS		DECWAR	PREGAM
+	USERS1	       447265	MSG		USERS
+	USERS2	       447300	MSG		USERS
+	USERS3	       447303	MSG	
+	USERS4	       447315	MSG	
+	USERS5	       447320	MSG		USERS
+	USEXT.	         6570	USRTMP	
+	USFIL.	         6567	USRTMP	
+	USHST.	         6575	USRTMP		MAKUSR
+	USID1.	         6557	USRTMP		WARMAC	MAKUSR
+
+Global Cross Reference for DECWAR version (20)		page 31
+
+Flags	Symbol	 Octal value	Defined in	Referenced in
+
+	USID2.	         6560	USRTMP		WARMAC	MAKUSR
+	USLEN.	          100	USRTMP		RDUSR.	WTUSR.
+	USLPN.	         6615	USRTMP	
+	USMDV.	         6613	USRTMP	
+	USMEN.	         6610	USRTMP	
+	USMIP.	         6607	USRTMP	
+	USMNM.	         6614	USRTMP	
+	USMXT.	         6625	USRTMP		LOFCHK
+	USNTP.	         6561	USRTMP		MAKUSR
+	USNXT.	         6612	USRTMP	
+	USPGM.	         6616	USRTMP	
+	USPPN.	         6556	USRTMP		WARMAC	RDUSR.	WTUSR.	MAKUSR	GWDUSR	ENCODE
+	USPRI.	         6611	USRTMP	
+	USRNAM	       460717	WARMAC		SET
+	USRPRJ	       460360	WARMAC		PASWRD
+	USSTP.	         6573	USRTMP		MAKUSR
+	USTAT.	         6576	USRTMP		WARMAC
+	USTER.	         6562	USRTMP		WARMAC	MAKUSR	RSTUSR
+	USTIP.	         6605	USRTMP	
+	USTOP.	         6606	USRTMP	
+	USTRM.	         6572	USRTMP	
+	USYOLN	           51	USRTMP	
+	US.PPN	         6571	USRTMP		MAKUSR
+	UTNOD.	         6626	USRTMP	
+	WRPDAM	       447321	MSG		MOVE
+	WTUSR.	       470200	WTUSR.		MAKUSR
+	XGTCMD	        11741	XGTCMD		PREGAM
+	Z	        12110	Z		WARMAC
+	ZAPLOK	       461476	WARMAC		GETCMD
+	.JBAPR	          125	JOBDAT		WARMAC
+	.JBDDT	           74	JOBDAT		WARMAC
+	.JBFF	          121	JOBDAT		WARMAC
+	.JBINT	          134	JOBDAT		WARMAC
+	.JBREL	           44	JOBDAT		WARMAC
+	.JBREN	          124	JOBDAT		WARMAC
+	.JBSA	          120	JOBDAT		WARMAC
+	.JBTPC	          127	JOBDAT		WARMAC
+	.JBVER	          137	JOBDAT		WARMAC
+
+	[End of LINK map of	DECWAR]

@@ -1,0 +1,20 @@
+limit sru 0
+compile/c/x lofchk,warmac,cishng,setmmn
+compile/c/s msg,setmsg
+compile/c/s/print (nowarn)/f10 setup,@decwar,low,high
+r glob
+low,high,decwar,blkdat,basbld,baskil,baspha,build,captur,check,chkpnt,clrbuf
+damage,dist,dock,dship,endgam,energy,free,getcmd,jump,kqsrch,list
+locate,lstscn,lstflg,lstupd,lstout,lstsum,lstobj,move,nova,outhit,outmsg
+paswrd,phacon,place,plnatk,plnrmv,points,pridis,prloc,prompt,radio,repair
+romdrv,romstr,romtor,scan,set,shield,snova,status,tell,time,tordam,torp,tractr
+trap,type,users
+warmac,cishng,lofchk,setup,setmsg,sys:forlib/l
+decwar.glb=^$
+^C
+$r link
+@l
+r link
+@ldeb
+^C
+$printnh decwar.map,decwar.glb

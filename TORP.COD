@@ -1,0 +1,23 @@
+n		accept an arbitrary number
+n[min..max]	accept a number within the given range
+t		accept a type (absolute,relative,computed)
+t=n		accept a type, default to n
+o(....)	if out of range, execute stuff within parentheses
+"...."		print the message within the quotes
+rn		take alternate return n
+-------
+? conditional
+  . at end of input
+i get another line of input
+
+C <Torpedoes>
+{The $ message is <Number of torps to file>, f1 is initially false}
+1 <Number of torps to fire> f1:F
+{If at EOL (print "Number of torps to fire: ", get a line, if at EOL
+ take the first alternate return, set f1 to true}
+  ?i.("Number of torps to fire: " l ?i.(r1) f1:T)
+{If the token is not an integer in the range 0 to 3 (print "Wrong
+number of torps in burst", take the first alternate return), set f2
+to the integer numeric value of the word}
+  ?i^[0,3]("Wrong number of torps in burst" r1) f2:vi
+2 i[t(a)]
