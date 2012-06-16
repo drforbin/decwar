@@ -26,10 +26,12 @@ DECCMP.CMD full compile control file.
 to compile unpack all files in directory, preferably a SFD (sub file directory).
 and do the following
 
-compile @deccmp
+compile @com1
+compile @com2
 
 This should compile ALL files without any (note WARMAC.MAC) errors.
-The compiler should issue 3 warnings for WARMAC. These warnings are understood and will be fixed.
+The compiler should issue 3 warnings for WARMAC. These warnings are understood and will be fixed. There should also be some "Possible index modified in DO loop" warnings.
+Ignore these.
 They should not affect anything. 
 This will compile each file into a *.REL file (relocatable file).
 
