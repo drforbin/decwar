@@ -26,16 +26,31 @@ C	debugging, cheating, etc.
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
+C	Routine rewitten by drforbin (Merlyn)
+C	Added ability to toggle pasflg
+	integer test!added by df
 
-	PASFLG = equal(tknlst(2), KPASS, 1)	!match the password?
-	if (PASFLG .eq. -1)  PASFLG = 0		!not an exact match
+C	PASFLG = equal(tknlst(2), KPASS, 1)	!match the password?
+C	if (PASFLG .eq. -1)  PASFLG = 0		!not an exact match
+
+	test = equal(tknlst(2), KPASS, 1)       !match the password?
+	if (test .eq. -1) goto 201 !not an exact match
+
 C	70725 project added by merlyn (drforbin)
+
+C	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and.
+C    +	(usrprj(0) .ne. "70006)
+C    +	.and. (usrprj(0) .ne. "70725))		!added
+C    +		pasflg = 0
+C	if (PASFLG)  return			!is he ok?
+
 	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and.
-     +		(usrprj(0) .ne. "70006)
-     +.and. (usrprj(0) .ne. "70725))		!added
-     +		pasflg = 0
-	if (PASFLG)  return			!is he ok?
-	call out (unkcom, 0)			!WHAT password routine!?!
+     +  (usrprj(0) .ne. "70006) .and. (usrprj(0) .ne. "70725)) 201,100 !added
+100	if ( pasflg .eq. -2 ) 101,102
+101	pasflg = 0 ; goto 200!added df
+102	pasflg = -2 !added df
+200	return
+201	call out (unkcom, 0)			!WHAT password routine!?!
 	if (oflg .ne. short)  call out (forhlp, 1)
 	return
 
