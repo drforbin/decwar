@@ -33,7 +33,8 @@ start:	reset
 
 filop:	xwd	400001,.fornm	;rename
 	exp	17
-	sixbit	/gam/
+;	sixbit	/gam/		;commented out by drforbin
+	sixbit	/dskc/		;changed for proper device
 	exp	0
 	exp	0
 	xwd	renblk,lokblk
@@ -44,6 +45,7 @@ renblk:
 lokblk:	sixbit	/decwar/
 	sixbit	/exe/
 	exp	0
-	xwd	5,30
+;	xwd	5,30		;commented by drforbin
+	xwd	1,27		;changed for proper p,pn
 
 	end	start
