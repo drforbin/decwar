@@ -34,7 +34,7 @@ C	PASFLG = equal(tknlst(2), KPASS, 1)	!match the password?
 C	if (PASFLG .eq. -1)  PASFLG = 0		!not an exact match
 
 	test = equal(tknlst(2), KPASS, 1)       !match the password?
-	if (test .eq. -1) goto 201 !not an exact match
+	if (test .eq. -1 .or. test .eq. 0) goto 201 !not an exact match
 
 C	70725 project added by merlyn (drforbin)
 
