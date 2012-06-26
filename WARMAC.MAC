@@ -3735,6 +3735,7 @@ jobsta:
 
 
 ;rewrite by merlyn (drforbin)
+
 	move	t1,[	2,,[	.TORSP
 				-1
 			   ]
@@ -3751,14 +3752,13 @@ jobsta:
 			^d150		; 5
 			^d200		; 6
 			^d300		; 7
-			^d0		; 8
-			^d0		; 9
-			^d600		; 10
-			^d1200		; 11
-			^d1800		; 12
-			^d2400		; 13
+			^d600		; 8
+			^d1200		; 9
+			^d1800		; 10
+			^d2400		; 11
 		](t1)
 	movem	t1,@kttysp-1(arg)
+
 ;end rewrite
 
 
