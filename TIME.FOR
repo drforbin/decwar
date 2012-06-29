@@ -27,17 +27,30 @@ C	elapsed time and run time of the game, job, and ship involved.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
-	call out (time01,0)		!total elapsed time of game
+C	The below mods are added because of decwars etim (WARMAC) routine
+C	which wraps around to a negative after 12 hours.
+C	It will display 'Timeslip' when in neg
+
+
+	IF ( .not. ( etim(tim0) .lt. 0) ) goto 100 
+	call out (time01,0)
+	call out ('Timeslip.',0)
+	goto 101 
+100	call out (time01,0)		!total elapsed time of game
 	call otim (etim(tim0))
 
-	if (who .eq. 0)  goto 100	!in Pre-game section?
+101	IF ( .not. ( etim(job(who,KJOBTM)) .lt. 0) ) goto 201
+	call out (time02,0)
+	call out ('Timeslip.',0)
+	goto 202
+201	if (who .eq. 0)  goto 300	!in Pre-game section?
 	call out (time02,0)		!elapsed time of ship
 	call otim (etim(job(who,KJOBTM)))
 
-	call out (time03,0)		!run time for this ship
+202	call out (time03,0)		!run time for this ship
 	call otim (runtim(d) - job(who,KRUNTM))
 
- 100	call out (time04,0)		!total run time for this job
+300	call out (time04,0)		!total run time for this job
 	call otim (runtim(d))
 
 	call out (time05,0)		!present time of day
