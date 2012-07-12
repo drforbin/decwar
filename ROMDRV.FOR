@@ -22,7 +22,7 @@ C	This routine controls the Romulans.  If no Romulan presently
 C	exists, one may be created and randomly placed in the universe.
 C	If a Romulan already exists, DIST is used to locate the nearest
 C	attackable object (ship or starbase), the Romulan then moves in
-C	that direction if he isn't yet at point-blank range, and finally
+C	that direction if he isnt yet at point-blank range, and finally
 C	if he is in range of his target, he either fires phasers or
 C	photon torpedos at it.  The entry points PHAROM and TOROM are
 C	used to hit a Romulan with either phasers or torpedos.  The
@@ -50,10 +50,11 @@ d	call timin ('ROMDRV')
 	romcnt = 0
 	call place (DXROM * 100 + 1, 1, locr(KVPOS), locr(KHPOS))
 	ROM = .TRUE.
-	erom = iran(200) + 200
+C	erom = iran(200) + 200!added by drforbin
+	erom = iran(200) + 800!increase the power of romulan
 	numrom = numrom + 1
 
-*.......Inform nearby players of Romulan's appearance
+*.......Inform nearby players of Romulans appearance
 
 	iwhat = 11  ;  dispfr = DXROM * 100
 	Vfrom = locr(KVPOS)  ;  Hfrom = locr(KHPOS)
@@ -104,7 +105,7 @@ d	call timin ('ROMDRV')
 	Vto = i  ;  Hto = j  ;  shjump = 0
 	shstfr = erom  ;  shcnfr = 1
 	id = pdist (Vfrom, Hfrom, Vto, Hto)
-	call phadam (nplc, iplace, id, 200, .TRUE.)
+	call phadam (nplc, iplace, id, 300, .TRUE.) !200 to 300 drforbin
 	iwhat = 1
 	call pridis (i, j, KRANGE, 0, 0)
 	dispfr = DXROM * 100  ;  dispto = (nplc * 100) + iplace

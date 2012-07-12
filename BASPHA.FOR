@@ -52,7 +52,7 @@ C	side's bases.
 	      dispto = (DXFSHP + (2 - i)) * 100 + k  ;  iwhat = 1
 	      dispfr = (DXFBAS + (i - 1)) * 100 + j  ;  shjump = 0
 	      id = pdist (Vfrom, Hfrom, Vto, Hto)
-	      call phadam (3-i, k, id, 200/numply, .FALSE.)	!hit him!
+	      call phadam (3-i, k, id, 500, .FALSE.)	!hit him!
 	      tmscor(i,KPEDAM) = tmscor(i,KPEDAM) + ihita
 	      shstfr = base(j,3,i)       ;  shcnfr = 1
 	      if (klflg .ne. 0) tmscor(i,KPEKIL) = tmscor(i,KPEKIL) + 5000

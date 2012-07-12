@@ -238,7 +238,14 @@ C	game which was CTL-C while still in SETUP.
 	call setran (daytim (d))
 	if (tim0 .lt. 0)  goto 200
 	if ((numply .ne. 1) .or. ((hitime-daytim(d)) .gt. 0))  goto 1200	!universe already set up?
- 200	call blkset (hfz, 0, locf(hlz) - locf(hfz) + 1)
+
+C	edited drforbin
+200	call out ('High segment too old or not created. initializing.',1)
+	call crlf
+	call blkset (hfz, 0, locf(hlz) - locf(hfz) + 1)
+C 200	call blkset (hfz, 0, locf(hlz) - locf(hfz) + 1) !edited out drforbin
+C	end edit drforbin
+
 	tim0 = daytim (d)		!get initial start time
 
 *.......Regular or Tournament game?

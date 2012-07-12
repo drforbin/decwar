@@ -24,10 +24,10 @@
 
 	twoseg
 	search	UUOSYM,MACTEN
-	sall
-	.directive flblst
+;	sall
+;	.directive flblst
 
-
+lall
 	subttl	Macro definitions
 
 	;added date macro drforbin

@@ -56,7 +56,7 @@ C	'BUILDS' the planet has undergone.
 	    Vfrom = locpln(k,KVPOS)  ;  Hfrom = locpln(k,KHPOS)
 	    Vto   = shpcon(j,KVPOS)  ;  Hto   = shpcon(j,KHPOS)
 	    shjump = 0
-	    iwhat = 1  ;  phit = (50 + (30 * locpln(k,3))) / numply
+	    iwhat = 1  ;  phit = (50 + (50 * locpln(k,3)))!added drforbin 
 	    id = pdist (Vfrom, Hfrom, Vto, Hto)
 	    call phadam (2, j, id, phit, .FALSE.)	!hit him!
 	    if (pcode .ne. DXNPLN)  tmscor(pteam,KPEDAM) =

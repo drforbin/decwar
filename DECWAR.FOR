@@ -255,9 +255,23 @@ d	call timout('CMDUSE')
 3500	continue
 	dotime = dotime + 1
 	if (dotime .lt. numply) goto 3501	! if time to do rebuilding etc
+
 	dotime = 0
+
+C	added by drforbin to implode game if etim == neg
+	if ( (.not. (etim(tim0) .lt. 0)) .and. (.not. 
+     +  (etim(job(who, KJOBTM) )) .lt. 0 ) ) goto 3502
+	call crlf
+	call crlf
+	call out ('This Game has taken too long
+     + and the galaxy has imploded.',1)
+	call out ('Please start a new game.',1) 
+	tim0 = -1
+	goto 3810
+C	end addition by dr
+
 d	call timin ('BASPHA')
-	call baspha			! activate enemy starbase defense
+3502	call baspha	!label added by dr! activate enemy starbase defense
 d	call timout('BASPHA')
 d	call timin ('PLNATK')
 	call plnatk			!activate neutral and enemy planets

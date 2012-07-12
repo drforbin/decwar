@@ -141,8 +141,13 @@ C	killing the object specified.
 
 c-- 800	if (iran(2) .eq. 1)  call deadro (d1,d2)!kill Romulan?
 800	continue			! don't kill the Romulan
-	if (ROM)  call jump (DXROM,1)
-	if (ROM)  erom = erom / 2
+C	if (ROM)  erom = erom / 2 !added dr
+C	if (ROM)  call jump (DXROM,1) !added dr
+	if ( .not. ROM ) goto 801 !added drforbin
+	ihita  = erom / 2
+	call jump (DXROM,1)
+	erom = erom - ihita
+801	continue !end add drforbin
 	if (.not. PLAYER)  rsr(KPRKIL) = rsr(KPRKIL) - erom
 	if (PLAYER)  tpoint(KPRKIL) = tpoint(KPRKIL) + erom
 	dispfr = DXSTAR * 100  ;  dispto = DXROM * 100  ;  iwhat = 8
