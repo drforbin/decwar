@@ -43,7 +43,7 @@ C	hit and message queues between commands.
 	ptime = 0			!assume no pause for next cmd.
 
  100	call crlf
-	call chkseq			! check for active jobs
+C	call chkseq			! check for active jobs !not needed added by drforbin
 	if (shpcon(who,KSDAM) .ge. KENDAM)  goto 1100	!ship dead?
 	if (shpcon(who,KSNRGY) .le. 0)  goto 1200	!energy gone?
 	if (shpcon(who,KSNRGY) .le. 10000)  shpcon(who,KSPCON) = YELLOW	!yellow alert?

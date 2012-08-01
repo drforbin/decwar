@@ -1,8 +1,7 @@
 .r link
-*/debug
+*/debug:forddt
 *low/seg:low
 *high/seg:high
-*/seg:def
 *decwar,blkdat,basbld,baskil,baspha,build,captur,check,chkpnt,clrbuf
 *damage,dist,dock,dship,endgam,energy,free,getcmd,jump,kqsrch,list
 *locate,lstscn,lstflg,lstupd,lstout,lstsum,lstobj,move,nova,outhit,outmsg
@@ -11,9 +10,8 @@
 *trap,type,users
 *msg
 *enqlck
-*warmac,warver
+*warver
 *sys:forlib/sea/seg:def
 *setup/seg:low
 *setmsg
-*sys:forlib/sea/seg:low
 */g

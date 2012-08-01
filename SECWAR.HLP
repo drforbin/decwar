@@ -57,7 +57,7 @@ side:
 
 
 
-     Due to continuous espionage activities, present  front-line
+     Due to continuous espionage activities, present  front-line
 ships  of the Federation and the Klingon Empire are identical in
 strength and weaponry.  These ships  can  move  from  sector  to
 sector  using  either  warp or impulse engines, can attack enemy
@@ -116,7 +116,8 @@ following devices:
          deflect photon torpedoes  with  little  or  no  damage.
          NOTE:  If a ship's shields are up, the amount of energy
          expended during movement is doubled.
-     6.  Computer -- The ship's computer is  used  for  computed
+
+     6.  Computer -- The ship's computer is  used  for  computed
          firing,  computation  during  ship  movement,  and  for
          phaser  control.   If  the  computer  is   inoperative,
          navigation  during  warp  and  impulse movement becomes
@@ -176,7 +177,7 @@ enemies, which come in several categories:
          comes across a suitable target  (Federation  or  Empire
          ship  or base) which he immediately proceeds to attack.
          An infinite supply of torpedoes and energy make  him  a
-         formidable   foe.    If  you  kill  one,  another  will
+         formidable   foe.    If  you  kill  one,  another  will
          eventually appear somewhere in the galaxy.
 
      2.  Enemy ship.  This is the second most dangerous thing to
@@ -234,8 +235,9 @@ description of each command).  The legal commands are:
          be captured.
 
      3.  CAPTURE -- Win a neutral or enemy planet over  to  your
+
          side.
-     4.  DAMAGES --  List  damaged  devices  and  their  current
+     4.  DAMAGES --  List  damaged  devices  and  their  current
          status.
 
      5.  *DEBUG -- A password-controlled routine  to  enter  DDT
@@ -294,7 +296,7 @@ description of each command).  The legal commands are:
 
     25.  STATUS -- List your ship's current  status  and  supply
          levels.
-    26.  SUMMARY -- List various information  on  ships,  bases,
+    26.  SUMMARY -- List various information  on  ships,  bases,
          and planets.
 
     27.  TARGETS -- List  targets  (enemies  within  range)  and
@@ -317,7 +319,7 @@ description of each command).  The legal commands are:
 
 
 
-. .INPUT
+. .INPUT
 General INPUT information
 
 - Only the first 5 characters of each  input  word  are  stored.
@@ -375,7 +377,7 @@ General INPUT information
   describing  the  coordinate input type is given only once, and
   all coordinates must be of the same type.
 .
-.OUTPUT
+.OUTPUT
 General OUTPUT information
 
 The SET OUTPUT LONG/MEDIUM/SHORT command controls the length  of
@@ -435,7 +437,7 @@ The ACTIVATE command (valid only in the  pre-game)  is  used  to
 exit the pre-game section and enter the normal ship setup stage.
 The pre-game can be recognized from the 'PG>' command prompt.
 .
-.HINTS
+.HINTS
 Some general HINTS
 
 - When in doubt, use the on-line help system.  See the  help  on
@@ -495,7 +497,7 @@ Some general HINTS
   BOTH.  (The range is the magnitude of either delta v or  delta
   h, whichever is larger.)
 .
-.PAUSES
+.PAUSES
 Commands that take real time
 
 Many of the commands are designed to take a  certain  amount  of
@@ -549,7 +551,7 @@ bells will be output.
 NOTE:  A ship under RED alert conditions can not be returned  to
 the monitor level except by using the QUIT command.
 .
-.BASES
+.BASES
 List various BASE information
 
 Syntax:  BAses [<keywords>]
@@ -609,7 +611,7 @@ enemy ships, and can be DOCKed at to refuel and rearm, just like
 a  base (except a planet can only supply half the resources that
 a  base  can).   Enemy  planets  can  also  be  captured.   When
 capturing an enemy planet, 1 second is added to the normal pause
-time of 5 seconds for each BUILD present.   Also,  50  units  of
+time of 5 seconds for each BUILD present.   Also,  50  units  of
 ship energy are lost for each build.
 
 Examples:
@@ -669,7 +671,7 @@ resources available per move when DOCKing at a base or planet:
 Resource                        Base    Planet
 ----------------------------------------------
 Ship energy                    +1000      +500
-Shield energy                   +500      +250
+Shield energy                   +500      +250
 Photon Torpedoes                 +10        +5
 Life Support Reserves             +5        +5
 Ship Damage                     -100       -50
@@ -729,7 +731,7 @@ Syntax:  Help [*|<keywords>]
 Give general help info, a  list  of  available  commands,  or  a
 detailed description of a particular command or keyword.  Unless
 you are under red  alert,  HELP  will  protect  you  from  enemy
-attack.   The  following  conventions  are  used in the detailed
+attack.   The  following  conventions  are  used in the detailed
 descriptions:
 - The first line contains, in all caps, the keyword that help is
   being given for.
@@ -789,7 +791,7 @@ The following information is available via the LIST command:
   within range.
 - Location of any known enemy base (any base that has previously
   been SCANned or LISTed by anyone on your team).
-- Location and number of builds of  any  known  planet,  or  any
+- Location and number of builds of  any  known  planet,  or  any
   planet within range.
 * Note:  If the password flag is  set,  all  ships,  bases,  and
   planets  are  "known" about.  So, with the password set, LIST,
@@ -848,7 +850,7 @@ SUmmary         List summary of all selected items.  Turn off
                 list unless command is LIST or the keyword LIST
                 is specified.  Extend the range to infinity
                 unless a range is explicitly given.
-And             Used to separate groups of keywords.
+And             Used to separate groups of keywords.
 &               Same as AND.
 
 Examples:
@@ -908,7 +910,7 @@ Syntax:  *Password [<password>]
 
 If the correct password is given, set the password flag.  If  no
 password  is given, or the password is incorrect, issue an error
-message and clear the flag.  The password flag must  be  set  to
+message and clear the flag.  The password flag must  be  set  to
 access  system  commands (*DEBUG).  Also, with the password flag
 set, you have access to ANY information that  LIST  can  supply,
 including detailed information on out of range enemy forces.  It
@@ -968,7 +970,7 @@ Syntax:  PLanets [<keywords>]
 List location and number of builds for all known planets, and  a
 summary  of  planets  within  a  specified  range  or the entire
 galaxy.  The default range is 10 sectors, and the  default  side
-is  every  side.  See the help for LIST for more information and
+is  every  side.  See the help for LIST for more information and
 the complete set of keywords that can be used to modify  PLANETS
 output.
 
@@ -1028,7 +1030,7 @@ Quit the game before normal end of execution and return  to  the
 monitor.   Your  ship  is  released  for  use by another player,
 you're chalked up as just  one  more  casualty,  and  you  can't
 CONTINUE  the game.  If you want to rejoin the game, you'll have
-to wait 2 minutes, and then either START or RUN  the  game.   If
+to wait 2 minutes, and then either START or RUN  the  game.   If
 you  want  to exit the game temporarily (to answer SENDS, etc.),
 type ^C (CTL-C), and you'll usually be able to CONTINUE.   NOTE:
 If  you're  under  red alert, you won't be able to ^C out of the
@@ -1088,7 +1090,7 @@ Syntax:  SCan [Up|Down|Right|Left|Corner] [<range>|<vr><hr>] [W]
 
 Display a selected portion of the nearby universe.  If no  range
 is  specified,  SCAN  defaults  to  a  square  scan range of ten
-sectors from the present ship location.  The keywords UP,  DOWN,
+sectors from the present ship location.  The keywords UP,  DOWN,
 RIGHT,  LEFT, and CORNER modify this to include only the part of
 this original square specified  (relative  to  the  ship).   The
 maximum  scan  range  is 10 sectors, and larger specified ranges
@@ -1148,7 +1150,7 @@ Prompt  Normal   Default.  Use "COMMAND:  " prompt.
         Informative Use "> " for prompt.  Precede the ">" with:
                  S if shields are down or < 10%.
                  E if ship energy < 1000 (yellow alert).
-                 D if ship damage > 2000.
+                 D if ship damage > 2000.
                  nL if life support is critically damaged (n
                  stardates of reserves).  Ttytype CRT, ADM-3a,
                  ADM-2, SOROC, BEEHIVE, ACT-IV, ACT-V Doesn't do
@@ -1208,7 +1210,7 @@ Show ship STATUS
 Syntax:
 STatus
 [Condition|Location|Torpedoes|Energy|Damage|Shields|Radio]
-Show the current stardate, plus the status of any  of  the  ship
+Show the current stardate, plus the status of any  of  the  ship
 attributes:   ship  condition,  location,  number of torps, ship
 energy, ship damage, shield energy, and radio  condition.   Ship
 condition  can  be  green,  yellow  (low  on energy), or red (in
@@ -1268,7 +1270,7 @@ TA 5            List all targets within 5 sectors.
 TELL another ship something using the sub-space radio
 
 Syntax:                                                     TEll
-All|FEderation|HUman|EMpire|Klingon|ENemy|FRiendly|        <ship
+All|FEderation|HUman|EMpire|Klingon|ENemy|FRiendly|        <ship
 names>;<msg>
 
 Send messages to one or several of the players currently in  the
@@ -1328,7 +1330,7 @@ TO 3 6 7 8 7 9 12 Fire one torpedo at sector 6-7, one at 8-7,
                   and one at 9-12.
 TO 3 12 24 13 39  Fire one torpedo at sector 12-24, and two at
                   sector 13-39.
-TO A 3 12 24      Equivalent to "TO 3 12 24".
+TO A 3 12 24      Equivalent to "TO 3 12 24".
 TO R 2 2 -5       Fire two torpedoes at sector 22-25, assuming
                   your location is 20-30.
 TO C 3 BUZZARD    Fire three torpedoes at the Buzzard.
@@ -1387,7 +1389,7 @@ TY OU           List the output settings.
 
 .USERS
 List USERS
-Syntax:  Users
+Syntax:  Users
 
 List all ships  currently  in  the  game.   Include  ship  name,
 captain  (may  be  changed  by  SET  NAME),  TTY speed, PPN, TTY
@@ -1396,4 +1398,4 @@ or short, omit the TTY and job numbers.  If the output format is
 set to short, omit the TTY speed and PPN (include only the  ship
 name and captain).
 * If the password is set, you also get each ship's location.
- 
+

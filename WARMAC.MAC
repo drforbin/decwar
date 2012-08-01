@@ -43,9 +43,6 @@ lall
 	movem	cndat,year
 	>
 
-
-
-
 ;;;	ASCIL -- Define an ASCII string with <CR><LF><NUL> tacked on the end.
 ;
 	define ascil (txt), <
@@ -511,6 +508,7 @@ hi.fst==hfz
 	integer	scnflg			;scan verbosity flag
 	integer	ttytyp			;terminal type
 	integer	hcpos			;horizontal cursor position
+	integer usppn			;added by drforbin for lowseg private ppn
 	integer	icflg			;default coord input type (abs,rel)
 	integer ocflg			;default coord out type (abs,rel,both)
 	integer	blank			;number of consecutive blank lines
@@ -619,16 +617,16 @@ hi.fst==hfz
 	dbque.==0		; -1 to check the queues
 	dbzer.==0		; -1 to check for storing zero values in setdsp
 	db777.==-1		; -1 to check for storing 7777 in setdsp
+
 	subttl	low segment data
 
 	reloc	0
 
 hand:	block	2		;drforbin
-uscbh.:	block	2		;drforbin
 save$v:	block	1		; saves contents of $v in havenq
 hang$v:	block	1		; saves contents of $v in hang
 hangta:	block	1		; save for register ta
-hv.lok:	block	1		; set to -1 when enq. request is granted
+hv.lok::block	1		; set to -1 when enq. request is granted
 LVLTBL:	block	2
 pdl:	block	pdlsiz		;push down list
 stk:	block	stksiz		;argument save stack
@@ -977,7 +975,7 @@ cbits:	phase 0
 	z				;^D
 	z				;^E
 	z				;^F
-	cf.etg				;^G <BEL>
+	cf.dsp;cf.etg			;^G <BEL>
 	cf.bsc				;^H <BS>
 	cf.spc!cf.dlm			;^I <TAB> <HT>
 	cf.eol!cf.eoc!cf.ff		;^J <LF>
@@ -1105,7 +1103,6 @@ cbits:	phase 0
 ;all changes below made by drforbin(merlyn)
 ;changes include ridding CIS variables and defining terminal wdth to 80 characters
 
-;to fix -drforbin---p.nam,p.ppn,p.dev
 ;;;	RESET. -- This routine is called automatically by the FORTRAN
 ;	generated code.  It initializes all the I/O, etc.  Most of the
 ;	actual initialization is done in SETUP, which is low segment
@@ -1116,9 +1113,28 @@ cbits:	phase 0
 	entry	reset.
 	sixbit	/RESET./
 reset.:	reset
-	movem	.sgnam,p.nam	;save program name
-	movem	.sgppn,p.ppn	;save source PPN
-	movem	.sgdev,p.dev	;save device
+
+;drforbin added
+	move	t1,[xwd -1,.gtrdv]
+	gettab	t1,
+	  warn	  <An error has occured in 'reset.' (gettab call) killing job>,exit.
+	movem	t1,p.dev
+	move	t1,[xwd -1,.gtrdi]
+	gettab	t1,
+	  warn	  <An error has occured in 'reset.' (gettab call) killing job>,exit.
+	movem	t1,p.ppn
+	move	t1,[xwd -1,.gtrfn]
+	gettab	t1,
+	  warn	  <An error has occured in 'reset.' (gettab call) killing job>,exit.
+	movem	t1,p.nam
+;drforbin
+
+
+
+;	movem	.sgnam,p.nam	;save program name
+;	movem	.sgppn,p.ppn	;save source PPN
+;	movem	.sgdev,p.dev	;save device
+
 
 	move	t1,.JBFF	;get last used location in low seg
 	cail	t1,z		;setup code loaded?
@@ -1154,9 +1170,10 @@ iswiz:
 	setzm	hungup
 	setzm	addrck
 ;	pushj	p,cishng	; enable hangup detect and enq. interrupt
+	pushj	p,psilck##	;added by drforbin for enq. interrupt
 	movei	t1,intblk	;enable interception of ^C and fatal errors
 	setzm	intblk+2
-	movem	t1,.JBINT
+	movem	t1,.jbint##
 	movei	t1,aprtrp	; set up to capture APR failures
 	hrrm	t1,.jbapr##
 	movei	t1,1b19+1b22
@@ -1182,34 +1199,47 @@ iswiz:
 	popj	p,
 
 
+;	entry	stop., exit., exit
+;	sixbit	/EXIT/
+;stop.:
+;exit.:
+;exit:
+;	jrst	monit
+
+	entry	monit
+	sixbit	/MONIT/
+monit:	skipn	hungup
+	output	tty,
+;	hllzs	.jbsa##		; no restarts allowed
+	pushj	p,zaplok	; zap all pending locks
+;	reset			; kill any pending locks
+;	skipe	t1,who		; if ship apparently active
+;this is not needed
+;	jrst	[movei	arg,[who]
+;		 pushj	p,free##	; then free it
+;		 jrst	.+1
+;		]
+;
+;	skipe	t1,jsqwho		; if job has entry in jsqtab
+;	setzm	jsqtab-1(t1)		; then clear it
+;end
+
+	monrt.	;drforbin (add)
+	popj	p,			;Used for TRAP return return
+
+;	jrst	rdwhst	;add drforbin		; run "DWHOST"
+
 	entry	stop., exit., exit
 	sixbit	/EXIT/
 stop.:
 exit.:
 exit:
-	jrst	monit
-	entry	monit
-	sixbit	/MONIT/
-monit:	skipn	hungup
+	hllzs	.JBSA
+	skipn	hungup
 	output	tty,
-	hllzs	.jbsa##		; no restarts allowed
 	pushj	p,zaplok	; zap all pending locks
-	reset			; kill any pending locks
-	skipe	t1,who		; if ship apparently active
-	jrst	[movei	arg,[who]
-		 pushj	p,free##	; then free it
-		 jrst	.+1
-		skipe	t1,jsqwho ;drforbin		; if job has entry in jsqtab
-		setzm	jsqtab-1(t1) ;drforbin		; then clear it
-		]
-
-;2 lines below commented drforbin.
-;	skipe	t1,jsqwho		; if job has entry in jsqtab
-;	setzm	jsqtab-1(t1)		; then clear it
-	monrt.	;drforbin (add)
-
-;
-;	jrst	rdwhst		; run "DWHOST"
+	exit	0,
+	popj	p,		;WILL NEVER GET HERE		
 
 	subttl	PTY
 
@@ -1310,7 +1340,7 @@ iich.2:	save	<x1,p1>
 ;
 	entry	echon
 	sixbit	/ECHON/
-echon:	popj	p,
+echon:	;popj	p,
 	open	tty,eonblk	;open TTY, don't suppress echoing
 	  halt
 	setzm	echflg
@@ -1321,7 +1351,7 @@ echon:	popj	p,
 ;
 	entry	echoff
 	sixbit	/ECHOFF/
-echoff:	popj	p,
+echoff:	;popj	p,
 	open	tty,eofblk	;open TTY with echoing suppressed
 	  halt
 	setom	echflg
@@ -1487,8 +1517,6 @@ open.6:	movem	x3,.JBFF	;restore .JBFF
 open.7:	restor	<x3,x2>
 	popj	p,
 
-
-
 ;;;	CLOSE. -- Close the most recently opened file and release any
 ;	core that was allocated for buffers.
 ;
@@ -1539,8 +1567,6 @@ seto.:	hlrz	t1,x1
 	dpb	t2,[point 4,obfins,12]
 
 	popj	p,
-
-
 
 ;;;	SETI. -- Set up for input from new file.
 ;
@@ -1622,7 +1648,6 @@ ochr.1:	cain	c,lf		;line feed?
 ochr.2:	restor	<c>
 	popj	p,
 
-
 ;;;	ICHR. -- Low level character input routine.
 ;	Input a character into c.
 ;
@@ -1656,6 +1681,7 @@ incr.h:	jrst	[movei	c,12	; then return <lf>
 	cain	c,15		; ignore <ret>
 	jrst	ichr.t
 	popj	p,
+
 	subttl	GTKN -- GTKN
 
 ;;;	GTKN -- Read and parse a line of input.  Return the individual
@@ -1731,6 +1757,7 @@ gtkn.5:	movem	x1,ntok
 	setzm	tknlst(t1)
 	restor	<x2,x1>
 	popj	p,
+
 	subttl	GTKN -- NXTT.
 
 ;;;	NXTT. -- Get the next token from the input line and store it
@@ -1792,8 +1819,6 @@ nxtt.4:	trne	f,tf.neg	;number is negative?
 	restor	<p1,x3,x2>
 	popj	p,
 
-
-
 	;Skip string of spacing characters pointed to by BUFPTR.
 
 	sixbit	/SKPB./
@@ -1803,8 +1828,6 @@ skpb.:	move	c,@bufptr	;get next character
 	popj	p,		;no, done
 	aos	bufptr		;yes, skip it
 	jrst	skpb.
-
-
 
 	;Add C to the partially built number in X2.
 
@@ -1846,6 +1869,7 @@ anum.3:	movei	t1,-"0"(c)	;get digit to add to fraction
 anum.4:	tro	f,tf.nnm	;illegal sequence of numeric characters
 	setz	x2,
 	popj	p,
+
 	subttl	GETLIN -- INLI.
 
 ;;;	INLI. -- Read a line from the tty and store it in LINBUF.
@@ -1860,7 +1884,11 @@ anum.4:	tro	f,tf.nnm	;illegal sequence of numeric characters
 inli.:	skipn	hungup
 	output	tty,
 	setom	bufptr		;new line
+
+
 	pushj	p,nxch.		;get first character
+
+
 	trnn	f,cf.rpt	;repeat previous command?
 	jrst	inli.1		;no
 	setom	rptflg		;yes, say so (can't repeat TELL commands)
@@ -1871,6 +1899,8 @@ inli.1:	setzm	rptflg		;this is a new command
 	jrst	.+2
 
 inli.2:	pushj	p,nxch.		;get next character
+
+
 	trne	f,cf.spe	;character requires special action?
 	jrst	inli.3		;yes
 	aos	t1,chrcnt	;increment input character count
@@ -1913,6 +1943,7 @@ inli.7:	trnn	f,cf.bsl	;back space over entire line?
 	skipge	echflg		;echoing off?
 	pushj	p,echon		;yes, turn it on
 	jrst	inli.2
+
 	subttl	GETLIN -- NXCH.
 
 ;;;	Get the next character and return it's flag bits.
@@ -1927,6 +1958,8 @@ inli.7:	trnn	f,cf.bsl	;back space over entire line?
 nxch.:	pushj	p,ichr.		;get the next character
 	hrr	f,cbits(c)	;get the character type bits
 
+
+
 	trne	f,cf.ign	;ignore this character?
 	jrst	nxch.		;yes
 
@@ -1934,13 +1967,17 @@ nxch.:	pushj	p,ichr.		;get the next character
 	trz	f,cf.cr!cf.ff	;no, didn't echo <CR> or <LF>,<VT>,<FF>
 
 	popj	p,
+
 	subttl	GETLIN -- DISP.
 
 ;;;	DISP. -- Display the current input line in response to ^R.
 ;
 	sixbit	/DISP./
 disp.:	skipn	hungup
+
+
 	outstr	[byte (7) 15,12]
+
 	skipge	echflg		;is echoing turned on?
 	pushj	p,echon		;no, turn it on
 
@@ -1962,6 +1999,7 @@ disp.3:	skipn	hungup
 	jrst	disp.2
 
 disp.4:	popj	p,
+
 	subttl	GETLIN -- ECHG.
 
 ;;;	ECHG. -- Toggle echo in response to ^G input.
@@ -2016,7 +2054,6 @@ tab.:	sub	x1,hcpos
 	pushj	p,ochr.
 	jrst	.-2
 
-
 ;;;	SPACES -- relative tab (output n spaces)
 ;
 ;		CALL SPACES (n)
@@ -2028,8 +2065,6 @@ spcs.:	movei	c,sp
 	sojl	x1,cpopj
 	pushj	p,ochr.
 	jrst	.-2
-
-
 
 ;;;	SPACE/OSPC. -- Output a space.
 ;
@@ -2170,7 +2205,6 @@ ostb.4:
 	restor	<x2,x1>
 	popj	p,
 
-
 ;;;	O2DG. -- output the 2 digit decimal number from X1.
 ;
 ;		MOVE	X1,number
@@ -2187,7 +2221,6 @@ o2dg.:	save	<x1,x2>
 	pushj	p,ochr.
 	restor	<x2,x1>
 	popj	p,
-
 
 ;;;	O2DB. -- Output a 2 digit number, suppress leading 0.
 ;
@@ -2235,7 +2268,6 @@ odec.:	save	<x3>
 	pushj	p,onum.		;output the number
 	restor	<x3>
 	popj	p,
-
 
 ;;;	OOCT. -- output the octal number from X1 using the field width in
 ;	X2.
@@ -2549,18 +2581,46 @@ osts.:	save	<x1,x2,x3,x4>
 	pushj	p,ospc.		;output date
 	pushj	p,ospc.
 
-	movei	x1,tmp		; get current date
-	calli	x1,-121		; UNDAT. uuo
-	  jfcl
-	pushj	p,xfrtmp
-	pushj	p,ospc.
-	movei	x1,tmp		; get current time
-	calli	x1,-120		; UNTIM. uuo
-	  jfcl
-	pushj	p,xfrtmp
-	pushj	p,ospc.
+
+;added by drforbin to added date and time to gripe
+	date 	t1,
+	dacon	t1,day#,month#,year#
+	move	x1,day
+	pushj	p,o2dg.
+	movei	p1,[asciz "/"]
+	pushj	p,ostr.
+	move	x1,month
+	pushj	p,o2dg.
+	movei	p1,[asciz "/"]
+	pushj	p,ostr.
+	move	x1,year
+	pushj	p,o2dg.;drforbin end code
+
 	pushj	p,ospc.
 
+	mstime	t1,
+	movem	t1,@0(arg)
+	pushj	p,otim
+;end
+
+
+;-------------------edited out by drforbin used CIS calls
+;	movei	x1,tmp		; get current date
+;	calli	x1,-121		; UNDAT. uuo
+;	  jfcl
+;	pushj	p,xfrtmp
+;	pushj	p,ospc.
+;
+;
+;	movei	x1,tmp		; get current time
+;	calli	x1,-120		; UNTIM. uuo
+;	  jfcl
+;	pushj	p,xfrtmp
+;-----------------------end drforbin
+
+
+	pushj	p,ospc.
+	pushj	p,ospc.
 	move	x3,who		;who to output user info for
 	movni	x4,-100		;output all there is
 	skipe	who		;Player in pre-game?
@@ -3650,20 +3710,15 @@ gmsg.2:	movei	x4,@1(arg)	;address of array to store message in
 
 	pushj	p,remv.		;remove entry from message queue
 	popj	p,
-	subttl	JOBSTA
 
-	;Return various job related parameters.
-	;
-	;SUBROUTINE JOBSTA (job,nam1,nam2,ppn,TTY#,TTYspeed)
 
-	entry	jobsta
-	sixbit	/JOBSTA/
-	entry	usrprj
-usrprj:	hlrz	0,usppn.#		; return user's project #
-	cain	0,337			; watch for devel. ppn
-	movei	0,70000			; make it look like CIS staff
+entry	usrprj
+usrprj:	hlrz	0,usppn			;return user's project #
+	cain	0,337			;watch for devel. ppn
+	movei	0,70000			;make it look like CIS staff
 	popj	p,
 
+;this seems to NOT be used (nte popj return)
 ;	chkseq:		check jobs for continued activity
 ;	call chkseq	(from GETCMD)
 
@@ -3705,7 +3760,15 @@ chksq2:	save<t1>
 chksq1:	sojge	t1,chksq0
 	popj	p,
 
+	subttl	JOBSTA
+
+	;Return various job related parameters.
+	;
+	;SUBROUTINE JOBSTA (job,nam1,nam2,ppn,TTY#,TTYspeed)
+
+	entry	jobsta
 	sixbit	/JOBSTA/
+	
 jobsta:
 	output	tty,			; flush tty buffer
 	pjob	t1,
@@ -3761,15 +3824,21 @@ jobsta:
 
 ;end rewrite
 
+;-------------NOT NEEDED
+;	skipe	t1,who			; if ship is assigned  ;commented by drforbin (not needed)
 
-	skipe	t1,who			; if ship is assigned
 ;	jrst	[calli	t2,-46		;commented drforbin;then set up the sequence #
-	jrst	[pjob	t2,		;added drforbin;then set up the sequence #
-		 jfcl
-		 movem	t1,jsqwho	; remember that we have it
-		 movem	t2,jsqtab-1(t1)
-		 jrst	.+1
-		]
+
+;This is not needed
+;	jrst	[pjob	t2,		;added drforbin;then set up the sequence #
+;		 jfcl			;not needed with pjob return
+;		 movem	t1,jsqwho	; remember that we have it
+;		 movem	t2,jsqtab-1(t1)
+;		 jrst	.+1
+;		]
+;end
+;----------
+
 	setz	t2,
 	getppn	t1,
 	  jfcl
@@ -3786,7 +3855,7 @@ jobsta:
 
 
 	getppn	t1,			;added drforin
-	movem	t1,usppn.#		;added drforbin
+	movem	t1,usppn		;added drforbin
 	movem	t1,@kppn-1(arg)
 	setzm	frebie
 	hlrz	t1,t1
@@ -3803,27 +3872,22 @@ jobsta:
 ;	movem	t1,@knam1-1(arg)
 ;	move	t1,usid2.##
 ;	movem	t1,@knam2-1(arg)
-	getlin	t1, ;tofix			; store tty name
+	getlin	t1, 			; store tty name
 	movem	t1,@4(arg)
-;all 3 commented below by drforbin(merlyn) was used by CIS for player name from cb handle uscbh. (user cb handle).
+;all 3 commented below by drforbin(merlyn) was used by CIS for 
+;player name from cb handle uscbh. (user cb handle).
 ;also remove usid1. (user id #1) CIS
-	move	t1,[point 7,uscbh.]
-;	ldb	t2,[point 7,uscbh.,6];drforbin(merlyn)deleted ##	; if there is a CB handle
-	ldb	t2,[point 7,uscbh.,7];changed 6 to 7 right most bit	; if there is a CB handle
+	move	t1,[point 7,hand]
+;	ldb	t2,[point 7,uscbh.##,6];drforbin(merlyn)deleted 	; if there is a CB handle
+	move 	t2,hand
 	jumpn	t2,gnm2			; then use it as player's name
 ;	skipe	usid1.##		; else if user has an acct ID
 ;	jrst	gnm5			; then use that
 
 gnm:	skipn	hungup
-	setzm	uscbh.
-	setzm	uscbh.+1
-	setzm	hand
-	setzm	hand+1
-	setzm	@knam1-1(arg)
-	setzm	@knam2-1(arg)
 	outstr	[asciz "
 Your name please: "]			; else ask for his/her name
-;	move	t1,[point 7,uscbh.];deleted drforbin(merlyn) #
+	move	t1,[point 7,hand];deleted drforbin(merlyn) #
 	setzm	ccflg
 gnm0:	inchwl	t2
 	caie	t2,03			; if ^C
@@ -3842,9 +3906,9 @@ gnm0:	inchwl	t2
 
 gnm1:	movei	t2,0
 	idpb	t2,t1
-	move	t1,[point 7,uscbh.]	;deleted # drforbin
+	move	t1,[point 7,hand]	;deleted # drforbin
 
-gnm2:	move	t2,[point 6,hand]	;added 'hand' as variable (DF) drforbin
+gnm2:	move	t2,[point 6,tmp]	;added 'hand' as variable (DF) drforbin
 	setzm	tmp
 	setzm	tmp+1
 
@@ -3854,13 +3918,13 @@ gnm3:	ildb	t3,t1
 	caile	t3,"z"
 	trc	t3,40
 	idpb	t3,t2
-	came	t2,[point 6,hand+1,35]	;same as above(DF) drforbin
+	came	t2,[point 6,tmp+1,35]	;same as above(DF) drforbin
 	jrst	gnm3
 
-gnm4:	move	t1,hand			;same as above(DF) drforbin
+gnm4:	move	t1,tmp			;same as above(DF) drforbin
 	jumpe	t1,gnm
 	movem	t1,@knam1-1(arg)
-	move	t1,hand+1
+	move	t1,tmp+1
 	movem	t1,@knam2-1(arg)
 gnm5:
 ;***	CIS change:
@@ -4207,9 +4271,9 @@ abor.1:	pushj	p,kilhgh	;remove high segment from swapper
 	pushj	p,makmsg
 	;log error
 	jrst	monit
+
 	subttl	KILHGH/KILLOW
 
-;to fix---drforbin-
 ;;;	KILHGH -- Remove DECWAR high segment from the swapper.
 ;
 	entry	kilhgh
@@ -4224,7 +4288,8 @@ kilhgh:	skipe	dead		;high seg alread removed?
 	  jrst	kilh.1
 
 	move	t1,p.nam	;get name of binary file
-	hrlzi	t2,'SHR'	;assume an extension of SHR
+	hrlzi	t2,'EXE'	;assume an extension of EXE
+;	hrlzi	t2,'SHR'	;assume an extension of SHR
 	setzb	t3,
 
 	move	t4,p.ppn
@@ -4233,6 +4298,7 @@ kilhgh:	skipe	dead		;high seg alread removed?
 
 	move	t4,p.ppn
 	rename	ren,t1		;remove high segment from swapper
+
 kilh.1:	  warn	<Can't remove DECWAR high segment from swapper>,kilh.2
 	movei	p1,[ascil <[DECWAR high segment removed from swapper]>]
 	pushj	p,ostr.
@@ -4241,7 +4307,6 @@ kilh.1:	  warn	<Can't remove DECWAR high segment from swapper>,kilh.2
 	output	tty,
 	jfcl
 kilh.2:	popj	p,
-
 
 ;;;	KILLOW -- Get rid of once only low segment code (SETUP, etc.)
 ;	and fix up the start address to do a RUN on DECWAR.
@@ -4519,18 +4584,20 @@ Fatal ENQ. error code "]
 	movei	t2,^d100	; in case input waiting has awakwned us
 	hiber	t2,
 	  jfcl
-	calli	t1,-210		; get uct
-	  setz	t1,
+	mstime	t1,		;added by drforbin to replace CIS call
+;	calli	t1,-210		; get uct ; drforbin comment out
+;	  setz	t1,
 	setzm	ccflg		; no ^C seen
 	setzm	ccflg.
-	addi	t1,^d4*3	; about 4 seconds
+	addi	t1,^d4000	; about 4 seconds
 	movei	t2,^d5000	; hibernate for five seconds
 lock.1:	hiber	t2,
 	  jfcl
-	skipe	hv.lok	; if request has been granted,
+	skipe	hv.lok		; if request has been granted,
 	jrst	lock.3		; then exit
-	calli	t2,-210		; get current UCT
-	  movei	t2,^d10000	; force exit if failed
+	mstime	t2,		;added by drforbin the replace CIS call
+;	calli	t2,-210		; get current UCT ;drforbin commented out
+;	  movei	t2,^d10000	; force exit if failed
 	camge	t2,t1
 	jrst	[movei	t2,^d1000	; hibernate extra second
 		 jrst	lock.1]
@@ -4580,10 +4647,6 @@ debdec:	idivi	t1,^d10
 	pushj	p,debdec
 	jrst	debcom
 
-
-
-
-
 ;;;	UNLOCK -- make a data area available to other jobs again (after
 ;	a lock to that area).
 ;
@@ -4596,8 +4659,6 @@ unlock:
 	setzm	locked
 	pushj	p,unlo.
 	popj	p,
-
-
 
 ;;;	UNLO. -- same as lock, but input is T1: key
 ;
@@ -4650,7 +4711,6 @@ Failure "]
 	outstr	[asciz "
 "]
 	popj	p,
-
 
 	subttl	NEWS
 
@@ -6008,7 +6068,7 @@ dspsta:
 Captain        Service # Credits"];pretty changes drforbin(merlyn)
 	pushj	p,ostr.
 ;	ldb	t1,[point 9,1+uster.##,8];edit here drforbin(merlyn)
-	skipg	@0(arg)			; if doing *Zap then use long form
+;	skipg	@0(arg)			; if doing *Zap then use long form ;drforbin
 ;	cail	t1,^d64 ;drforbin
 	jrst	[
 		movei	p1,[asciz " Ship        Runtm Date"]
@@ -6398,6 +6458,7 @@ nodnam:	'AKR',,[asciz "Akron "]
 	page
 	subttl	updnam	- update program's running name for tracking
 
+;this doesn't seem to be used-drforbin
 ;	move	t1,newinfo
 ;	move	t2,mask		; 77 in each position to be changed
 ;	pushj	p,updnam
@@ -6555,20 +6616,4 @@ loknam:	xwd	'PPP',plnlok
 ;
 ;	lit		; put lits in hiseg
 
-
-;below added by merlyn
-
-	entry	onexit
-	sixbit	/onexit/
-onexit:
-	monrt.
-	
-;not used drforbin(merlyn)
-	entry	pauses
-	sixbit	/pauses/
-pauses:
-	movei 1,@0(arg)	
-	sleep 1,
-	popj p,
-	
 	end

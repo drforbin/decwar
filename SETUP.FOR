@@ -121,9 +121,8 @@ C	if (lofchk(0)) call monit drforbin(merlyn)
 	include 'extern/nolist'
 	include 'setext/nolist'
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
-
 	call jobsta (jobnum, nam1, nam2, ppn, ttynum, ttyspd)
-	if(ccflg) call monit		!added by drforbin for ctrl-C bug
+C	if(ccflg) call monit		!added by drforbin for ctrl-C bug
 
   10	call ttyon
 	call out (strtup, 0)		!PREGAME or <CR>
@@ -217,7 +216,7 @@ C	game which was CTL-C while still in SETUP.
 	data tim0 /-1/
 
 	who = 0
-	call	frcchk			! force scan of jobsequence numbers
+C	call	frcchk			! force scan of jobsequence numbers !commented drforbin
 	call crlf
 	call jobsta (jobnum, nam1, nam2, ppn, ttynum, ttyspd)
 	if (numply .ne. KNPLAY)  goto 100
@@ -227,7 +226,7 @@ C	game which was CTL-C while still in SETUP.
 	call exit
 
 
- 100	call cctrap			!turn off ^C
+100	call cctrap			!turn off ^C
 101	call lock (frelok)		! lock out other users
 	if (hungup .or. ccflg) call exit	! get out if ^C or hung up
 	if (lkfail) goto 101		! we must lock others out!

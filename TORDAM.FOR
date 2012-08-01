@@ -107,7 +107,9 @@ C	sets up many of the variables eventually needed by MAKHIT.
 
 	if (klflg .ne. 0)  goto 750		!player destroyed?
 	if (iwhat .eq. 1)  return		!phaser hit?
-	call jump (nplc,j)			!displaced by torp?
+C	added below (drforbin) to give 50/50 chance of displacement
+C	with torp strike
+	if ( iran(10) .gt. 5 ) call jump (nplc,j)!displaced by torp?
 	if (klflg .eq. 0)  return		!displaced into BH?
 
  750	call setdsp (shpcon(j,KVPOS), shpcon(j,KHPOS), 0)

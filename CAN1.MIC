@@ -1,5 +1,5 @@
 .r link
-*/debug
+*/debug:forddt
 *low/seg:low
 *high/seg:high
 */seg:def

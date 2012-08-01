@@ -359,9 +359,14 @@ d	call timout('BASBLD')
 	txtot = total (1)
 	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy,
      +	txtem, who)
-	call free (who)			! release the ship
-	who = 0
-	call exit
 
-C	call onexit ;drforbin added
+
+C	call free (who)			! release the ship
+C	who = 0
+C	call exit
+
+	call trap
+	call out ('Returning from TRAP',1)
+	goto 50
+
 	end

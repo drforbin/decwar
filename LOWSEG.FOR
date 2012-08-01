@@ -24,7 +24,7 @@ C	02110-1301, USA.
      +	dispfr, dispto, dbits, shcnto, shstto, shcnfr, shstfr, shjump, 
      +	group, ngroup, pasflg, shtype, team, ccflg, player, tpoint, 
      +	phbank, tobank, ptime, prtype, rptflg, gagmsg, oflg, scnflg, 
-     +	ttytyp, hcpos, icflg, ocflg, blank, llz, inflag, hungup,
+     +	ttytyp, hcpos, usppn, icflg, ocflg, blank, llz, inflag, hungup,
      +  addrck, lkfail, terwid
 
 	integer	lfz			!first location of LOWSEG
@@ -69,6 +69,7 @@ C	02110-1301, USA.
 	integer	scnflg			!scan verbosity flag
 	integer	ttytyp			!terminal type
 	integer	hcpos			!horizontal cursor position
+	integer usppn			!added by drforbin for private ppn
 	integer	icflg			!default coord input type (abs,rel)
 	integer ocflg			!default coord out type (abs,rel,both)
 	integer	blank			!number of consecutive blank lines
