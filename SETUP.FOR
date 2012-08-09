@@ -495,6 +495,14 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	shpcon(who,KSNRGY) = 50000
 	shpcon(who,KSSHPC) = 1000
 
+	cloak(who,clhave)  = clno
+	cloak(who,clstat)  = clfind
+	cloak(who,clfsta)  = 0
+	cloak(who,cltime)  = 0
+
+	clteam(who,cteam)  = 0
+	clteam(who,cwho)   = 0
+
 	return
 
 	end

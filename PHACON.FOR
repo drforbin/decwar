@@ -28,15 +28,24 @@ C	the hit is made, and the appropriate messages are printed.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
+	logical  comput
+	integer  cindex
+
+C	cannot use weapons with cloak on
+	if (.not. (cloak(who, clstat) .eq. clon)) goto 50 
+	call out ('You have an active CLOAK. ',)
+	call out ('You cannot use weapons',1)
+	return 1
+
 *.......Phasers critically damaged?
 
-	if (shpdam(who,KDPHAS) .lt. KCRIT)  goto 100
+50	if (shpdam(who,KDPHAS) .lt. KCRIT)  goto 100
 	call out (phacn0,1)
 	return 1
 
 *.......Target location read in
 
- 100	tem = locate(-3)
+ 100	tem = locate(-3, comput, cindex)
  200	if (tem .eq. 1)  call out (erloc1,1)
 	if ((tem .lt. 0) .or. (tem .eq. 1))  return 1	!abort phasers?
 	if (tem .ne. 0)  goto 300
@@ -63,9 +72,22 @@ C	the hit is made, and the appropriate messages are printed.
 	if (id .le. KRANGE)  goto 700
 	call out (phacn1,1)  ;  return 1
 
+C	added by drforbin for cloaking device
+700 	if ( .not. ((cloak(cindex, clstat) .eq. clon) .and. 
+     +	( cloak(cindex,clhave) .eq. 1)) .or. (comput .eq. 0) ) 
+     +	goto 701
+	if ( clsee (id) .eq. .true. ) goto 701
+	call out ('Your sensors detected something but
+     + could not lock on',1)
+	return 1
+
+
+
 *	Determine size of phaser hit
 
-700 	call pause (phbank(bank) - etim(tim0))
+
+ 
+701	call pause (phbank(bank) - etim(tim0))
 	phit = 200
 	if (tem .eq. 2)  goto 800	!phaser hit specified?
 	if ((vallst(1) .gt. 500) .or. (vallst(1) .lt. 50))  goto 1700
@@ -124,6 +146,10 @@ C	the hit is made, and the appropriate messages are printed.
 	call pridis (30, 30, 100, nplc-2, 0)
 	dbits = dbits .and. .not. nomsg
 	call makhit
+C	added by drforbin for cloaking device
+	if ( (cloak(cindex, clstat) .eq. clon) .and. 
+     +	( cloak(cindex,clhave) .eq. 1) ) id=id+cldist(id,cindex,cloak)
+
 1300	call phadam (nplc, ip, id, phit, .TRUE.)	!hit him!
 
 *	set up parameters for MAKHIT

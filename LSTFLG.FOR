@@ -73,7 +73,7 @@ C	Specific coordinate was given ---------------------------------
 	scn = locpln(index,4)
 
 1000	ctr = 0
-	call lstupd (dummy, ctr, scn, dummy)
+	call lstupd (dummy, ctr, scn, dummy, iplace, 1)
 	if (ctr .ne. 0)  200, 300
 
 C	Specified object was not at coordinate (BASES, PLANETS, or
@@ -100,7 +100,7 @@ C	ROMULAN -------------------------------------------------------
 	goto 1700
 1400	side = 3  ;  code = 500  ;  object = 5
 	Vpos = locr(KVPOS)  ;  Hpos = locr(KHPOS)
-	call lstupd (dummy, dummy, -1, dummy)
+	call lstupd (dummy, dummy, -1, dummy, iplace, 2)
 	call lstobj
 
 C	---------------------------------------------------------------
@@ -115,8 +115,11 @@ C	Ship name -----------------------------------------------------
 	  code = object * 100 + index
 	  if (.not. alive(index))  goto 1800		!ship not in game
 	  Vpos = shpcon(index,KVPOS)  ;  Hpos = shpcon(index,KHPOS)
-	  if (disp(Vpos,Hpos) .eq. 0)  goto 1800	!dead, but not gone yet
-	  call lstupd (dummy, dummy, -1, dummy)
+C	  if (disp(Vpos,Hpos) .eq. 0)  goto 1800	!dead, but not gone yet
+	  iplace = index
+	call odec(iplace,0)
+	call crlf
+	  call lstupd (dummy, dummy, -1, dummy, iplace, 3)
 	  call lstobj
 	  goto 2100
 1800	  call odisp (code,0)
@@ -138,7 +141,7 @@ C	SHIP ----------------------------------------------------------
 	scn = 0						!no scan if out of range enemy
 	if ((gxf .and. IGMBIT) .ne. 0)   scn = -1	!unless asking for entire game
 	if ((imask .and. CLSBIT) .ne. 0)  scn = 0	!no scan if asking for closest
-	call lstupd (romlst, romctr, scn, rxf)
+	call lstupd (romlst, romctr, scn, rxf, iplace, 4)
 
 2600	first = 1  ;  last = KNPLAY
 	if ((smask .and. FEDBIT) .eq. 0)  first = KNPLAY/2+1	!Fed not selected
@@ -147,13 +150,14 @@ C	SHIP ----------------------------------------------------------
 	do 2900 i = first, last
 	  if (.not. alive(i))  goto 2900			!ship not in game
 	  Vpos = shpcon(i,KVPOS)  ;  Hpos = shpcon(i,KHPOS)
-	  if (disp(Vpos,Hpos) .eq. 0)  goto 2900		!dead, but not gone yet
+C	  if (disp(Vpos,Hpos) .eq. 0)  goto 2900		!dead, but not gone yet
 	  side = 1  ;  if (i .gt. KNPLAY/2)  side = 2
 	  scn = 0				!no scan if out of range enemy
 	  if ((imask .and. CLSBIT) .eq. 0)  goto 2700 !~ looking for closest
 	  if (i .ne. who)  2800, 2900		!don't include self as closest
 2700	  if ((gxf .and. IGMBIT) .ne. 0)  scn = -1	!scan if asking for entire game
-2800	  call lstupd (shplst(i), shpctr(side), scn, sxf(side))
+2800	  iplace = i
+	  call lstupd (shplst(i), shpctr(side), scn, sxf(side), iplace, 5)
 2900	continue
 
 C	---------------------------------------------------------------
@@ -169,7 +173,7 @@ C	BASE ----------------------------------------------------------
 	    if (base(i,3,side) .le. 0)  goto 3300	!base is dead
 	    Vpos = base(i,KVPOS,side)  ;  Hpos = base(i,KHPOS,side)
 	    call lstupd (baslst(i,side), basctr(side), base(i,4,side),
-     +	                bxf(side))
+     +	                bxf(side), iplace, 6)
 3300	  continue
 3400	continue
 
@@ -183,7 +187,8 @@ C	PLANET --------------------------------------------------------
 	  Vpos = locpln(i,KVPOS)  ;  Hpos = locpln(i,KHPOS)
 	  side = dispc(vpos,hpos) - 6
 	  if ((smask .and. sbits(side)) .eq. 0)  goto 3700	!wrong side
-	  call lstupd (plnlst(i), plnctr, locpln(i,4), pxf(side))
+	  call lstupd (plnlst(i), plnctr, locpln(i,4), 
+     +    pxf(side), iplace, 7)
 3700	continue
 
 C	---------------------------------------------------------------

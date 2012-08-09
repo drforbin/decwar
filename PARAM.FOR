@@ -182,7 +182,32 @@ C	02110-1301, USA.
 	parameter dxstar=9	!star
 	parameter dxbhol=10	!black hole
 
+C       following constants used for cloak
+
+        parameter cloyes=1
+        parameter clno=0        !does ship have cloaking device?
+
+C       cloak status
+
+        parameter clfind=1      !cloak find
+        parameter clinit=2      !cloak just found
+        parameter cloff=3       !cloak off
+        parameter clfout=4      !cloak fade out
+        parameter clfin=5       !cloak fade in
+        parameter clon=6        !cloak on
+
+C       cloak system array designators
+
+        parameter cltime=1      !time var of last cloak event
+        parameter clhave=2      !var to tell if we have cloak
+        parameter clstat=3      !var of status
+        parameter clfsta=4      !cloak fade state
+
+C	team saved info for cloak
+
+        parameter cwho=1	!select who in clteam array
+        parameter cteam=2	!select tem in clteam array
+
+
 	real ran,pwr
-
-
 

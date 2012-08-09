@@ -21,7 +21,7 @@ C	02110-1301, USA.
 C	LSTUPD -- Update list flags for given object (ship, base, planet)
 C	if it's allowed to be listed (or included in a summary).
 
-	subroutine LSTUPD (lstmsk, objctr, scnbts, xxf)
+	subroutine LSTUPD (lstmsk, objctr, scnbts, xxf, iplace, ikind)
 	include 'param/nolist'
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
@@ -32,8 +32,16 @@ C	if it's allowed to be listed (or included in a summary).
 
 	xf = gxf
 
-	if (d .le. KRANGE)  goto 400		!within range
-	if (side .eq. team)  goto 400		!friendly
+C	added and modified by drforbin for cloaking device
+	if (.not. (d .le. KRANGE ) )  goto 50		!within range
+	if (.not. (ikind .eq. 5)) goto 400
+
+	if(  .not. (cloak(iplace, clstat) .eq. clon) ) goto 400
+	if( clsee(d) .eq. .true. ) goto 400
+
+C	end
+
+50	if (side .eq. team)  goto 400		!friendly
 	if (.not. PASFLG)  goto 100
 	xf = xf .or. PASBIT  ;  goto 400	!god
  100	xf = xf .or. ORNBIT			!out of range
@@ -47,7 +55,6 @@ C	if it's allowed to be listed (or included in a summary).
 	if ((xf .and. IGMBIT) .eq. 0)  goto 700	!not requesting entire game
 	xf = xf.and..not.LSTBIT			!allow summary only (no list)
 	goto 500
-
  400	if (d .gt. range)  goto 700		!not in requested range
 	if ((imask .and. CLSBIT) .ne. 0)  goto 600  !looking for closest
  500	lstmsk = lstmsk .or. xf

@@ -32,14 +32,27 @@ C	the calling routine should therefore abort.  The entry point
 C	RELOC is used when a command has already been entered, and the
 C	first token is now a modifier, rather than the command itself.
 
-	function LOCATE (n)
+	function LOCATE (n, comput, cindex)
 	include 'param/nolist'
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
+
+	logical  comput
+	integer  cindex
+
+C	comput has been added for cloak
+C	comput = 1 used computed coordinates
+C	comput = 0 NOT used computed coordinates
+
+C	cindex is index into shpcon array or cloak array when compute used
+
 	real dV, dH
 
+	comput = .false.
+	cindex = 0
 	p = 2
+
 	goto 100
 
 	entry RELOC (n)
@@ -75,6 +88,7 @@ C	first token is now a modifier, rather than the command itself.
 	goto 1400
 
  600	if (.not. equal(tknlst(p), 'COMPUTED'))  goto 1400
+	comput = .true.
 	if (shpdam(who,KDCOMP) .lt. KCRIT)  goto 700
 	call out (damcom,1)
 	goto 200
@@ -115,6 +129,7 @@ c--	goto 200
 	  vallst(2*i-p) = shpcon(j,KVPOS) ; typlst(2*i-p) = KINT
 	  vallst(2*i-p+1) = shpcon(j,KHPOS) ; typlst(2*i-p+1) = KINT
 1300	continue
+	cindex = j
 	return
 
 1400	locate = ntok - p + 1 	!number of tokens that follow

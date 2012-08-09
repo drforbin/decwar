@@ -8,7 +8,8 @@ paswrd,phacon,place,plnatk,plnrmv,points,pridis,prloc,prompt,radio,repair
 romdrv,romstr,romtor,scan,set,shield,snova,status,tell,time,tordam,torp,tractr
 trap,type,users
 msg
-enqlck
+enqlck,cloak
+cllock,cluock
 warmac,warver
 sys:forlib/sea/seg:def
 setup/seg:low

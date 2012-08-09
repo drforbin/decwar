@@ -31,6 +31,10 @@ C	hit and message queues between commands.
 	external monit
 
 	call ttyon
+	if (cloak(who,clhave) .eq. cloyes) call clstup (
+     +  cloak(who,clstat), who, cloak)
+
+	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
 	call ttyon
 	if (msgflg(who) .ne. 0)  call outmsg
@@ -63,11 +67,17 @@ C	call chkseq			! check for active jobs !not needed added by drforbin
 	if (comknt .lt. 30 * numply)  goto 300
 	comknt = 0
 c--	call dship
- 300	if ((hitflg(who) .eq. 0) .and. (msgflg(who) .eq. 0))  goto 350
+	
+300	call ttyon
+	if (cloak(who,clhave) .eq. cloyes) call clstup (
+     +  cloak(who,clstat), who, cloak)
+
+	if ((hitflg(who) .eq. 0) .and. (msgflg(who) .eq. 0)) goto 350
 	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
 	call ttyon
 	if (msgflg(who) .ne. 0)  call outmsg
+
 	goto 100
 
  350	call endgam  ;  goto 200	!check for end of game

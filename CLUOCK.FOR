@@ -5,8 +5,8 @@
 
 	subroutine cluock 
 
-	include 'hiseg/nolist'
 	include 'param/nolist'
+	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 
 

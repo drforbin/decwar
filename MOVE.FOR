@@ -27,6 +27,10 @@ C	searched for collisions, and the energy consumption computed.
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
+
+	logical comput
+	integer cindex
+
 	common /chkout/ V1, H1, V2, H2, dcode, disV, disH
 	real d, disV, disH
 
@@ -48,7 +52,7 @@ C	searched for collisions, and the energy consumption computed.
 
 *.......Get proposed movement
 
-	tem = locate(2)
+	tem = locate(2, comput, cindex)
  200	if (tem .lt. 0)  return 1
 	if (tem .ne. 0)  goto 300
 	tem = reloc(2)

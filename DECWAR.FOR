@@ -131,14 +131,18 @@ d	call timin ('CMDIMP')
 d	call timout('CMDIMP')
 	if (.not. alive(who))  3810, 3400
 1000	continue
+	call cllock
 d	call timin ('CMDLIS')
 	call list			!list
 d	call timout('CMDLIS')
+	call cluock
 	goto 50
 1100	continue
+	call cllock
 d	call timin ('CMDMOV')
 	call move ($49)
 d	call timout('CMDMOV')
+	call cluock
 	if (.not. alive(who))  3810, 3400
 1200	continue
 d	call timin ('CMDNEW')
@@ -146,9 +150,11 @@ d	call timin ('CMDNEW')
 d	call timout('CMDNEW')
 	goto 50
 1300	continue
+	call cllock
 d	call timin ('CMDPHA')
 	call phacon ($49)
 d	call timout('CMDPHA')
+	call cluock
 	goto 3500
 1400	continue
 d	call timin ('CMDPLA')
@@ -208,9 +214,11 @@ d	call timin ('CMDSUM')
 d	call timout('CMDSUM')
 	goto 50
 2500	continue
+	call cllock
 d	call timin ('CMDTAR')
 	call target             	!targets
 d	call timout('CMDTAR')
+	call cluock
 	goto 50
 2600	continue
 d	call timin ('CMDTEL')
@@ -223,9 +231,11 @@ d	call timin ('CMDTIM')
 d	call timout('CMDTIM')
 	goto 50
 2800	continue
+	call cllock
 d	call timin ('CMDTOR')
 	call torp ($49)
 d	call timout('CMDTOR')
+	call cluock
 	goto 3500
 2900	continue
 d	call timin ('CMDTRA')

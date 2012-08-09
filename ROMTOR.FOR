@@ -22,7 +22,7 @@ C	This routine controls the Romulan's torpedo firing procedure.
 C	The initial target is fired upon, and later torpedos are
 C	retargeted as the situation requires.
 
-	subroutine ROMTOR (iV1, iH1)
+	subroutine ROMTOR (iV1, iH1, iplace)
 	include 'param/nolist'
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
@@ -40,6 +40,8 @@ C	retargeted as the situation requires.
 *.........See if anything hit
 
 	  idis = KRANGE - 2 + int((ran(0) - 0.5) * 4.0 + 0.5)
+C	added by drforbin for cloaking device
+	  if (cloak(iplace,clstat) .eq. clon ) idis = idis - 2	
 	  tpaus = tpaus + (slwest + 1) * 1000
 	  call check (locr(KVPOS), locr(KHPOS), iV1, iH1, idis, d)
 	  if (l .eq. 0)  goto 800

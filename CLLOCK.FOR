@@ -5,13 +5,12 @@
 
 	subroutine cllock 
 
-	include 'hiseg/nolist'
 	include 'param/nolist'
+	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 
 
 C	call lock
-
 	call lock(board, 'boardlock')
 
 C	call board normal
@@ -23,7 +22,7 @@ C	for processing.
 	if ( .not. (( alive(iwho) ) .and. ( cloak(iwho,clstat)  
      +	.eq. clon )) ) goto 100 
 	call setdsp ( shpcon(iwho,KVPOS), shpcon(iwho,KHPOS),
-     +	(100 * team) + who ) 
+     +	(100 * clteam(clteam(iwho,cwho),cteam) ) + clteam(iwho,cwho) ) 
 
 100	continue
 	return

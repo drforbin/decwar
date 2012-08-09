@@ -34,6 +34,8 @@ C	TRANSFER.
 	if (equal (tknlst(2), 'TRANSFER'))  goto 500
 	if (equal (tknlst(2), 'UP'))  goto 800
 	if (equal (tknlst(2), 'DOWN'))  goto 1000
+	if (equal (tknlst(2), 'IN')) goto 1200
+	if (equal (tknlst(2), 'OUT')) goto 1400
 
  100	call out (shld01,0)			!get the switch
 	call gtkn
@@ -99,6 +101,12 @@ C	TRANSFER.
 	return
 
 1100	call out (shld09,1)
+	return
+
+C	cloak control test code
+1200	call clstup(clfin,who,cloak)
+	return
+1400	call clstup(clfout,who,cloak)
 	return
 
 	end

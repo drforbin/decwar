@@ -385,6 +385,34 @@ lall
 	dxepln==8		;empire planet
 	dxstar==9		;star
 	dxbhol==10		;black hole
+
+;;;	constants used for CLOAK
+
+	cloyes==1
+	clno==0		;does ship have cloaking device?
+
+;;;	cloak status
+	
+	clfind=1		;clock find
+	clinit=2		;cloak just found
+	cloff==3		;cloak off
+	clfout==4		;cloak fade out
+	clfin==5		;cloak fade in
+	clon==6			;cloak on
+
+;;;	cloak system array designators 
+
+	cltime==1		;time variable of last cloak event
+	clhave==2		;varible to tell if we have cloak
+	clstat==3		;varible of status
+	clfsta==4		;cloak fade state
+	
+
+;;;	team saved info for cloak
+
+	cwho==1
+	cteam==2	
+
 	subttl	FORTRAN interface -- high segment common block
 
 	common	hiseg
@@ -395,6 +423,8 @@ hi.fst==hfz
 	integer	shpcon,<KNPLAY,10>	;ship information
 	integer	shpdam,<KNPLAY,KNDEV>	;damage to ship devices
 	integer	base,<KNBASE,4,2>	;base information
+	integer cloak,<KNPLAY,4>	;added drforbin for cloak
+	integer clteam,<KNPLAY,2>	;added drforbin for team save cloak
 	integer	nbase,<2>		;number of federation and klingon bases
 	integer board,<brdsiz>		;board
 	integer	locpln,<KNPLNT,4>	;planet info

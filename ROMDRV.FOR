@@ -88,7 +88,8 @@ C	erom = iran(200) + 200!added by drforbin
  600	call romstr (i, j)			!star adjacent to target?
 	V1 = i - locr(KVPOS)
 	H1 = j - locr(KHPOS)
-	call romtor (V1, H1)			!fire torps!!
+C	added by drforbin for cloaking device
+	call romtor (V1, H1, iplace)			!fire torps!!
 	goto 1000
 
 *.......Romulan uses phasers
@@ -105,6 +106,8 @@ C	erom = iran(200) + 200!added by drforbin
 	Vto = i  ;  Hto = j  ;  shjump = 0
 	shstfr = erom  ;  shcnfr = 1
 	id = pdist (Vfrom, Hfrom, Vto, Hto)
+C	added by drforbin for cloaking device
+	if(cloak(iplace,clstat) .eq. clon) id = id + 2
 	call phadam (nplc, iplace, id, 300, .TRUE.) !200 to 300 drforbin
 	iwhat = 1
 	call pridis (i, j, KRANGE, 0, 0)

@@ -26,13 +26,25 @@ C	burst is read in, checked for syntax errors, and executed.
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
+
+
+	logical comput
+	integer cindex
+
 	common /chkout/ V1, H1, iVc, iHc, dcode, idisV, idisH
 	real d, idisV, idisH
 	common /tolocl/ torpl(3,2), tpaus
 
+C	cannot use weapons with cloak on
+	if (.not. (cloak(who, clstat) .eq. clon)) goto 50
+	call out ('You have an active CLOAK. ',)
+	call out ('You cannot use weapons.',1)
+	return 1
+
+
 *.......Torpedo tubes critically damaged?
 
-	if (shpdam(who,KDTORP) .lt. KCRIT)  goto 100
+50	if (shpdam(who,KDTORP) .lt. KCRIT)  goto 100
 	call out (torp00,1)
 	return 1
 
@@ -46,7 +58,7 @@ C	burst is read in, checked for syntax errors, and executed.
 
 *.......Read number of torps in burst, target locations
 
- 200	tem = locate(-7)
+ 200	tem = locate(-7, comput, cindex)
 	if (tem .lt. 0)  return 1			!abort torpedo burst
 	if (tem .gt. 0)  goto 400
  300	call out (torp02,0)
@@ -86,9 +98,28 @@ C	burst is read in, checked for syntax errors, and executed.
      +	  torpl(i,1), torpl(i,2), KRANGE))  goto 2700
  800	continue
 
+
+C	added by drforbin for cloaking device
+ 	if ( .not. ((cloak(cindex, clstat) .eq. clon) .and. 
+     +	( cloak(cindex,clhave) .eq. 1)) .or. (comput .eq. 0) ) 
+     +	goto 802
+
+
+	do 801 i = 1, ntorp
+	  id = pdist (torpl(i,1), torpl(i,2), shpcon(who,KVPOS), 
+     +	  shpcon(who,KHPOS))
+	  if ( clsee (id) .eq. .true. ) goto 801
+	  call out ('Your sensors detected something but
+     + but could not lock on',1)
+	  call out ( 'Burst cancelled',1)
+	  return 1
+801	continue
+C	end
+
+
 *.......Start torpedo loop
 
-	call pause (tobank - etim(tim0))		!load torpedo tubes
+802	call pause (tobank - etim(tim0))		!load torpedo tubes
 	tpaus = 0
 	shpcon(who,KSPCON) = RED
 	do 2000 id = 1, ntorp
@@ -113,6 +144,18 @@ C	burst is read in, checked for syntax errors, and executed.
 *.........See if anything hit
 
  900	  idis = KRANGE - 2 + int((ran(0) - 0.5) * 4.0 + 0.5)
+
+
+C	added by drforbin for cloaking device
+	  icdist = pdist (torpl(id,1), torpl(id,2), shpcon(who,KVPOS), 
+     +	  shpcon(who,KHPOS))
+
+	  if ( (cloak(cindex, clstat) .eq. clon) .and.
+     +    ( cloak(cindex,clhave) .eq. 1) ) 
+     +    idis = idis - cldist(icdist,cindex,cloak)
+C	end
+
+
 	  tpaus = tpaus + (slwest + 1) * 1000 + shpdam(who,KDTORP)
 	  call check (shpcon(who,KVPOS), shpcon(who,KHPOS), iV, iH,
      +    idis, d)

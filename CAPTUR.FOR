@@ -30,8 +30,12 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
+	logical  comput
+	integer  cindex
+
+
 	v = etim (tim0) + 5000
-	tem = locate(2)
+	tem = locate(2, comput, cindex)
  100	if (tem .lt. 0)  return 1		!abort 'capture'
 	if (tem .ne. 0)  goto 200
 	tem = reloc(2)
@@ -90,12 +94,16 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 	call makhit
 	tpoint(KPPCAP) = tpoint(KPPCAP) + 1000	!get points
 	ptime = v - etim(tim0)			!pause for capture
-	if ((shpcon(who,KSDAM) .lt. KENDAM) .and.
-     +	(shpcon(who,KSNRGY) .gt. 0))  return	!if player alive, return
+	if ( .not. ((shpcon(who,KSDAM) .lt. KENDAM) .and.
+     +	(shpcon(who,KSNRGY) .gt. 0)))  goto 302 !if player alive, return
+
+C	drforbin added for cloaking device
+	if (cloak(who,clhave) .eq. clono) call clstup(clfind,who,cloak)  
+	return
 
 *.......Player dies!
 
-	if (team .eq. 1)  call out (captu1,1)
+302	if (team .eq. 1)  call out (captu1,1)
 	if (team .eq. 2)  call out (captu2,1)
 	call odisp (who + (team * 100), 1)
 	call out (captu4,1)

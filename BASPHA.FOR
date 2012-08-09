@@ -43,15 +43,37 @@ C	side's bases.
 
 	    do 300 k = (KNPLAY/2) * (2 - i) + 1, (KNPLAY/2) * (3 - i)
 	      if (.not. alive(k))  goto 300		!player dead?
-	      if (disp(shpcon(k,KVPOS), shpcon(k,KHPOS)) .le. 0)
-     +	      goto 300					!player cloaked?
-	      if (.not. ldis(shpcon(k,KVPOS), shpcon(k,KHPOS),
-     +	      base(j,KVPOS,i), base(j,KHPOS,i), 4))  goto 300	!player in range?
+C	      if (disp(shpcon(k,KVPOS), shpcon(k,KHPOS)) .le. 0)
+C     +	      goto 300					!player cloaked?
+
+C	added by drforbin for cloaking device
+
 	      Vfrom = base(j,KVPOS,i)  ;  Hfrom = base(j,KHPOS,i)
 	      Vto   = shpcon(k,KVPOS)  ;  Hto   = shpcon(k,KHPOS)
+
+	      id = pdist (Vfrom, Hfrom, Vto, Hto)
+
+	      if ( .not. ((cloak(k, clstat) .eq. clon) .and.
+     +        ( cloak(k,clhave) .eq. 1)) ) goto 101
+              if ( clsee (id) .eq. .true. ) goto 101
+              goto 300 
+C	end
+
+101	      if (.not. ldis(shpcon(k,KVPOS), shpcon(k,KHPOS),
+     +	      base(j,KVPOS,i), base(j,KHPOS,i), 4))  goto 300	!player in range?
+C	      Vfrom = base(j,KVPOS,i)  ;  Hfrom = base(j,KHPOS,i)
+C	      Vto   = shpcon(k,KVPOS)  ;  Hto   = shpcon(k,KHPOS)
 	      dispto = (DXFSHP + (2 - i)) * 100 + k  ;  iwhat = 1
 	      dispfr = (DXFBAS + (i - 1)) * 100 + j  ;  shjump = 0
-	      id = pdist (Vfrom, Hfrom, Vto, Hto)
+C	      id = pdist (Vfrom, Hfrom, Vto, Hto)
+
+C	added by drforbin for cloaking device
+	      if ( (cloak(k, clstat) .eq. clon) .and.
+     +        ( cloak(k,clhave) .eq. 1) ) 
+     +        id = id + cldist(id, cindex, cloak)
+C	end
+
+
 	      call phadam (3-i, k, id, 500, .FALSE.)	!hit him!
 	      tmscor(i,KPEDAM) = tmscor(i,KPEDAM) + ihita
 	      shstfr = base(j,3,i)       ;  shcnfr = 1

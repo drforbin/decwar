@@ -19,8 +19,8 @@ C	02110-1301, USA.
 
 
 	common /hiseg/
-     +	hfz, shpcon, shpdam, base, nbase, board, locpln, locr, 
-     +	erom, eromo, rsr, nplnet, rom, romcnt, rtpaus, rppaus, 
+     +	hfz, shpcon, shpdam, base, cloak, clteam, nbase, board, locpln, 
+     +	locr, erom, eromo, rsr, nplnet, rom, romcnt, rtpaus, rppaus, 
      +	job, msgflg, hitflg, numcap, romopt, blhopt, endflg, nomsg, 
      +	tmscor, tim0, slwest, kilque, nkill, kilndx, tmturn, numshp, 
      +	numrom, trstat, active, alive, comknt, hitime, dead, docked, 
@@ -31,12 +31,15 @@ C	02110-1301, USA.
 c Note: the following MUST be last entry in hiseg impure area
 	common /hiseg/ hilst
 
+
 	!High core zeroed out by first player
 
 	integer	hfz			!first location to zero out
 	integer	shpcon(KNPLAY,10)	!ship information
 	integer	shpdam(KNPLAY,KNDEV)	!damage to ship devices
 	integer	base(KNBASE,4,2)	!base information
+	integer	cloak(KNPLAY,4)		!added by drforbin for cloak
+	integer clteam(KNPLAY,2)	!added by drforbin for teams cloak
 	integer	nbase(2)		!number of federation and klingon bases
 	integer board(brdsiz)		!board
 	integer	locpln(KNPLNT,4)	!planet info
