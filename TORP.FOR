@@ -29,18 +29,19 @@ C	burst is read in, checked for syntax errors, and executed.
 
 
 	logical comput
-	integer cindex
+	integer cindex(3)
 
 	common /chkout/ V1, H1, iVc, iHc, dcode, idisV, idisH
 	real d, idisV, idisH
 	common /tolocl/ torpl(3,2), tpaus
 
 C	cannot use weapons with cloak on
-	if (.not. (cloak(who, clstat) .eq. clon)) goto 50
-	call out ('You have an active CLOAK. ',)
-	call out ('You cannot use weapons.',1)
+	if (.not. (cloak(who, clstat) .eq. cloff)) goto 40
+	goto 50
+40	call out ('***You have an active CLOAK.
+     + You cannout use Weapons.***',1)
 	return 1
-
+C	end
 
 *.......Torpedo tubes critically damaged?
 
@@ -58,7 +59,7 @@ C	cannot use weapons with cloak on
 
 *.......Read number of torps in burst, target locations
 
- 200	tem = locate(-7, comput, cindex)
+ 200	tem = locate(-7, comput)
 	if (tem .lt. 0)  return 1			!abort torpedo burst
 	if (tem .gt. 0)  goto 400
  300	call out (torp02,0)
@@ -80,15 +81,22 @@ C	cannot use weapons with cloak on
 
  600	torpl(1,1) = vallst(i)
 	torpl(1,2) = vallst(i+1)
+	cindex(1) = dispx(torpl(1,1),torpl(1,2))
 	if (ntorp .eq. 1)  goto 700
 	if (tem .ge. i+2)  i = i + 2
 	torpl(2,1) = vallst(i)
 	torpl(2,2) = vallst(i+1)
+	cindex(2) = dispx(torpl(2,1),torpl(2,2))
 	if (ntorp .eq. 2)  goto 700
 	if (tem .ge. i+2)  i = i + 2
 	torpl(3,1) = vallst(i)
 	torpl(3,2) = vallst(i+1)
+	cindex(3) = dispx(torpl(3,1),torpl(3,2))
 
+
+
+
+	
 *	Input own location or out-of-range location?
 
  700	do 800 i = 1, ntorp
@@ -100,18 +108,18 @@ C	cannot use weapons with cloak on
 
 
 C	added by drforbin for cloaking device
- 	if ( .not. ((cloak(cindex, clstat) .eq. clon) .and. 
-     +	( cloak(cindex,clhave) .eq. 1)) .or. (comput .eq. 0) ) 
-     +	goto 802
+	if (comput .eq. .false.) goto 802
 
 
 	do 801 i = 1, ntorp
+ 	  if ( .not. (cloak(cindex(i), clstat) .eq. clon) ) 
+     +	  goto 801
 	  id = pdist (torpl(i,1), torpl(i,2), shpcon(who,KVPOS), 
      +	  shpcon(who,KHPOS))
 	  if ( clsee (id) .eq. .true. ) goto 801
-	  call out ('Your sensors detected something but
-     + but could not lock on',1)
-	  call out ( 'Burst cancelled',1)
+	  call out ('***Your sensors detected something
+     + but could not lock on***',1)
+	  call out ( '***Burst cancelled***',1)
 	  return 1
 801	continue
 C	end
@@ -150,9 +158,10 @@ C	added by drforbin for cloaking device
 	  icdist = pdist (torpl(id,1), torpl(id,2), shpcon(who,KVPOS), 
      +	  shpcon(who,KHPOS))
 
-	  if ( (cloak(cindex, clstat) .eq. clon) .and.
-     +    ( cloak(cindex,clhave) .eq. 1) ) 
-     +    idis = idis - cldist(icdist,cindex,cloak)
+	  if ( (cloak(cindex(id), clstat) .eq. clon) .or.
+     +    ( cloak(cindex(id),clstat) .eq. clfout)  .or. 
+     +    ( cloak(cindex(id),clstat) .eq. clfin) )
+     +    idis = idis - cldist(icdist,cindex(id),cloak)
 C	end
 
 

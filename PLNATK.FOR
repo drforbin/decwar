@@ -51,42 +51,33 @@ C	'BUILDS' the planet has undergone.
      +	    locpln(k,KVPOS), locpln(k,KHPOS), 2))  goto 200	!in range?
 
 
+*	    Set up parameters for call to MAKHIT
+
+	    dispfr = disp (locpln(k,KVPOS), locpln(k,KHPOS))
+	    dispto = disp (shpcon(j,KVPOS), shpcon(j,KHPOS))
+	    shstfr = locpln(k,3)
+	    Vfrom = locpln(k,KVPOS)  ;  Hfrom = locpln(k,KHPOS)
+	    Vto   = shpcon(j,KVPOS)  ;  Hto   = shpcon(j,KHPOS)
+	    shjump = 0
+	    iwhat = 1  ;  phit = (50 + (50 * locpln(k,3)))!added drforbin 
+	    id = pdist (Vfrom, Hfrom, Vto, Hto)
+
+
 C       added by drforbin for cloaking device
 
 
-	    Vfrom = locpln(k,KVPOS)  ;  Hfrom = locpln(k,KHPOS)
-	    Vto   = shpcon(j,KVPOS)  ;  Hto   = shpcon(j,KHPOS)
-	
-	    id = pdist (Vfrom, Hfrom, Vto, Hto)
-
-            if ( .not. ((cloak(j, clstat) .eq. clon) .and.
-     +      ( cloak(j,clhave) .eq. 1)) ) goto 100
+            if ( .not. (cloak(j, clstat) .eq. clon)) 
+     +      goto 101
             if ( clsee (id) .eq. .true. ) goto 100
             goto 200
 
 
-
-*	    Set up parameters for call to MAKHIT
-
-100	    dispfr = disp (locpln(k,KVPOS), locpln(k,KHPOS))
-	    dispto = disp (shpcon(j,KVPOS), shpcon(j,KHPOS))
-	    shstfr = locpln(k,3)
-C	    Vfrom = locpln(k,KVPOS)  ;  Hfrom = locpln(k,KHPOS)
-C	    Vto   = shpcon(j,KVPOS)  ;  Hto   = shpcon(j,KHPOS)
-	    shjump = 0
-	    iwhat = 1  ;  phit = (50 + (50 * locpln(k,3)))!added drforbin 
-C	    id = pdist (Vfrom, Hfrom, Vto, Hto)
-
-
-
 C       added by drforbin for cloaking device
-              if ( (cloak(j, clstat) .eq. clon) .and.
-     +        ( cloak(j,clhave) .eq. 1) )
-     +        id = id + cldist(id, cindex, cloak)
+100         id = id + cldist(id, j, cloak)
 
 
 
-	    call phadam (2, j, id, phit, .FALSE.)	!hit him!
+101	    call phadam (2, j, id, phit, .FALSE.)	!hit him!
 	    if (pcode .ne. DXNPLN)  tmscor(pteam,KPEDAM) =
      +	    tmscor(pteam,KPEDAM) + ihita
 	    if ((klflg .ne. 0) .and. (pcode .ne. DXNPLN))

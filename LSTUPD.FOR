@@ -21,6 +21,11 @@ C	02110-1301, USA.
 C	LSTUPD -- Update list flags for given object (ship, base, planet)
 C	if it's allowed to be listed (or included in a summary).
 
+
+C	added drforbin (ikind) arg which is used to select
+C	which class of LISt is ran through CLOAk test
+
+
 	subroutine LSTUPD (lstmsk, objctr, scnbts, xxf, iplace, ikind)
 	include 'param/nolist'
 	include 'hiseg/nolist'
@@ -32,14 +37,16 @@ C	if it's allowed to be listed (or included in a summary).
 
 	xf = gxf
 
+
 C	added and modified by drforbin for cloaking device
 	if (.not. (d .le. KRANGE ) )  goto 50		!within range
 	if (.not. (ikind .eq. 5)) goto 400
 
 	if(  .not. (cloak(iplace, clstat) .eq. clon) ) goto 400
 	if( clsee(d) .eq. .true. ) goto 400
-
 C	end
+
+
 
 50	if (side .eq. team)  goto 400		!friendly
 	if (.not. PASFLG)  goto 100

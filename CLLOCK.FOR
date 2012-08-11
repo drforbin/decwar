@@ -1,5 +1,9 @@
 
+C	Added by Merlyn drforbin as lock routine for 
+C	cloak DECWAR
 
+C	cllock locks board array and returns board to
+C	non-cloak state for processing
 
 
 

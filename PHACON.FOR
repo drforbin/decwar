@@ -32,10 +32,12 @@ C	the hit is made, and the appropriate messages are printed.
 	integer  cindex
 
 C	cannot use weapons with cloak on
-	if (.not. (cloak(who, clstat) .eq. clon)) goto 50 
-	call out ('You have an active CLOAK. ',)
-	call out ('You cannot use weapons',1)
+	if (.not. (cloak(who, clstat) .eq. cloff)) goto 40 
+	goto 50
+40	call out ('***You have an active CLOAK.
+     + You cannout use Weapons.***',1)
 	return 1
+C	end
 
 *.......Phasers critically damaged?
 
@@ -45,7 +47,7 @@ C	cannot use weapons with cloak on
 
 *.......Target location read in
 
- 100	tem = locate(-3, comput, cindex)
+ 100	tem = locate(-3, comput)
  200	if (tem .eq. 1)  call out (erloc1,1)
 	if ((tem .lt. 0) .or. (tem .eq. 1))  return 1	!abort phasers?
 	if (tem .ne. 0)  goto 300
@@ -56,6 +58,10 @@ C	cannot use weapons with cloak on
 	iV = vallst(tem-1)  ;  iH = vallst(tem)	!identify type of target
 	nplc = dispc (iV,iH)
 	ip   = dispx (iV,iH)
+
+C	added by drfrobin for cloak who index
+	cindex = ip
+
 	if ((nplc .lt. DXFSHP) .or. (nplc .gt. DXEPLN))  goto 1600
 	if ((nplc .lt. DXFBAS) .and. (.not. alive(ip)))  goto 1600
 
@@ -72,20 +78,20 @@ C	cannot use weapons with cloak on
 	if (id .le. KRANGE)  goto 700
 	call out (phacn1,1)  ;  return 1
 
-C	added by drforbin for cloaking device
-700 	if ( .not. ((cloak(cindex, clstat) .eq. clon) .and. 
-     +	( cloak(cindex,clhave) .eq. 1)) .or. (comput .eq. 0) ) 
-     +	goto 701
-	if ( clsee (id) .eq. .true. ) goto 701
-	call out ('Your sensors detected something but
-     + could not lock on',1)
-	return 1
 
+
+C	added by drforbin for cloaking device
+700 	if ( .not. (cloak(cindex, clstat) .eq. clon) .or. 
+     +  (comput .eq. .false. ) ) goto 701
+	if ( clsee (id) .eq. .true. ) goto 701
+	call out ('***Your sensors detected something but
+     + could not lock on***',1)
+	call out ('***Phaser fire cancelled***',1)
+	return 1
+C	end
 
 
 *	Determine size of phaser hit
-
-
  
 701	call pause (phbank(bank) - etim(tim0))
 	phit = 200
@@ -146,9 +152,17 @@ C	added by drforbin for cloaking device
 	call pridis (30, 30, 100, nplc-2, 0)
 	dbits = dbits .and. .not. nomsg
 	call makhit
+
+
+
 C	added by drforbin for cloaking device
-	if ( (cloak(cindex, clstat) .eq. clon) .and. 
-     +	( cloak(cindex,clhave) .eq. 1) ) id=id+cldist(id,cindex,cloak)
+	if ( (cloak(cindex, clstat) .eq. clon) .or. 
+     +	(cloak(cindex,clstat) .eq. clfout) .or. 
+     +	(cloak(cindex,clstat) .eq. clfin ))
+     +	id = id + cldist(id,cindex,cloak)
+C	end
+
+
 
 1300	call phadam (nplc, ip, id, phit, .TRUE.)	!hit him!
 

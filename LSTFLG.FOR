@@ -117,8 +117,6 @@ C	Ship name -----------------------------------------------------
 	  Vpos = shpcon(index,KVPOS)  ;  Hpos = shpcon(index,KHPOS)
 C	  if (disp(Vpos,Hpos) .eq. 0)  goto 1800	!dead, but not gone yet
 	  iplace = index
-	call odec(iplace,0)
-	call crlf
 	  call lstupd (dummy, dummy, -1, dummy, iplace, 3)
 	  call lstobj
 	  goto 2100

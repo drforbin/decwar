@@ -32,11 +32,10 @@ C	of operational starbases at that time).
 	include 'extern/nolist'
 
 	logical comput
-	integer cindex
 
 
 	v = etim(tim0) + (slwest * 1000) + 4000
-	tem = locate(2, comput, cindex)
+	tem = locate(2, comput)
  100	if (tem .lt. 0)  return 1		!abort 'build'
 	if (tem .ne. 0)  goto 200
 	tem = reloc(2)

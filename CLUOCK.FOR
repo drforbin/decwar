@@ -1,5 +1,7 @@
 
-
+C	added by merlyn drforbin for cloak device
+C	cluock routine returns board to post processing state
+C	cloak enabled state and unlocks board array
 
 
 

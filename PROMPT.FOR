@@ -46,6 +46,7 @@ C				    of n stardates.
      +	.lt. 0))  call outc ('S')
 	if (shpcon(who,KSDAM) .ge. 20000)  call outc ('D')	!ship damages > 2000?
 	if (shpcon(who,KSNRGY) .le. 10000)  call outc ('E')	!yellow alert?
+	if (cloak(who, clstat) .eq. clon) call outc ('C')	!cloak on 
 	call out2c ('> ')	!finish prompt...
 	return
 

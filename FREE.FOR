@@ -33,7 +33,9 @@ C	will be lost.
 	include 'extern/nolist'
 
 	common /frlocl/ tship, tshpco(10), tshpda(KNDEV), tjob(KNJBST),
-     +	dum(16)
+     +	dum(16), tloak, tlteam
+
+	integer tloak(4), tlteam(2)
 
 	if (alive(snum) .gt. 0)  return
 
@@ -83,6 +85,14 @@ C.......time when he will again be eligible to play.
 	  tshpda(i) = shpdam(snum,i)
  400	continue
 
+	do 401 i = 1, 4
+	  tloak(i) = cloak(who, i)
+401	continue
+
+	tlteam(1) = clteam(who,1)
+	tlteam(2) = clteam(who,2)
+
+
  500	if (hitflg(snum) .le. 0)  goto 600	!clear out hit messages
 	call gethit (snum)
 	goto 500
@@ -117,6 +127,14 @@ C.......time when he will again be eligible to play.
 	do 1000 i = 1, KNDEV
 	  shpdam(snum,i) = tshpda(i)
 1000	continue
+
+
+	do 1001 i = 1, 4
+	  cloak(who,i) = tloak(i)
+1001	continue
+
+	clteam(who,1) = tlteam(1)
+	clteam(who,2) = tlteam(2)
 
 	call jobsta (
      +		job(snum,KJOB),
