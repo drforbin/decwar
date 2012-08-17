@@ -57,7 +57,9 @@ C     +	      goto 300					!player cloaked?
 C	added by drforbin for cloaking device
 
 
-	      if ( .not. (cloak(k, clstat) .eq. clon)) 
+	      if ( .not. ((cloak(k, clstat) .eq. clon)
+     +        .or. (cloak(k,clstat) .eq. clfout) .or.
+     +        (cloak(k,clstat) .eq. clfin))) 
      +        goto 102
               if ( clsee (id) .eq. .true. ) goto 101
               goto 300 

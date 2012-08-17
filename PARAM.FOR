@@ -207,7 +207,11 @@ C	team saved info for cloak
 
         parameter cwho=1	!select who in clteam array
         parameter cteam=2	!select tem in clteam array
+        parameter cspflg=3	!speed flag
 
+C	added for slow down of real time loop
+
+	parameter ielay=2
 
 	real ran,pwr
 

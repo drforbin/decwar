@@ -96,17 +96,32 @@ C	TRANSFER.
 
 *.......Lower deflector shields
 
-1000	shpcon(who,KSHCON) = -1
+
+C	added by drforbin for CLOAK control
+
+1000	if (cloak(who,clstat) .lt. clfout) goto 1001 
+	call out ('***You must deactivate cloak before dropping
+     + shields***',1)
+	return
+1001	shpcon(who,KSHCON) = -1
 	call out (shld08,1)
 	return
 
 1100	call out (shld09,1)
 	return
 
-C	cloak control test code
+C	cloak activate/deactivate code
+
 1200	call clstup(clfin,who,cloak)
 	return
-1400	call clstup(clfout,who,cloak)
+
+C	added by drforbin for CLOAK control
+
+1400	if (  shpcon(who,KSHCON) .eq. 1 ) goto 1401
+	call out ('***You must raise your shields before
+     + activating CLOAK***',1)
+	return
+1401	call clstup(clfout,who,cloak)
 	return
 
 	end

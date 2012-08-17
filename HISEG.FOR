@@ -39,7 +39,7 @@ c Note: the following MUST be last entry in hiseg impure area
 	integer	shpdam(KNPLAY,KNDEV)	!damage to ship devices
 	integer	base(KNBASE,4,2)	!base information
 	integer	cloak(KNPLAY,4)		!added by drforbin for cloak
-	integer	clteam(KNPLAY,2)	!added by drforbin for teams cloak
+	integer	clteam(KNPLAY,3)	!added by drforbin for teams cloak
 	integer	nbase(2)		!number of federation and klingon bases
 	integer board(brdsiz)		!board
 	integer	locpln(KNPLNT,4)	!planet info

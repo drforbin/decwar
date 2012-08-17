@@ -61,7 +61,23 @@ C	searched for collisions, and the energy consumption computed.
 
  300	iV = vallst(1) - shpcon(who,KVPOS)
 	iH = vallst(2) - shpcon(who,KHPOS)
-	if (.not. ((iV .eq. 0) .and. (iH .eq. 0)))  goto 700
+
+
+C       added by drforbin for cloaking device
+	cindex = dispx(vallst(1), vallst(2))
+	idist = pdist(vallst(1), vallst(2), shpcon(who,KVPOS),
+     +	shpcon(who,KHPOS))
+	if ( .not. (cloak(cindex, clstat) .eq. clon) .or. 
+     +  (comput .eq. .false. ) ) goto 301
+        if ( clsee (idist) .eq. .true. ) goto 301
+        call out ('***Your sensors detected something but
+     + could not lock on***',1)
+        call out ('***Movement cancelled***',1)
+        return 1
+C       end
+
+
+301	if (.not. ((iV .eq. 0) .and. (iH .eq. 0)))  goto 700
 	if (oflg)  400, 400, 500
  400	call out (error2,1)  ;  goto 600
  500	call out (error1,1)
@@ -71,6 +87,8 @@ C	searched for collisions, and the energy consumption computed.
  700	shpcon(who,KSPCON) = GREEN			!condition green
 	docked(who) = .FALSE.
 	ia = max0 (iabs(iV), iabs(iH))			!how far to go?
+	clteam(who,cspflg) = 0
+	if ( ia .lt. 3 ) clteam(who,cspflg) = 1		!speed flag set when speed less than 3
 	if (shpdam(who,KDCOMP) .ge. KCRIT)  d = (ran(0) - 0.5) / 2.0	!add deflection if computer damaged
 	if (iflg .eq. 1)  goto 800			!impulse
 	if (ia .gt. 6)  goto 1300			!TOO fast!

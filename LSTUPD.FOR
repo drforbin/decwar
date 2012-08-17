@@ -40,7 +40,7 @@ C	which class of LISt is ran through CLOAk test
 
 C	added and modified by drforbin for cloaking device
 	if (.not. (d .le. KRANGE ) )  goto 50		!within range
-	if (.not. (ikind .eq. 5)) goto 400
+	if (.not. ((ikind .eq. 5) .or. (ikind .eq. 3))) goto 400
 
 	if(  .not. (cloak(iplace, clstat) .eq. clon) ) goto 400
 	if( clsee(d) .eq. .true. ) goto 400

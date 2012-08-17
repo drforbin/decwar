@@ -32,8 +32,13 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 
 	logical  comput
 
+C	added by drforbin for cloak
+	if (.not. (cloak(who,clstat) .gt. cloff)) goto 50
+	call out ('***You cannot CAPTURE with cloak ON***',1)
+	return 1
+C	end
 
-	v = etim (tim0) + 5000
+50	v = etim (tim0) + 5000
 	tem = locate(2, comput)
  100	if (tem .lt. 0)  return 1		!abort 'capture'
 	if (tem .ne. 0)  goto 200

@@ -35,7 +35,7 @@ C	will be lost.
 	common /frlocl/ tship, tshpco(10), tshpda(KNDEV), tjob(KNJBST),
      +	dum(16), tloak, tlteam
 
-	integer tloak(4), tlteam(2)
+	integer tloak(4), tlteam(3)
 
 	if (alive(snum) .gt. 0)  return
 
@@ -91,7 +91,7 @@ C.......time when he will again be eligible to play.
 
 	tlteam(1) = clteam(who,1)
 	tlteam(2) = clteam(who,2)
-
+	tlteam(3) = clteam(who,3)
 
  500	if (hitflg(snum) .le. 0)  goto 600	!clear out hit messages
 	call gethit (snum)
@@ -135,6 +135,7 @@ C.......time when he will again be eligible to play.
 
 	clteam(who,1) = tlteam(1)
 	clteam(who,2) = tlteam(2)
+	clteam(who,3) = tlteam(3)
 
 	call jobsta (
      +		job(snum,KJOB),

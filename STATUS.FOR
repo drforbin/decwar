@@ -45,7 +45,7 @@ C	called from a STATUS string appended to DOCK.
 
 *.......Set up dummy TYPLST and TKNLST strings for printing full report
 
- 700	typlst(stoken+7) = KEOL
+ 700	typlst(stoken+8) = KEOL
 	tknlst(stoken)   = 1hC
 	tknlst(stoken+1) = 1hL
 	tknlst(stoken+2) = 1hT
@@ -53,7 +53,8 @@ C	called from a STATUS string appended to DOCK.
 	tknlst(stoken+4) = 1hD
 	tknlst(stoken+5) = 1hS
 	tknlst(stoken+6) = 1hR
-	do 800 i = stoken, stoken + 6
+	tknlst(stoken+7) = 1hA
+	do 800 i = stoken, stoken +7
 	  typlst(i) = KALF
  800	continue
 
@@ -70,6 +71,7 @@ C	called from a STATUS string appended to DOCK.
 	  if (equal (tknlst(i), 'ENERGY'))  goto 3400
 	  if (equal (tknlst(i), 'DAMAGE'))  goto 4100
 	  if (equal (tknlst(i), RADIO3))  goto 4800
+	  if (equal (tknlst(i), 'ACHERON')) goto 5601
 	  call out (syntax, 1)			!unknown switch
 	  goto 5700
 
@@ -156,9 +158,19 @@ C	called from a STATUS string appended to DOCK.
 	  if ((bits(who) .and. nomsg) .eq. 0)  call out2c ('On')
 5400	  if (oflg)  5500, 5600, 5600
 5500	  call space  ;  goto 5700
-5600	  call crlf
+5600	  call crlf;goto 5700
+
+C	added by drforbin for status display of CLOAK
+
+5601	if (.not. (cloak(who,clstat) .gt. clinit)) goto 5700
+	call out ('Acheron:	',0)
+	if (cloak(who,clstat) .eq. clon) goto 5602
+	call out ('Off',1);goto 5700
+5602	call out ('On',1)
+	goto 5700
 
 5700	continue
+
 	return
 
 	end

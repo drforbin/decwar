@@ -125,16 +125,25 @@ C	added by drforbin for cloaking device
 *.......Activate bases and planets, rebuild bases a little
 
 1000	if (iran (50) .le. 1) call tell		! let the Romulan speak!
-d	call timout ('ROMDRV')
-d	call timin  ('BASPHA')
-	call baspha
-d	call timout ('BASPHA')
-d	call timin  ('PLNATK')
-	call plnatk
-d	call timout ('PLNATK')
-d	call timin  ('BASBLD')
-	call basbld
-d	call timout ('BASBLD')
+
+C	added by dr for activating rom and defenses 
+C	call caldef
+C	end
+
+C	edited out by drforbin
+Cd	call timout ('ROMDRV')
+Cd	call timin  ('BASPHA')
+C	call baspha
+Cd	call timout ('BASPHA')
+Cd	call timin  ('PLNATK')
+C	call plnatk
+Cd	call timout ('PLNATK')
+Cd	call timin  ('BASBLD')
+C	call basbld
+Cd	call timout ('BASBLD')
+C	end
+
+
 	return
 
 9999	continue
@@ -145,7 +154,24 @@ d	call timout ('ROMDRV')
 *.......nearest attackable object.
 
 1100	call dist (iplace, nplc, numsec)	!find object
-	if (numsec .le. 1)  goto 200		!already point-blank range?
+
+
+
+
+C       added by drforbin for cloaking device
+	idist = pdist (locr(KVPOS), locr(KHPOS), shpcon(iplace,KVPOS),
+     +  shpcon(iplace,KHPOS))
+	idist = idist - 2
+	idist = max0(idist, 0)
+        if ( .not. (cloak(iplace, clstat) .eq. clon)) goto 1101 
+        if ( clsee (idist) .eq. .true. ) goto 1101
+	return
+C       end
+
+
+
+
+1101	if (numsec .le. 1)  goto 200		!already point-blank range?
 	goto (1300, 1300, 1200, 1200)  nplc
 1200	i = base(iplace,KVPOS,nplc-2)  ;  j = base(iplace,KHPOS,nplc-2)
 	goto 1400

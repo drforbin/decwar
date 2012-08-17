@@ -32,9 +32,10 @@ C	the hit is made, and the appropriate messages are printed.
 	integer  cindex
 
 C	cannot use weapons with cloak on
-	if (.not. (cloak(who, clstat) .eq. cloff)) goto 40 
-	goto 50
-40	call out ('***You have an active CLOAK.
+	if ( .not. ((cloak(who, clstat) .eq. clon) .or. 
+     +	(cloak(who,clstat) .eq. clfout) .or. 
+     +	(cloak(who,clstat) .eq. clfin ))) goto 50
+	call out ('***You have an active CLOAK.
      + You cannout use Weapons.***',1)
 	return 1
 C	end

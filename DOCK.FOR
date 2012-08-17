@@ -29,9 +29,18 @@ C	supply twice the energy and supplies per dock as do planets.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
+
+C	added by drforbin for cloak
+	if (.not. (cloak(who,clstat) .gt. cloff)) goto 50
+        call out ('***You cannot DOCK with cloak ON***',1)
+        return 1
+C	end
+
+
+
 *.......Check for friendly base in range
 
-	v = etim(tim0) + (slwest * 1000) + 1000
+50	v = etim(tim0) + (slwest * 1000) + 1000
 	ifract=0
 	do 100 j = 1, KNBASE
 	  if (base(j,3,team) .le. 0)  goto 100			!is base alive?

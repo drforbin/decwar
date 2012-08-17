@@ -63,10 +63,24 @@ C	call chkseq			! check for active jobs !not needed added by drforbin
 	if (input(KCMDTM))  goto 400	!command input?
 	if (hungup) goto 500
 210	active(who) = 0
-	comknt = comknt + 1
-	if (comknt .lt. 30 * numply)  goto 300
-	comknt = 0
+
+C	comknt = comknt + 1
+C	if (comknt .lt. 30 * numply)  goto 300
+C	comknt = 0
 c--	call dship
+
+
+
+
+C	added by drforbin
+	iotime = iotime + 1
+        if (iotime .lt. ielay) goto 300       !SLow me down code DR 
+
+        iotime = 0
+	call caldef
+c	end
+
+
 	
 300	call ttyon
 	if (cloak(who,clhave) .eq. cloyes) call clstup (
@@ -85,7 +99,7 @@ c--	call dship
  400	active(who) = 0
 	if (hungup) goto 500		! job hung up?
 C	if (lofchk(0))	goto 500	! drforbin(merlyn) dump user whose time limit is over
-	comknt = comknt + 1
+C	comknt = comknt + 1
 	call gtkn
 	if (.not. CCFLG) goto 600	!^C wasn't typed
 	if (shpcon(who,KSPCON) .ne. RED) goto 500

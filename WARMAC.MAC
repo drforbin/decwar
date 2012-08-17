@@ -412,6 +412,7 @@ lall
 
 	cwho==1
 	cteam==2	
+	cspflg==3
 
 	subttl	FORTRAN interface -- high segment common block
 
@@ -424,7 +425,7 @@ hi.fst==hfz
 	integer	shpdam,<KNPLAY,KNDEV>	;damage to ship devices
 	integer	base,<KNBASE,4,2>	;base information
 	integer cloak,<KNPLAY,4>	;added drforbin for cloak
-	integer clteam,<KNPLAY,2>	;added drforbin for team save cloak
+	integer clteam,<KNPLAY,3>	;added drforbin for team save cloak
 	integer	nbase,<2>		;number of federation and klingon bases
 	integer board,<brdsiz>		;board
 	integer	locpln,<KNPLNT,4>	;planet info

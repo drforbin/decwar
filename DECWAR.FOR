@@ -92,7 +92,9 @@ d	call timout('CMDBA ')
 	goto 50
 200	continue
 d	call timin ('CMDBU ')
+	call cllock
 	call build ($49)		! build
+	call cluock
 d	call timout('CMDBU ')
 	goto 3400
 300	continue
@@ -280,16 +282,30 @@ C	added by drforbin to implode game if etim == neg
 	goto 3810
 C	end addition by dr
 
-d	call timin ('BASPHA')
-3502	call baspha	!label added by dr! activate enemy starbase defense
-d	call timout('BASPHA')
-d	call timin ('PLNATK')
-	call plnatk			!activate neutral and enemy planets
-d	call timout('PLNATK')
-d	call timin ('BASBLD')
-	call basbld			!partially rebuild enemy bases
-d	call timout('BASBLD')
-	if (ROMOPT)  call romdrv(d1,d2)	!activate Romulan?
+
+C	added by DR for activating rom and defenses
+3502	call caldef		!added by drforbin for event loop
+C	end
+
+
+C	editied out by drforbin
+Cd	call timin ('BASPHA')
+C3502	call baspha	!label added by dr! activate enemy starbase defense
+Cd	call timout('BASPHA')
+Cd	call timin ('PLNATK')
+C	call plnatk			!activate neutral and enemy planets
+Cd	call timout('PLNATK')
+Cd	call timin ('BASBLD')
+C	call basbld			!partially rebuild enemy bases
+Cd	call timout('BASBLD')
+C	if (.not. ROMOPT) goto 3501
+C	call cllock
+C	call romdrv(d1,d2)	!activate Romulan?
+C	call cluock
+C	end
+
+
+
 3501	shpcon(who,KNTURN) = shpcon(who,KNTURN) + 1	!update stardate
 	tmturn(team) = tmturn(team) + 1
 

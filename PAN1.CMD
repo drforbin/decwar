@@ -9,7 +9,7 @@ romdrv,romstr,romtor,scan,set,shield,snova,status,tell,time,tordam,torp,tractr
 trap,type,users
 msg
 enqlck,cloak
-cllock,cluock
+cllock,cluock,caldef
 warmac,warver
 sys:forlib/sea/seg:def
 setup/seg:low

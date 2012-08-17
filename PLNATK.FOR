@@ -66,7 +66,9 @@ C	'BUILDS' the planet has undergone.
 C       added by drforbin for cloaking device
 
 
-            if ( .not. (cloak(j, clstat) .eq. clon)) 
+            if ( .not. ((cloak(j, clstat) .eq. clon)
+     +      .or. (cloak(j,clstat) .eq. clfout) .or.
+     +      (cloak(j,clstat) .eq. clfin))) 
      +      goto 101
             if ( clsee (id) .eq. .true. ) goto 100
             goto 200
