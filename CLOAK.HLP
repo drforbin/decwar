@@ -1,0 +1,82 @@
+
+***CLOAKING DEVICE USE***
+
+The cloaking device will be found while capturing a planet.
+There is a random chance of discovering one as the capture process is taking place.
+Should one be found a message will alert the player of this.
+It will then take some random time to discover it's purpose and install it.
+
+Once installed it can be turned off and on with the following commands.
+
+sh out (to fade out/turn it on)
+sh in  (to fade in/turn it off)
+
+When on you cannot dock/build/capture or fire any weapons.
+It takes 5 stages (each takes some time for the device to fully turn on or off).
+The on/off process is classified as fading out and on/fading in and off.
+The full effects of the device donot take effect until it is fully on,
+and you cannot use weapons until fully off.
+The effects gradually come into effect each stage and go out of effect each stage,
+each stage consumes 25 units of power as fade in/fade out occure.
+once fully on the device consumes 100 units per 5 secs.
+
+Note, Shields must be UP to turn on cloak, and cloak must be off to drop
+shields. Should shields be knocked down during combat the cloak will be knocked offline.
+
+The Romulan can detect a cloak ship better than other ships, and the distance
+adjustment is not as severe. 
+
+The status of the cloak will show as a 'C' in information PROMPT
+and or in STATUS display as the status of the acheron.
+
+There is a added bonus adjustment for cloaked ships when they move at
+less than warp 3. Which means at such a slow speed it's harder
+to be detected and damage is less.
+
+There are two stages for firing on a cloaked ship.
+
+
+*LOCKON STAGE*
+
+There is a probability determined by the CLSEE function described below,
+that the ship will show up AT ALL in a LIST or TARGET command etc.
+This reflects the difficulty of your sensors detecting the target.
+
+If COMPUTED fire or MOVE is used your sensors will either not be 
+able to LOCKON to the target at which point a message will be printed 
+to that effect, or they will LOCKON. This probability again is
+determined by CLSEE. If they LOCKON the firing will move onto the 2nd stage. 
+
+
+NOTE-You can bypass this stage by using absolute or relative coordinates.
+I.e. Not using COMPUTED coordinates.
+
+*FIRING STAGE*
+ 
+The distance from the TARGET will be adjusted by the CLDIST function.
+The distance adjustment will increase/decrease for each stage of
+fade out/fade in. When fully ON an additional bonus adjustment will occur.
+The net effect of all this is to lower damage and hits from phasers and torpedoes. 
+
+This applies to all strikes against cloaked ships.
+
+
+
+
+
+CLSEE
+function
+
+isee = 100 -  (50 + ( min0( ( (id - 1) ** iran(7)), 80 ) - 40 ) )
+
+CLDIST
+function
+
+Fully ON
+cldist = 2 * ( id -1 ) + fadestate
+
+Fading
+cldist = (id -1 ) + fadestate
+
+
+
