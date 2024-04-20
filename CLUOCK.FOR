@@ -22,10 +22,6 @@ C	re-remove cloaked units from board
 	call setdsp ( shpcon(iwho,KVPOS), shpcon(iwho,KHPOS), 0 ) 
 100	continue
 
-C	call unlock
-
-	call unlock(board)
-
 	return
 
 	end

@@ -30,10 +30,11 @@ C	02110-1301, USA.
 	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	versio = 24					!version number
 C	call royaln('CSIS86') drforbin(merlyn)
+
+	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	oflg   = medium
 	call out (decver, 1)
 	call out ('Are you: ', 1)
-
 	call out ('1 Beginner', 1)
 	call out ('2 Intermediate', 1)
 	call out ('3 Expert', 1)
@@ -69,11 +70,11 @@ C	call royaln('CSIS86') drforbin(merlyn)
 	call pregam			!enter Pre-game stage
 
 	call ttyon
+	call kilchk
 	call setup			!start up player in game
 	call aprset($9999)		! set up trap for data out of bounds
 	call place ((100 * team) + who, 1, shpcon(who,KVPOS),
      +	shpcon(who,KHPOS))
-
 49	continue
   50	PLAYER = .TRUE.			!regular player, not a Romulan
 d	call timin ('GETCMD')
@@ -267,25 +268,7 @@ d	call timout('CMDUSE')
 3500	continue
 	dotime = dotime + 1
 	if (dotime .lt. numply) goto 3501	! if time to do rebuilding etc
-
 	dotime = 0
-
-C	added by drforbin to implode game if etim == neg
-	if ( (.not. (etim(tim0) .lt. 0)) .and. (.not. 
-     +  (etim(job(who, KJOBTM) )) .lt. 0 ) ) goto 3502
-	call crlf
-	call crlf
-	call out ('This Game has taken too long
-     + and the galaxy has imploded.',1)
-	call out ('Please start a new game.',1) 
-	tim0 = -1
-	goto 3810
-C	end addition by dr
-
-
-C	added by DR for activating rom and defenses
-3502	call caldef		!added by drforbin for event loop
-C	end
 
 
 C	editied out by drforbin
@@ -298,12 +281,8 @@ Cd	call timout('PLNATK')
 Cd	call timin ('BASBLD')
 C	call basbld			!partially rebuild enemy bases
 Cd	call timout('BASBLD')
-C	if (.not. ROMOPT) goto 3501
-C	call cllock
-C	call romdrv(d1,d2)	!activate Romulan?
-C	call cluock
+C	if (ROMOPT)	call romdrv(d1,d2)	!activate Romulan?
 C	end
-
 
 
 3501	shpcon(who,KNTURN) = shpcon(who,KNTURN) + 1	!update stardate
@@ -370,6 +349,8 @@ C	end
 	goto 3810
 *.......Player dead or quitting
 
+C	player is reallying quitting.
+
 3810	continue
 3800	call cctrap			! disable ^C trapping, if any
 	txppn = job(who, kppn)
@@ -387,12 +368,7 @@ C	end
      +	txtem, who)
 
 
-C	call free (who)			! release the ship
-C	who = 0
-C	call exit
-
-	call trap
-	call out ('Returning from TRAP',1)
-	goto 50
-
+	call free (who)			! release the ship
+	who = 0
+	call exit
 	end

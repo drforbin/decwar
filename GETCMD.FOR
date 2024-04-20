@@ -31,10 +31,6 @@ C	hit and message queues between commands.
 	external monit
 
 	call ttyon
-	if (cloak(who,clhave) .eq. cloyes) call clstup (
-     +  cloak(who,clstat), who, cloak)
-
-	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
 	call ttyon
 	if (msgflg(who) .ne. 0)  call outmsg
@@ -43,7 +39,7 @@ C	hit and message queues between commands.
 	call dmpbuf			!dump output buffer
 	call CCTRAP
 	if (.not. PASFLG)
-     +    call pause (ptime)		!pause (mark) after previous command
+     +call pause (ptime)		!pause (mark) after previous command
 	ptime = 0			!assume no pause for next cmd.
 
  100	call crlf
@@ -51,7 +47,7 @@ C	call chkseq			! check for active jobs !not needed added by drforbin
 	if (shpcon(who,KSDAM) .ge. KENDAM)  goto 1100	!ship dead?
 	if (shpcon(who,KSNRGY) .le. 0)  goto 1200	!energy gone?
 	if (shpcon(who,KSNRGY) .le. 10000)  shpcon(who,KSPCON) = YELLOW	!yellow alert?
-	if (shpcon(who,KSPCON) .eq. YELLOW)  call out ("034160703400,0)	!if yellow alert, BEEP!
+C	if (shpcon(who,KSPCON) .eq. YELLOW)  call out ("034160703400,0)	!if yellow alert, BEEP!
 	call ttyon
 
 	call endgam			!game over?
@@ -69,29 +65,20 @@ C	if (comknt .lt. 30 * numply)  goto 300
 C	comknt = 0
 c--	call dship
 
-
-
-
 C	added by drforbin
-	iotime = iotime + 1
-        if (iotime .lt. ielay) goto 300       !SLow me down code DR 
-
-        iotime = 0
+	dotime = dotime + 1
+	if (dotime .lt. numply*ielay) goto 300 ! if time to do rebuilding etc
+	dotime = 0
 	call caldef
 c	end
 
-
 	
 300	call ttyon
-	if (cloak(who,clhave) .eq. cloyes) call clstup (
-     +  cloak(who,clstat), who, cloak)
-
 	if ((hitflg(who) .eq. 0) .and. (msgflg(who) .eq. 0)) goto 350
 	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
 	call ttyon
 	if (msgflg(who) .ne. 0)  call outmsg
-
 	goto 100
 
  350	call endgam  ;  goto 200	!check for end of game

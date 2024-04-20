@@ -14,9 +14,6 @@ C	non-cloak state for processing
 	include 'lowseg/nolist'
 
 
-C	call lock
-	call lock(board, 'boardlock')
-
 C	call board normal
 
 C	place routines for placing cloaked (removed) units back on board

@@ -68,21 +68,22 @@ C	time, or are implementors of the game and know the password.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 	include 'setext/nolist'
-	external cc1
+	external trap
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
 
+	call cctrap(trap)
 	PASFLG = .FALSE.
 	call kqsrch (ttynum, jobnum, ppn, kindex)
 	if (kindex .eq. 0)  return		!This player hasn't been killed
-
 	timlft = KWAIT - etim(kilque(kindex,4))
 	if (timlft .le. 0)  return		!he has been dead long enough
 
 *.......Inform player of remaining time to wait
 
+	call crlf
 	call out (kilch4, 0)
 	timlft = KWAIT - etim(kilque(kindex,4))
-	if (timlft .lt. 1000)  timlft = 1000
+	if (timlft .lt. 1000)  timlft = 10000
 	timlft = timlft / 1000
 	minute = timlft / 60  ;  second = mod(timlft,60)
 	call odec (minute,0)  ;  call out (kilch5, 0)
@@ -90,7 +91,6 @@ C	time, or are implementors of the game and know the password.
 
 *.......Countdown to restart, check for password input
 
-	call cctrap(cc1)
 	call out (kilch8, 0)
 	call dmpbuf
 	call echoff
@@ -112,8 +112,8 @@ C	time, or are implementors of the game and know the password.
 	if (equal(tknlst(1),KPASS) .eq. -2)  return
 C	if (lofchk(0)) call monit drforbin(merlyn)
 	call cc1
-
 	end
+
 	subroutine PREGAM
 	include 'param/nolist'
 	include 'hiseg/nolist'
@@ -121,9 +121,9 @@ C	if (lofchk(0)) call monit drforbin(merlyn)
 	include 'extern/nolist'
 	include 'setext/nolist'
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
+
 	call jobsta (jobnum, nam1, nam2, ppn, ttynum, ttyspd)
 C	if(ccflg) call monit		!added by drforbin for ctrl-C bug
-
   10	call ttyon
 	call out (strtup, 0)		!PREGAME or <CR>
 	call gtkn
@@ -233,7 +233,6 @@ C	call	frcchk			! force scan of jobsequence numbers !commented drforbin
 	numply = numply + 1		!number of players
 	if (CCFLG .or. hungup)  call cc1
 	call cctrap(cc1)
-
 	call setran (daytim (d))
 	if (tim0 .lt. 0)  goto 200
 	if ((numply .ne. 1) .or. ((hitime-daytim(d)) .gt. 0))  goto 1200	!universe already set up?
@@ -260,7 +259,7 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (equal (tknlst(1), 'TOURNAMENT'))  goto 400
 	if (equal (tknlst(1), 'REGULAR'))  600, 300
  400	i = 2
-	if (typlst(2) .ne. KEOL)  goto 500
+C	if (typlst(2) .ne. KEOL)  goto 500
 	i = 1
 	call out (setu03, 0)
 	call gtkn
@@ -300,8 +299,9 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 
 	nstar  = int(51 * ran(0)) * 5 + 100
 	nhole  = int(41.0 * ran(0) + 10)
-c--	nplnet = int(20.0 + ran(0) * 61.0)
-	nplnet = 60			! ALWAYS insert max. # of planets
+C	nplnet = int(20.0 + ran(0) * 61.0) ! drforbin uncommented
+	nplnet = int(20.0 + ran(0) * 40.0) ! drforbin uncommented
+C	nplnet = 60			! ALWAYS insert max. # of planets
 	do 900 i = 1 , KNBASE
 	  call place (((DXFBAS*100) + i), 1, base(i,KVPOS,1),
      +	  base(i,KHPOS,1))

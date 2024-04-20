@@ -10,7 +10,8 @@
 *romdrv,romstr,romtor,scan,set,shield,snova,status,tell,time,tordam,torp,tractr
 *trap,type,users
 *msg
-*enqlck
+*enqlck,cloak
+*cllock,cluock,caldef
 *warmac,warver
 *sys:forlib/sea/seg:def
 *setup/seg:low

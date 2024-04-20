@@ -30,17 +30,9 @@ C	his ship has been taken over by someone else).
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
-	call CCTRAP
-	call free (who)			!store ship info, remove from high seg
-C	who = 0 !I think this has to be removed
-	IF ( tim0 .eq. -1 ) call exit 
-	isegid = tim0
-	call monit			!return to monitor
-	IF( isegid .eq. tim0 ) goto 100
-	call out ('New high segment created while in monitor mode.',1) 
-	call out ('Start a new Game.',1)
+	who = 0 !I think this has to be removed
+	call crlf
+	call out('You typed CTL-C.',1)
+	call out('Please start game again EXIT',1)
 	call exit
-100	call rstart (who)		!restore ship to high seg if possible
-	return
-
 	end

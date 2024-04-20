@@ -41,7 +41,10 @@ C	and the job is returned to monitor level.
 	call kilhgh
 	endflg = .true.
 
- 100	call out (endgm0,1)
+C 100	call out (endgm0,1)!edited by drforbin
+100	call crlf!added by drforbin for beauty
+	call crlf
+	call out (endgm0,1)
 	if (max0 (nplnet, nbase(1), nbase(2)) .ne. 0) goto 300
 		call out (endgm1, 1)
 		endflg = -2			! -2 implies total destruction

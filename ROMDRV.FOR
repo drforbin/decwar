@@ -40,7 +40,7 @@ C	game.
 d	call timin ('ROMDRV')
 	romcnt = romcnt + 1
 	if (romcnt * 2 .lt. numply)  goto 9999	!time to move?
-	PLAYER = .FALSE.			!Romulan moving ...
+C	PLAYER = .FALSE.			!Romulan moving ...
 	tmturn(3) = tmturn(3) + 1
 	if (ROM)  goto 1100			!Romulan already alive?
 
@@ -62,7 +62,9 @@ C	erom = iran(200) + 200!added by drforbin
 	if (PASFLG)  dbits = dbits .or. bits(who)
 	call makhit
 
-151	if (iran (10) .eq. 1) call tell		! let the Romulan speak!
+	if ( .not. (iran (10) .le. 1)) goto 99		! let the Romulan speak!DRF
+	call tell
+99	continue
 
 *.......Romulan searches for a target in range
 
@@ -106,8 +108,10 @@ C	added by drforbin for cloaking device
 	Vto = i  ;  Hto = j  ;  shjump = 0
 	shstfr = erom  ;  shcnfr = 1
 	id = pdist (Vfrom, Hfrom, Vto, Hto)
+
 C	added by drforbin for cloaking device
 	if(cloak(iplace,clstat) .eq. clon) id = id + 2
+
 	call phadam (nplc, iplace, id, 300, .TRUE.) !200 to 300 drforbin
 	iwhat = 1
 	call pridis (i, j, KRANGE, 0, 0)
@@ -124,11 +128,12 @@ C	added by drforbin for cloaking device
 
 *.......Activate bases and planets, rebuild bases a little
 
-1000	if (iran (50) .le. 1) call tell		! let the Romulan speak!
+C	1000	if (iran (50) .le. 1) call tell		! let the Romulan speak!
 
-C	added by dr for activating rom and defenses 
-C	call caldef
-C	end
+1000	if ( .not.  (iran (10) .le. 2)) goto 1099   ! let the Romulan speak!DRF
+	call tell
+1099	continue
+
 
 C	edited out by drforbin
 Cd	call timout ('ROMDRV')
@@ -143,7 +148,6 @@ C	call basbld
 Cd	call timout ('BASBLD')
 C	end
 
-
 	return
 
 9999	continue
@@ -155,21 +159,16 @@ d	call timout ('ROMDRV')
 
 1100	call dist (iplace, nplc, numsec)	!find object
 
-
-
-
 C       added by drforbin for cloaking device
+	if ( (nplc .eq. 3) .or. (nplc .eq. 4) ) goto 1101
 	idist = pdist (locr(KVPOS), locr(KHPOS), shpcon(iplace,KVPOS),
      +  shpcon(iplace,KHPOS))
 	idist = idist - 2
 	idist = max0(idist, 0)
-        if ( .not. (cloak(iplace, clstat) .eq. clon)) goto 1101 
-        if ( clsee (idist) .eq. .true. ) goto 1101
+	if ( .not. (cloak(iplace, clstat) .eq. clon)) goto 1101 
+	if ( clsee (idist) .eq. .true. ) goto 1101
 	return
 C       end
-
-
-
 
 1101	if (numsec .le. 1)  goto 200		!already point-blank range?
 	goto (1300, 1300, 1200, 1200)  nplc

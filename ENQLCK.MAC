@@ -28,12 +28,12 @@ psilck:	movei	t1,vector
 	jrst	[outstr [asciz /Error in PIINI. . CALL. Exiting/]
 		exit
 		]
-	move 	t1,[PS.FAC+PS.FON+[
-			.PCQUE
+	move 	t1,[exp PS.FAC+PS.FON+[
+			exp .PCQUE
 			xwd 0,0
 			xwd 0,0]]
 	pisys.	t1,		;enable psi system
-	jrst	[outstr [asciz /Error in PISUS. . CALL. Exiting/]
+	jrst	[outstr [asciz /Error in PISYS. . CALL. Exiting/]
 		exit
 		]
 	popj	p,	 	

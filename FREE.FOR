@@ -109,6 +109,7 @@ C.......time when he will again be eligible to play.
 
 	entry RSTART (snum)
 
+
  800	if (shpcon(snum,KVPOS) .ne. 0)  goto 1100	!tship in use
 	if (disp(tshpco(KVPOS),tshpco(KHPOS)) .gt. 0)
      +	goto 1200   !  spot on board is taken
@@ -145,11 +146,13 @@ C.......time when he will again be eligible to play.
      +		job(snum,KTTYN),
      +		job(snum,KTTYSP)
      +		    )
+
 	job(snum,KNAM1) = tjob(KNAM1)
 	job(snum,KNAM2) = tjob(KNAM2)
 	job(snum,KTTYTP) = tjob(KTTYTP)
 	job(snum,KJOBTM) = tjob(KJOBTM)
 	job(snum,KRUNTM) = tjob(KRUNTM)
+
 	call setdsp (tshpco(KVPOS), tshpco(KHPOS), tship)
 	call unlock (frelok)
 	return
@@ -163,5 +166,4 @@ C.......time when he will again be eligible to play.
 1200	call out (free02,1)			!Spot on board taken
 	call monit
 	goto 800
-
 	end

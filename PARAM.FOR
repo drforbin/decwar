@@ -47,7 +47,7 @@ C	02110-1301, USA.
 	parameter krange=10	!maximum range of scan, phasers, and torps
 	parameter kcrit=3000	!amount of device damage deemed critical
 	parameter kendam=25000	!amount of ship damage deemed fatal
-	parameter kwait=0	!milliseconds to wait before restart
+	parameter kwait=100000	!milliseconds to wait before restart
 	parameter kcmdtm=2000	!milliseconds to wait for command before loop
 	parameter kqlen=10	!length of killed queue
 	parameter maxint="377777777777 !biggest integer

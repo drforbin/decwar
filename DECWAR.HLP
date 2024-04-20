@@ -1,4 +1,5 @@
-             DECWAR Version 2.2, December 25, 1979
+             DECWAR Version 2.3, November 20, 1981
+               (Includes help on SYSTEM commands)
 
 
 .Introduction
@@ -56,7 +57,7 @@ side:
 
 
 
-     Due to continuous espionage activities, present  front-line
+     Due to continuous espionage activities, present  front-line
 ships  of the Federation and the Klingon Empire are identical in
 strength and weaponry.  These ships  can  move  from  sector  to
 sector  using  either  warp or impulse engines, can attack enemy
@@ -116,7 +117,7 @@ following devices:
          NOTE:  If a ship's shields are up, the amount of energy
          expended during movement is doubled.
 
-     6.  Computer -- The ship's computer is  used  for  computed
+     6.  Computer -- The ship's computer is  used  for  computed
          firing,  computation  during  ship  movement,  and  for
          phaser  control.   If  the  computer  is   inoperative,
          navigation  during  warp  and  impulse movement becomes
@@ -138,6 +139,10 @@ following devices:
          danger.  The beam can not be  used  unless  both  ships
          have lowered their shields.
 
+    10.  Cloaking device -- The cloaking  device  can  be  found
+         during the course of the game. This  is  an addition to
+         the standard DECWAR game. Please  see SHields below for
+         details.
 
      In addition to the individual devices  discussed  above,  a
 newly  commissioned  ship (or a fully repaired and rearmed older
@@ -176,7 +181,7 @@ enemies, which come in several categories:
          comes across a suitable target  (Federation  or  Empire
          ship  or base) which he immediately proceeds to attack.
          An infinite supply of torpedoes and energy make  him  a
-         formidable   foe.    If  you  kill  one,  another  will
+         formidable   foe.    If  you  kill  one,  another  will
          eventually appear somewhere in the galaxy.
 
      2.  Enemy ship.  This is the second most dangerous thing to
@@ -234,85 +239,91 @@ description of each command).  The legal commands are:
          be captured.
 
      3.  CAPTURE -- Win a neutral or enemy planet over  to  your
+
          side.
-     4.  DAMAGES --  List  damaged  devices  and  their  current
+     4.  DAMAGES --  List  damaged  devices  and  their  current
          status.
 
-     5.  DOCK -- Dock at  an  adjacent  base  or  planet.   This
+     5.  *DEBUG -- A password-controlled routine  to  enter  DDT
+         directly from DECWAR.
+
+     6.  DOCK -- Dock at  an  adjacent  base  or  planet.   This
          increases  your  energy,  replenishes  your  torpedoes,
          repairs your ship  a  little,  and  reduces  your  ship
          damage.
 
-     6.  ENERGY -- Transfer energy between two ships.
+     7.  ENERGY -- Transfer energy between two ships.
 
-     7.  GRIPE -- Record bugs, comments,  suggestion,  etc.   in
+     8.  GRIPE -- Record bugs, comments,  suggestion,  etc.   in
          the file GAM:DECWAR.GRP, which is periodically reviewed
          by the implementors.
 
-     8.  HELP -- List or describe the legal commands.
+     9.  HELP -- List or describe the legal commands.
 
-     9.  IMPULSE -- Move using impulse engines.
+    10.  IMPULSE -- Move using impulse engines.
 
-    10.  LIST -- List various information  about  ships,  bases,
+    11.  LIST -- List various information  about  ships,  bases,
          and planets.
 
-    11.  MOVE -- Move using warp engines.
+    12.  MOVE -- Move using warp engines.
 
-    12.  NEWS -- Tell about any  new  features  or  enhancements
+    13.  NEWS -- Tell about any  new  features  or  enhancements
          described in the file GAM:DECWAR.NWS.
 
-    13.  PHASERS -- Fire phasers at a target.
+    14.  *PASSWORD -- Set password for debugging, cheating, etc.
 
-    14.  PLANETS -- List information on friendly and known enemy
+    15.  PHASERS -- Fire phasers at a target.
+
+    16.  PLANETS -- List information on friendly and known enemy
          and neutral planets.
 
-    15.  POINTS -- List your score breakdown so far.
+    17.  POINTS -- List your score breakdown so far.
 
-    16.  QUIT -- Get out of the game.
+    18.  QUIT -- Get out of the game.
 
-    17.  RADIO -- Turn ship's sub-space radio on or off;  ignore
+    19.  RADIO -- Turn ship's sub-space radio on or off;  ignore
          or restore communications from individual ships.
 
-    18.  REPAIR -- Repair your damaged devices a little.
+    20.  REPAIR -- Repair your damaged devices a little.
 
-    19.  SCAN -- Display the galaxy with the default  range  set
+    21.  SCAN -- Display the galaxy with the default  range  set
          to  maximum  (10  sectors  in  each direction from your
          ship).
 
-    20.  SET -- Set various input and output defaults.
+    22.  SET -- Set various input and output defaults.
 
-    21.  SHIELDS -- Transfer energy to  or  from  your  shields;
-         raise or lower your shields.
+    23.  SHIELDS -- Transfer energy to  or  from  your  shields;
+         raise or lower your shields. ***CLOAK USE***
 
-    22.  SRSCAN -- Display the galaxy with a default range of  7
+    24.  SRSCAN -- Display the galaxy with a default range of  7
          sectors (1 greater than the maximum warp factor).
 
-    23.  STATUS -- List your ship's current  status  and  supply
+    25.  STATUS -- List your ship's current  status  and  supply
          levels.
-
-    24.  SUMMARY -- List various information  on  ships,  bases,
+    26.  SUMMARY -- List various information  on  ships,  bases,
          and planets.
-    25.  TARGETS -- List  targets  (enemies  within  range)  and
+
+    27.  TARGETS -- List  targets  (enemies  within  range)  and
          their current locations.
 
-    26.  TELL  --  Send  messages  to  other  ships  using   the
+    28.  TELL  --  Send  messages  to  other  ships  using   the
          sub-space radio.
 
-    27.  TIME -- List information on run time and elapsed time.
+    29.  TIME -- List information on run time and elapsed time.
 
-    28.  TORPEDOES -- Fire photon torpedoes at a target.
+    30.  TORPEDOES -- Fire photon torpedoes at a target.
 
-    29.  TRACTOR -- Use tractor beam to tow friendly ships.
+    31.  TRACTOR -- Use tractor beam to tow friendly ships.
 
-    30.  TYPE  --  List  current   input,   output,   and   game
+    32.  TYPE  --  List  current   input,   output,   and   game
          characteristics.
 
-    31.  USERS -- List the names  and  other  information  known
+    33.  USERS -- List the names  and  other  information  known
          about the players currently in the game.
 
 
-
-.INPUT
+. 
+.INPUT
 General INPUT information
 
 - Only the first 5 characters of each  input  word  are  stored.
@@ -362,15 +373,15 @@ General INPUT information
     type of coordinate computation is available only to captains
     controlling  their  ships  through  slow  terminals  (< 1200
     baud), and requires an operational computer.
+    * If the password is set you can  use  computed  coordinates
+      even on a fast terminal.
   The keyword ABSOLUTE, RELATIVE, or COMPUTED is only given  one
   time  for  each set of coordinates.  For instance, the TORPEDO
   command can accept  up  to  3  coordinates,  but  the  keyword
   describing  the  coordinate input type is given only once, and
   all coordinates must be of the same type.
 .
-
-
-.OUTPUT
+.OUTPUT
 General OUTPUT information
 
 The SET OUTPUT LONG/MEDIUM/SHORT command controls the length  of
@@ -428,11 +439,8 @@ Summary   Time      Users
 
 The ACTIVATE command (valid only in the  pre-game)  is  used  to
 exit the pre-game section and enter the normal ship setup stage.
-The pre-game can be recognized from the 'PG>' command prompt, as
-well as the DECWPG program name.
-.
-
-
+The pre-game can be recognized from the 'PG>' command prompt.
+.
 .HINTS
 Some general HINTS
 
@@ -490,11 +498,9 @@ Some general HINTS
   output set right each time you play a game.
 - To always see the range and direction of any object listed (in
   hit  messages,  output from the LIST command, etc.), SET OCDEF
-  BOTH.  (The range is the magnitude of either delta v or  delta
+  BOTH.  (The range is the magnitude of either delta v or  delta
   h, whichever is larger.)
 .
-
-
 .PAUSES
 Commands that take real time
 
@@ -535,12 +541,11 @@ torpedoes again.
 Use of ^C
 
 If you're in command input wait (DECWAR is waiting  for  you  to
-type  a  command, and the program name is set to DECWTI), typing
-^C will abort the game and return you to monitor mode.  When you
-abort the game in this manner, your ship is returned to the pool
-of available ships.  You will be able to continue unless  a  new
-player  has  taken  your ship or someone has moved into the spot
-you occupied.
+type  a command), typing a ^C will abort the game and return you
+to monitor mode.  When you abort the game in this  manner,  your
+ship  is  returned  to the pool of available ships.  You will be
+able to continue unless a new player  has  taken  your  ship  or
+someone has moved into the spot you occupied.
 
 If you're not in a command input wait state when  you  type  ^C,
 any  stacked  commands (commands that you typed in ahead of time
@@ -550,7 +555,7 @@ bells will be output.
 NOTE:  A ship under RED alert conditions can not be returned  to
 the monitor level except by using the QUIT command.
 .
-.BASES
+.BASES
 List various BASE information
 
 Syntax:  BAses [<keywords>]
@@ -610,7 +615,7 @@ enemy ships, and can be DOCKed at to refuel and rearm, just like
 a  base (except a planet can only supply half the resources that
 a  base  can).   Enemy  planets  can  also  be  captured.   When
 capturing an enemy planet, 1 second is added to the normal pause
-time of 5 seconds for each BUILD present.   Also,  50  units  of
+time of 5 seconds for each BUILD present.   Also,  50  units  of
 ship energy are lost for each build.
 
 Examples:
@@ -638,6 +643,19 @@ DA              List all damaged devices and their current
 DA SH T         List damages for SHields and Torpedo tubes.
 DA PH RA C      List damages for PHasers, sub-space RAdio, and
                 Computer.
+.
+
+
+.*DEBUG
+DEBUG the game
+
+If DDT is loaded:
+  Chain to DDT to allow variables to be  examined  and  altered,
+  set break points, etc.  To get back to DECWAR, type C.$G.
+If DDT is not loaded:
+  Exit to the monitor.  If a symbol file is  present,  variables
+  can  still  be  easily  examined  by  entering DDT through the
+  monitor command DDT.
 .
 
 
@@ -670,7 +688,9 @@ DO ST           Dock, show ship's status AFTER docking.
 DO ST SH T      Dock, show ship's shield strength and number of
                 torpedos on board AFTER docking.
 .
-.ENERGY
+
+
+.ENERGY
 Transfer ENERGY to a friendly ship
 
 Syntax:  Energy <ship name> <units of energy to transfer>
@@ -730,7 +750,7 @@ descriptions:
 - Any parameter that must be typed in literally  is  started  in
   capital  letters  and continued in lower case.  The upper case
   letters signal  the  shortest  unambiguous  abbreviation  (the
-  shortest   abbreviation  may  change  slightly,  depending  on
+  shortest   abbreviation  may  change  slightly,  depending  on
   context).
 
 Examples:
@@ -777,6 +797,13 @@ The following information is available via the LIST command:
   been SCANned or LISTed by anyone on your team).
 - Location and number of builds of  any  known  planet,  or  any
   planet within range.
+* Note:  If the password flag is  set,  all  ships,  bases,  and
+  planets  are  "known" about.  So, with the password set, LIST,
+  SUMMARY, BASES, PLANETS, and TARGETS will allow you access  to
+  any  information  they are capable of providing.  However, any
+  information received because of the password being set is  not
+  "remembered"  like  information  learned through normal use of
+  these commands.
 The above information is also available, in whole  or  in  part,
 through the SUMMARY, BASES, PLANETS, and TARGETS commands.  Each
 command has it's own default range,  side  (Federation,  Empire,
@@ -790,7 +817,7 @@ Keywords used with BASES, PLANETS, TARGETS,  LIST,  and  SUMMARY
 
 ship names      Include only specified ships (several ship names
                 may be given, including Romulan).
-vpos hpos       List only the object at the location vpos-hpos.
+vpos hpos       List only the object at the location vpos-hpos.
 CLosest         List only the closest of the specified objects.
 
 SHips           Include only ships (Federation, Empire, or
@@ -827,7 +854,6 @@ SUmmary         List summary of all selected items.  Turn off
                 list unless command is LIST or the keyword LIST
                 is specified.  Extend the range to infinity
                 unless a range is explicitly given.
-
 And             Used to separate groups of keywords.
 &               Same as AND.
 
@@ -850,7 +876,8 @@ LI 1 3 & 9 5    List the objects at locations 1-3 and 9-5.
 MOVE using warp drive
 
 Syntax:  Move [Absolute|Relative|Computed] <vpos> <hpos>
-Maximum speed is warp factor 6, which will move  you  6  sectors
+
+Maximum speed is warp factor 6, which will move  you  6  sectors
 per  turn.  Maximum SAFE speed is warp factor 4;  warp factors 5
 and 6 risk potential warp engine damage.  Energy consumption per
 move  is  proportional to the square of the warp factor.  If the
@@ -877,6 +904,23 @@ Syntax:  NEws
 
 Display the file which contains information on any new features,
 enhancements, bug fixes, etc for each version of DECWAR.
+.
+
+
+.*PASSWORD
+Set PASSWORD
+
+Syntax:  *Password [<password>]
+
+If the correct password is given, set the password flag.  If  no
+password  is given, or the password is incorrect, issue an error
+message and clear the flag.  The password flag must  be  set  to
+access  system  commands (*DEBUG).  Also, with the password flag
+set, you have access to ANY information that  LIST  can  supply,
+including detailed information on out of range enemy forces.  It
+is suggested that you turn off  echoing  by  typing  ^G  (CTL-G)
+before  you  type  in  any system command, and especially before
+typing in the password.
 .
 
 
@@ -909,7 +953,8 @@ NOTE:  Although phasers can damage enemy planetary installations
 (BUILDs), they can NOT destroy the planet itself.
 
 Examples:
-PH 12 32        Phaser target at sector 12-32.
+
+PH 12 32        Phaser target at sector 12-32.
 PH A 12 32      Equivalent to "PH 12 32".
 PH R 2 -3       Phaser target at sector 12-32, if your location
                 is 10-35.
@@ -969,7 +1014,7 @@ Categories in POINTS breakdown:
 - Total points scored.
 - Total number of ships commissioned.
 - Total score / number of players.
-- Total score / stardates.
+- Total score / stardates.
 
 Examples:
 
@@ -1029,7 +1074,7 @@ to  a  device,  REPAIR can be used to restore the device to full
 (or partial) working order.   A  REPAIR  removes  the  specified
 units  of  damage  from  each damaged device, in addition to the
 normal repair rate of 30 units per turn.  If the ship is DOCKED,
-the  pause  time  for the specified REPAIR is reduced by half of
+the  pause  time  for the specified REPAIR is reduced by half of
 that needed  while  in  flight.   If  the  repair  size  is  not
 specified,  REPAIR  defaults to a 4 second repair (50 units + 50
 more if docked).  REPAIR does NOT reduce the SHIP damage.
@@ -1089,7 +1134,7 @@ Examples:
                   (puts ship in upper right corner of the scan).
   SC W            Same as "SC", plus shows danger zones around
                   enemy bases and planets.
-.
+.
 
 
 .SET
@@ -1149,7 +1194,85 @@ SH U            Raise shields.
 SH D            Lower shields.
 SH T 500        Transfer 500 units of energy TO shields
 SH T -500       Transfer 500 units of energy FROM shields
-.
+
+***CLOAK DEVICE USE***
+
+Syntax:  SHields Out|In
+
+the cloaking device will be found while capturing a planet.
+There is a random chance of discovering one as the capture process is taking place.
+Should one be found a message will alert the player of this.
+It will then take some random time to discover it's purpose and install it.
+
+Once installed it can be turned off and on with the following commands.
+
+sh out (to fade out/turn it on)
+sh in  (to fade in/turn it off)
+
+When on you cannot dock/build/capture or fire any weapons.
+It takes 5 stages (each takes some time for the device to fully turn on or off).
+The on/off process is classified as fading out and on/fading in and off.
+The full effects of the device donot take effect until it is fully on,
+and you cannot use weapons until fully off.
+The effects gradually come into effect each stage and go out of effect each stage,
+each stage consumes 25 units of power as fade in/fade out occure.
+once fully on the device consumes 100 units per 5 secs.
+
+Note, Shields must be UP to turn on cloak, and cloak must be off to drop
+shields. Should shields be knocked down during combat the cloak will be knocked offline.
+
+The Romulan can detect a cloak ship better than other ships, and the distance
+adjustment is not as severe. 
+
+The status of the cloak will show as a 'C' in information PROMPT
+and or in STATUS display as the status of the acheron.
+
+There is a added bonus adjustment for cloaked ships when they move at
+less than warp 3. Which means at such a slow speed it's harder
+to be detected and damage is less.
+
+There are two stages for firing on a cloaked ship.
+
+
+*LOCKON STAGE*
+
+There is a probability determined by the CLSEE function described below,
+that the ship will show up AT ALL in a LIST or TARGET command etc.
+This reflects the difficulty of your sensors detecting the target.
+
+If COMPUTED fire or MOVE is used your sensors will either not be 
+able to LOCKON to the target at which point a message will be printed 
+to that effect, or they will LOCKON. This probability again is
+determined by CLSEE. If they LOCKON the firing will move onto the 2nd stage. 
+
+
+NOTE-You can bypass this stage by using absolute or relative coordinates.
+I.e. Not using COMPUTED coordinates.
+
+*FIRING STAGE*
+ 
+The distance from the TARGET will be adjusted by the CLDIST function.
+The distance adjustment will increase/decrease for each stage of
+fade out/fade in. When fully ON an additional bonus adjustment will occur.
+The net effect of all this is to lower damage and hits from phasers and torpedoes. 
+
+This applies to all strikes against cloaked ships.
+
+
+CLSEE
+function
+
+isee = 100 -  (50 + ( min0( ( (id - 1) ** iran(7)), 80 ) - 40 ) )
+
+CLDIST
+function
+
+Fully ON
+cldist = 2 * ( id -1 ) + fadestate
+
+Fading
+cldist = (id -1 ) + fadestate
+.
 
 
 .SRSCAN
@@ -1169,7 +1292,6 @@ Show ship STATUS
 Syntax:
 STatus
 [Condition|Location|Torpedoes|Energy|Damage|Shields|Radio]
-
 Show the current stardate, plus the status of any  of  the  ship
 attributes:   ship  condition,  location,  number of torps, ship
 energy, ship damage, shield energy, and radio  condition.   Ship
@@ -1209,7 +1331,8 @@ SUM EN          Tell how many enemies are in the game (number of
 List information on TARGETS
 
 Syntax:  TArgets [<keywords>]
-Primarily for locating targets during battle, when a SCAN  would
+
+Primarily for locating targets during battle, when a SCAN  would
 be  too time consuming.  List location and shield percent of any
 enemy ship, base, or planet in range;  name of any enemy ship in
 game  (including the Romulan);  or location and number of builds
@@ -1240,7 +1363,7 @@ ESCAPE key (no junk mail!).
 
 Examples:
 
-TE V;Hello!     Send "Hello!"  to the Vulcan.
+TE V;Hello!     Send "Hello!" to the Vulcan.
 TE KL;DROP DEAD Send "DROP DEAD" to all Klingons.
 TE V,E;HELP ME  Send "HELP ME" to the Vulcan and Excalibur.
 .
@@ -1269,7 +1392,7 @@ any  object  lying  along  its  path will intercept the torpedo.
 One, two, or three torpedoes may be fired with one command,  and
 the torpedoes may be individually targeted, or fired at a common
 location.  The minimum range of a torpedo is 8 sectors, but some
-will  travel  10 sectors before self-destructing.  Torpedoes may
+will  travel  10 sectors before self-destructing.  Torpedoes may
 be deflected from the desired track by  a  number  of  different
 factors,  including  your  ship's  shield strength, computer and
 torpedo tube damage, and torpedo misfires.   A  torpedo  misfire
@@ -1329,7 +1452,7 @@ Syntax:  TYpe OPtion|OUtput
 Type the current game OPTION and OUTPUT settings.
 The OPTION settings are:
 - The version number and date of implementation,
-- Whether there are Romulans in the game,
+- Whether there are Romulans in the game,
 - and whether there are Black Holes in the game.
 The OUTPUT settings are:
 - SHORT, MEDIUM, or LONG output,
@@ -1348,7 +1471,6 @@ TY OU           List the output settings.
 
 .USERS
 List USERS
-
 Syntax:  Users
 
 List all ships  currently  in  the  game.   Include  ship  name,
@@ -1357,3 +1479,5 @@ number, and job number.  If the output format is set  to  medium
 or short, omit the TTY and job numbers.  If the output format is
 set to short, omit the TTY speed and PPN (include only the  ship
 name and captain).
+* If the password is set, you also get each ship's location.
+.

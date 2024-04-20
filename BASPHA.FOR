@@ -43,8 +43,6 @@ C	side's bases.
 
 	    do 300 k = (KNPLAY/2) * (2 - i) + 1, (KNPLAY/2) * (3 - i)
 	      if (.not. alive(k))  goto 300		!player dead?
-C	      if (disp(shpcon(k,KVPOS), shpcon(k,KHPOS)) .le. 0)
-C     +	      goto 300					!player cloaked?
 	      if (.not. ldis(shpcon(k,KVPOS), shpcon(k,KHPOS),
      +	      base(j,KVPOS,i), base(j,KHPOS,i), 4))  goto 300	!player in range?
 	      Vfrom = base(j,KVPOS,i)  ;  Hfrom = base(j,KHPOS,i)

@@ -21,7 +21,7 @@ C	*********MAIN ROUTINE***********
 C	its best I can do with FORTRAN IV
 
 
-100	if (.not. (iran(100) .le. 100)) goto 101	!clfind
+100	if (.not. (iran(100) .le. 5)) goto 101	!clfind
 	icloak(iwho,cltime) = daytim(d)
 	icloak(iwho,clstat) = clinit
 	icloak(iwho,clhave) = cloyes
