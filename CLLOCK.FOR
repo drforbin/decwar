@@ -5,7 +5,7 @@ C	cloak DECWAR
 C	cllock locks board array and returns board to
 C	non-cloak state for processing
 
-
+	  
 
 	subroutine cllock 
 
@@ -19,6 +19,8 @@ C	call board normal
 C	place routines for placing cloaked (removed) units back on board
 C	for processing.
 
+	call lock (clolok)	!lock call to lock cloak structures
+
 	do 100 iwho = 1,KNPLAY
 	if ( .not. (( alive(iwho) ) .and. ( cloak(iwho,clstat)  
      +	.eq. clon )) ) goto 100 
@@ -26,6 +28,7 @@ C	for processing.
      +	(100 * clteam(clteam(iwho,cwho),cteam) ) + clteam(iwho,cwho) ) 
 
 100	continue
+	call unlock (clolok)	!unlock cloak structures
 	return
 
 	end

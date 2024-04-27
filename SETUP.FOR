@@ -259,7 +259,7 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (equal (tknlst(1), 'TOURNAMENT'))  goto 400
 	if (equal (tknlst(1), 'REGULAR'))  600, 300
  400	i = 2
-C	if (typlst(2) .ne. KEOL)  goto 500
+	if (typlst(2) .ne. KEOL)  goto 500
 	i = 1
 	call out (setu03, 0)
 	call gtkn
@@ -314,6 +314,10 @@ C	nplnet = 60			! ALWAYS insert max. # of planets
 1000	continue
 	call place (dxstar*100, nstar, dm1, dm2)
 	if (CCFLG .or. hungup)  goto 1400
+
+
+C	This commented to allow black hole select
+C	drforbin
 
 *.......Black hole option?
 C	all comments below inserted by drforbin

@@ -40,7 +40,7 @@ C	game.
 d	call timin ('ROMDRV')
 	romcnt = romcnt + 1
 	if (romcnt * 2 .lt. numply)  goto 9999	!time to move?
-C	PLAYER = .FALSE.			!Romulan moving ...
+	PLAYER = .FALSE.			!Romulan moving ...
 	tmturn(3) = tmturn(3) + 1
 	if (ROM)  goto 1100			!Romulan already alive?
 

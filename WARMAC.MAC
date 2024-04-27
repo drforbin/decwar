@@ -232,8 +232,10 @@ lall
 	kgalh==75		;maximum Horizontal coordinate in galaxy
 	brdsiz==1875		;board size (kgalv * kgalh / 3)
 	knplnt==60		;maximum number of planets
+;these two are not used at all? I wonder why drforbin
 ;	kmnpln==20		;minimum number of planets
 ;	kmxpln==80		;maximum number of planets
+;---
 	kndev==9		;number of devices
 	kpass=="S2K"		;password for system (*) commands
 	knmsg==32		;maximum number of messages in queue
@@ -395,8 +397,8 @@ lall
 ;added by drforbin
 ;;;	cloak status
 	
-	clfind=1		;clock find
-	clinit=2		;cloak just found
+	clfind==1		;clock find
+	clinit==2		;cloak just found
 	cloff==3		;cloak off
 	clfout==4		;cloak fade out
 	clfin==5		;cloak fade in
@@ -460,6 +462,7 @@ lall
 	integer numrom			;total number of romulans used
 	integer	trstat,<KNPLAY>		;tractor beam status
 	integer	active,<KNPLAY>		;dead ship flags
+  ;drforbin 1 == availible; 2 == unavailible (alive)
 	logical	alive,<KNPLAY>		;true if player is alive
 	integer comknt			;dead ship monitor count
 	integer hitime			;time to reinitialize HISEG
@@ -469,6 +472,7 @@ lall
 
 	;high core not zeroed out by first player
 
+  integer clolok      ;lock cloak lock
 	integer plnlok			;lock variable for LOCPLN array
 	integer frelok			;lock variable for FREE routine
 	integer quelok			;lock variable for queue routines
@@ -488,6 +492,7 @@ lall
 	integer	gameno			; game number
 	integer dotime			; counter for driving base rebuild etc.
 	integer score,<KNPOIN,knplay>		;ship score information
+  ;look into this
 	integer hi.lst			; highest location for remap
 
 	common	timers			; block of data for timers
@@ -859,6 +864,7 @@ iniexp:	0,,iich.		;buffered input
 	0
 	-1			;use logged in PPN
 	z
+
 	;News file
 nwsfil:	0,,ichr.b		;buffered input
 	-1,,406			;generate 406 words of buffer space
@@ -1221,6 +1227,7 @@ iswiz:
 	setzm	inwait
 	setzm	hungup
 	setzm	addrck
+;below disable CIS code drforbin
 ;	pushj	p,cishng	; enable hangup detect and enq. interrupt
 	pushj	p,psilck##	;added by drforbin for enq. interrupt
 	movei	t1,intblk	;enable interception of ^C and fatal errors
@@ -1311,6 +1318,7 @@ pty:	seto	t1,
 	tdza	t0,t0		;no, FALSE
 	seto	t0,		;yes, TRUE
 	popj	p,
+
 	subttl	DECINI
 
 ;;;	DECINI -- Switch input from TTY to DECWAR.INI, and back again
@@ -1327,6 +1335,7 @@ Are you:
 3 - Expert
 
 Which? "]
+
 	skipe	hungup
 	skipa	p1,["3"]
 	inchwl	p1
@@ -1386,6 +1395,7 @@ iich.2:	save	<x1,p1>
 	setom	blank		;no blank lines yet
 	restor	<p1,x1>
 	pjrst	ichr.		;now get character from TTY
+
 	subttl	ECHON/ECHOFF/DMPBUF/TTYON
 
 ;;;	ECHON -- turn echoing on
@@ -1429,9 +1439,40 @@ ttyon:	skipn	hungup
 	skpinl
 	  jfcl
 	popj	p,
+
+
+
+
 	subttl	Low Level I/O -- Introduction
 
 comment %
+
+
+
+Added by drforbin
+-----
+
+
+it seems that the way it works is as follows;
+
+It uses filop. to init the channel. (open.)
+
+Then uses IN and OUT calls to get and put data.
+
+The SETI. and SETO. are used to set the 
+
+BUFFER input/out routines
+
+set in ic: and oc: by SETI. and SETO.
+
+
+the routine used to read into the buffers is sperate and
+again is set by SET(i/o)
+
+
+the input buffer instruction (ibfins) and output buffer instruction (obfins) is
+set by SETI and SETO. 
+
 
 To suspend output to the current file and open a new file for output
 
@@ -1485,6 +1526,13 @@ The file block has the format
 		or 0 to end block (if ersatz device)
 	.fbsfd	SFDs, terminated by the first 0 word
 %
+
+
+
+
+
+
+
 	subttl	Low Level I/O -- OPEN./CLOSE.
 
 ;;;	OPEN. -- Open file for input and/or output.
@@ -1568,6 +1616,8 @@ open.5:	came	x3,.JBFF	;buffer space allocated by this routine?
 open.6:	movem	x3,.JBFF	;restore .JBFF
 open.7:	restor	<x3,x2>
 	popj	p,
+
+
 
 ;;;	CLOSE. -- Close the most recently opened file and release any
 ;	core that was allocated for buffers.

@@ -20,6 +20,8 @@ C	02110-1301, USA.
 
 C	This routine is called periodically by GETCMD to check
 C	for dead ships.
+      
+C	This ALL code seems to not be used
 
 	subroutine DSHIP
 	include 'param/nolist'
@@ -28,9 +30,9 @@ C	for dead ships.
 	include 'extern/nolist'
 
 	do 100 i = 1, KNPLAY
-	  if (.not. alive(i))  go to 100	!ship in use?
+	  if (.not. alive(i))  goto 100	!ship in use?
 	  active(i) = active(i) + 1
-	  if (active(i) .lt. 2)  go to 100	!inactive?
+	  if (active(i) .lt. 2)  goto 100	!inactive?
 	  active(i) = 0
 	  call free (i)				!remove dead ship
  100	continue

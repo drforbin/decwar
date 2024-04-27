@@ -25,13 +25,11 @@ C	02110-1301, USA.
 	include 'extern'
 	common /local/ dummy(locsiz)
 	common /polocl/ total(9)
-	external monit
+C	external monit !I don't this is needed ? drforbin
 
 	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	versio = 24					!version number
 C	call royaln('CSIS86') drforbin(merlyn)
-
-	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	oflg   = medium
 	call out (decver, 1)
 	call out ('Are you: ', 1)
@@ -259,7 +257,6 @@ d	call timout('CMDUSE')
 	call debug			!*debug
 	goto 50
 3300	call paswrd			!*password
-/
 	goto 50
 
 *.......A time-consuming move has occurred ....

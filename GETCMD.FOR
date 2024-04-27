@@ -28,7 +28,7 @@ C	hit and message queues between commands.
 	include 'extern/nolist'
 	common /local/ dummy(locsiz)
 	common /polocl/ total(4)
-	external monit
+C	external monit !probably not needed? drforbin
 
 	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
@@ -63,7 +63,7 @@ C	if (shpcon(who,KSPCON) .eq. YELLOW)  call out ("034160703400,0)	!if yellow ale
 C	comknt = comknt + 1
 C	if (comknt .lt. 30 * numply)  goto 300
 C	comknt = 0
-c--	call dship
+c--	call dship (THIS IS NEVER CALLED) 
 
 C	added by drforbin
 	dotime = dotime + 1

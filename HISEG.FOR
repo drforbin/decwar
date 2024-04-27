@@ -24,12 +24,13 @@ C	02110-1301, USA.
      +	job, msgflg, hitflg, numcap, romopt, blhopt, endflg, nomsg, 
      +	tmscor, tim0, slwest, kilque, nkill, kilndx, tmturn, numshp, 
      +	numrom, trstat, active, alive, comknt, hitime, dead, docked, 
-     +	hlz, plnlok, frelok, quelok, device, isaydo, xhelp, ttydat, 
-     +	names, bits, sbits, cmdbts, numply, numsid, versio, gameno,
-     +  dotime, score
-
+     +	hlz, clolok, plnlok, frelok, quelok, device, isaydo, xhelp, 
+     +	ttydat, names, bits, sbits, cmdbts, numply, numsid, versio, 
+     +	gameno, dotime, score
+!DO WE NEED THIS?
 c Note: the following MUST be last entry in hiseg impure area
-	common /hiseg/ hilst
+C	common /hiseg/ hilst
+!DO WE?
 
 
 	!High core zeroed out by first player
@@ -80,6 +81,7 @@ c Note: the following MUST be last entry in hiseg impure area
 
 	!high core not zeroed out by first player
 
+	integer clolok			!lock clolok varible 
 	integer plnlok			!lock variable for LOCPLN array
 	integer frelok			!lock variable for FREE routine
 	integer quelok			!lock variable for queue routines
@@ -99,6 +101,3 @@ c Note: the following MUST be last entry in hiseg impure area
 	integer gameno			! game number
 	integer dotime			! counter for rebuilding bases
 	integer score(knpoin, knplay)
-
-
-

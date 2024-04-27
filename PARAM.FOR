@@ -29,8 +29,10 @@ C	02110-1301, USA.
 	parameter kgalh=75	!maximum Horizontal coordinate in galaxy
 	parameter brdsiz=1875	!board size (kgalv * kgalh / 3)
 	parameter knplnt=60	!maximum number of planets
+! The two below are not used drforbin
 !	kmnpln==20		;minimum number of planets
 !	kmxpln==80		;maximum number of planets
+!	--I wonder why? 
 	parameter kndev=9	!number of devices
 	parameter kpass='*MINK'	!password for system (*) commands
 	parameter knmsg=32	!maximum number of messages in queue
