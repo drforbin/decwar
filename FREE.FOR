@@ -46,7 +46,7 @@ C	will be lost.
 	tship = (tteam * 100) + snum
 	numply = numply - 1
 	if ((numply .eq. 0) .and. .not. ENDFLG)  hitime =
-     +	daytim(d) + 300000		!preserve high segment for 5 minutes
+     +	daytim(d) + 300000;datime = getdat(d)!preserve high segment for 5 minutes
 	numsid(tteam) = numsid(tteam) - 1
 	if (trstat(snum) .ne. 0)  call trcoff (snum)
 

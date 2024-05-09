@@ -42,7 +42,8 @@ C
 	  if (typlst(i) .ne. KALF)  goto 1800
 	  do 700 j = 1, KNDEV
 	    if (.not. (equal(tknlst(i), device(j))))  goto 700
-	    call odev (j)
+	    ja = j! Do index warn cure drforbin
+	    call odev (ja)
 	    if (oflg)  300, 400, 500
  300	    call space  ;  goto 600
  400	    call tab (10)    ;  goto 600
@@ -65,7 +66,8 @@ C
 	call out (dmhdr2,2)
 1200	do 1700 i = 1, KNDEV			!scan the devices
 	  if (shpdam(who,i) .le. 0)  goto 1700	!damaged?
-	  call odev (i)
+	  ia = i!do index cure 
+	  call odev (ia)
 	  if (oflg)  1300, 1400, 1500
 1300	  call space  ;  goto 1600
 1400	  call tab (10)    ;  goto 1600

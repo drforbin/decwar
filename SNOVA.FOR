@@ -36,7 +36,10 @@ C	and destroys as necessary.
 
  100	do 400 V = max0 (1,iVc-1), min0(KGALV,iVc+1)
 	  do 300 H = max0 (1,iHc-1), min0(KGALH,iHc+1)
-	    object = dispc (V,H)
+C Va,Ha added for DO index mod warning
+			Va = V
+			Ha = H
+	    object = dispc (Va,Ha)
 	    if ((object .lt. 1) .or. (object .gt. DXEPLN))  goto 200
 	    objptr = objptr + 1
 	    objstk(objptr,1) = V  ;  objstk(objptr,2) = H
@@ -46,7 +49,7 @@ C	and destroys as necessary.
 	    if (strptr .eq. 29)  goto 300	!no more room, so don't blow up star
 	    strptr = strptr + 1
 	    strstk(strptr,1) = V  ;  strstk(strptr,2) = H
-	    call setdsp (V, H, 0)
+	    call setdsp (Va, Ha, 0)
  300	  continue
  400	continue
 

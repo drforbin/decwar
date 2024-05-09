@@ -66,11 +66,13 @@ C	end
 
 
 C	added by drforbin for cloaking device
-101	      id = id + cldist(id, k, cloak)
+C ka added to stop index mod warning
+	        ka = k!placed to cure (due index change in loop warn)
+101	      id = id + cldist(id, ka, cloak)
 C	end
 
 
-102	      call phadam (3-i, k, id, 500, .FALSE.)	!hit him!
+102	      call phadam (3-i, ka, id, 500, .FALSE.)	!hit him!
 	      tmscor(i,KPEDAM) = tmscor(i,KPEDAM) + ihita
 	      shstfr = base(j,3,i)       ;  shcnfr = 1
 	      if (klflg .ne. 0) tmscor(i,KPEKIL) = tmscor(i,KPEKIL) + 5000

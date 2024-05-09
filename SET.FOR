@@ -152,7 +152,10 @@ C	on the Romulan, and remove black holes from the board.
 
 2100	do 2200 i = 1, KGALV
 	do 2200 j = 1, KGALH
-	  if (dispc (i,j) .eq. DXBHOL)  call setdsp (i, j, 0)
+C ia,ja added for INDEX DO mod warning
+		ia = i
+		ja = j
+	  if (dispc (ia,ja) .eq. DXBHOL)  call setdsp (ia, ja, 0)
 2200	continue
 	return
 

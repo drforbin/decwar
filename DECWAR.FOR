@@ -30,12 +30,19 @@ C	external monit !I don't this is needed ? drforbin
 	call blkset (lfz, 0, locf(llz) - locf(lfz) + 1)	!zero out low segment
 	versio = 24					!version number
 C	call royaln('CSIS86') drforbin(merlyn)
-	oflg   = medium
+C default settings
+	oflg     = medium
+	scnflg   = short
+	prtype   = -1
+	iclfg    =  krel
+	oflg     =  short
+
 	call out (decver, 1)
 	call out ('Are you: ', 1)
 	call out ('1 Beginner', 1)
 	call out ('2 Intermediate', 1)
 	call out ('3 Expert', 1)
+	call out ('4 DECINI', 1)
 	call out (' ', 1)
 	call out ('Which? ', 0)
 	call gtkn
@@ -44,7 +51,7 @@ C	call royaln('CSIS86') drforbin(merlyn)
 		oflg   = medium
 		prtype = 0
 		icflg  = kabs
-		goto 4
+		goto 1
 
 2	if(vallst(1).ne.2.and.(equal(tknlst(1),'INTERMEDIATE').eq.0))
      +		goto 3
@@ -52,27 +59,36 @@ C	call royaln('CSIS86') drforbin(merlyn)
 		prtype = -1
 		icflg  = krel
 		oflg   = medium
-		goto 4
+		goto 1
 
 3	if(vallst(1).ne.3.and.(equal(tknlst(1),'EXPERT').eq.0)) goto 4
 		scnflg = short
 		prtype = -1
 		icflg  = krel
 		oflg   = short
-
-4	continue
-	call type (1)
-	call type (2)
-	call summar
+		goto 1
+C	this is added by drforbin for the addition of DECINI file.
+4	if(vallst(1).ne.4.and.(equal(tknlst(1),'DECINI').eq.0)) goto 1
+		scnflg = short
+		prtype = -1
+		iclfg =  krel
+		oflg =   short
+C	end
 1	continue
 	call pregam			!enter Pre-game stage
-
 	call ttyon
 	call kilchk
 	call setup			!start up player in game
 	call aprset($9999)		! set up trap for data out of bounds
 	call place ((100 * team) + who, 1, shpcon(who,KVPOS),
      +	shpcon(who,KHPOS))
+
+5	continue
+	call decini!this is added for the addition of DECINI drforbin
+C	call type (1)! editied out for pretty by drforbin
+C	call type (2)
+C	call summar
+
 49	continue
   50	PLAYER = .TRUE.			!regular player, not a Romulan
 d	call timin ('GETCMD')

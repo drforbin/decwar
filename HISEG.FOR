@@ -23,10 +23,10 @@ C	02110-1301, USA.
      +	locr, erom, eromo, rsr, nplnet, rom, romcnt, rtpaus, rppaus, 
      +	job, msgflg, hitflg, numcap, romopt, blhopt, endflg, nomsg, 
      +	tmscor, tim0, slwest, kilque, nkill, kilndx, tmturn, numshp, 
-     +	numrom, trstat, active, alive, comknt, hitime, dead, docked, 
-     +	hlz, clolok, plnlok, frelok, quelok, device, isaydo, xhelp, 
-     +	ttydat, names, bits, sbits, cmdbts, numply, numsid, versio, 
-     +	gameno, dotime, score
+     +	numrom, trstat, active, alive, comknt, hitime, datime, 
+     +	dead, docked, hlz, clolok, plnlok, frelok, quelok, device, 
+     +	isaydo, xhelp, ttydat, names, bits, sbits, cmdbts, numply,
+     +	numsid, versio, gameno, dotime, score
 !DO WE NEED THIS?
 c Note: the following MUST be last entry in hiseg impure area
 C	common /hiseg/ hilst
@@ -75,6 +75,7 @@ C	common /hiseg/ hilst
 	logical	alive(KNPLAY)		!true if player is alive
 	integer comknt			!dead ship monitor count
 	integer hitime			!time to reinitialize HISEG
+	integer datime			!date (day) of high segment creation
 	logical	dead			!true if KILHGH already called
 	integer	docked(KNPLAY)		!docked flags
 	integer	hlz			!last location to zero out

@@ -30,7 +30,7 @@ C	and the job is returned to monitor level.
 	include 'extern/nolist'
 	common /local/ dummy(locsiz)
 	common /polocl/ total(4)
-	external monit
+C	external monit !probably don't need this
 
 	if (ENDFLG)  goto 100			!game already over?
 	if (nplnet .gt. 0)  return		!any planets left?

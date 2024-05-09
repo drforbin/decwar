@@ -1,0 +1,5 @@
+set output long
+set icdef rel
+set ocdef both
+set prompt inform
+set scan long

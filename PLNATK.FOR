@@ -43,6 +43,8 @@ C	'BUILDS' the planet has undergone.
 *.........Search for a player within range
 
 	  do 200 j = 1, KNPLAY
+C ja added for DO index mod warning
+			ja = j
 	    jtype = DXFPLN
 	    if (j .gt. KNPLAY/2)  jtype = DXEPLN
 	    if ((pcode .eq. jtype) .or. (.not. alive(j)))  goto 200
@@ -75,11 +77,11 @@ C       added by drforbin for cloaking device
 
 
 C       added by drforbin for cloaking device
-100         id = id + cldist(id, j, cloak)
+100         id = id + cldist(id, ja, cloak)
 
 
 
-101	    call phadam (2, j, id, phit, .FALSE.)	!hit him!
+101	    call phadam (2, ja, id, phit, .FALSE.)	!hit him!
 	    if (pcode .ne. DXNPLN)  tmscor(pteam,KPEDAM) =
      +	    tmscor(pteam,KPEDAM) + ihita
 	    if ((klflg .ne. 0) .and. (pcode .ne. DXNPLN))

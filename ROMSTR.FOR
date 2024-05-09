@@ -31,8 +31,11 @@ C	adjacent to his target.  If so, the star becomes the new target.
 	iHf = max0(iH - 1, 1)  ;  iHl = min0(iH + 1, KGALH)
 	do 100 i = iVf, iVl
 	do 100 j = iHf, iHl
-	  if (dispc (i,j) .ne. DXSTAR)  goto 100	!star?
-	  iV = i  ;  iH = j  ;  return			!Yes!  retarget, return
+C ia,ja added for INDEX mod warning
+	  ia = i
+	  ja = j
+	  if (dispc (ia,ja) .ne. DXSTAR)  goto 100	!star?
+	  iV = ia  ;  iH = ja  ;  return			!Yes!  retarget, return
  100	continue
 	return
 

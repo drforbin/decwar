@@ -466,6 +466,7 @@ lall
 	logical	alive,<KNPLAY>		;true if player is alive
 	integer comknt			;dead ship monitor count
 	integer hitime			;time to reinitialize HISEG
+  integer datime      ;day of HISEG creation
 	logical	dead			;true if KILHGH already called
 	integer	docked,<KNPLAY>		;docked flags
 	integer	hlz			;last location to zero out
@@ -493,7 +494,7 @@ lall
 	integer dotime			; counter for driving base rebuild etc.
 	integer score,<KNPOIN,knplay>		;ship score information
   ;look into this
-	integer hi.lst			; highest location for remap
+	;integer hi.lst			; highest location for remap
 
 	common	timers			; block of data for timers
 	integer timnam,^d50		; names
@@ -1188,7 +1189,7 @@ reset.:	reset
 ;drforbin
 
 
-
+;This removed obsolete drforbin
 ;	movem	.sgnam,p.nam	;save program name
 ;	movem	.sgppn,p.ppn	;save source PPN
 ;	movem	.sgdev,p.dev	;save device
@@ -1327,39 +1328,47 @@ pty:	seto	t1,
 	entry	DECINI
 	sixbit	/DECINI/
 decini:	save	<x1,p1>
-decin0:	skipn	hungup
-	outstr	[asciz "
-Are you:
-1 - Beginner
-2 - Intermediate
-3 - Expert
+  outstr  [asciz  "
 
-Which? "]
+[Reading Commands From DECWARINI]"]
+;decin0:	skipn	hungup
+;	outstr	[asciz "
+;Are you:
+;1 - Beginner
+;2 - Intermediate
+;3 - Expert
 
-	skipe	hungup
-	skipa	p1,["3"]
-	inchwl	p1
-	  jfcl
-	skipn	hungup
+;Which? "]
+
+;	skipe	hungup
+;	skipa	p1,["3"]
+;	inchwl	p1
+;	  jfcl
+;	skipn	hungup
 	clrbfi
-	  jfcl
-	movei	t1,10		; hibernate to clear the wake state
-	hiber	t1,
-	  jfcl
-	cail	p1,"1"
-	caile	p1,"3"
-	jrst	decin0
+;	  jfcl
+;	movei	t1,10		; hibernate to clear the wake state
+;	hiber	t1,
+;	  jfcl
+;	cail	p1,"1"
+;	caile	p1,"3"
+;	jrst	decin0
 	setom	bufptr		;and get set to read new line
 
-	movei	x1,iniexp	; choose ini file
-	cain	p1,"3"
-	jrst	decin1
-	movei	x1,iniint
-	cain	p1,"2"
-	jrst	decin1
+;	movei	x1,iniexp	; choose ini file
+;	cain	p1,"3"
+;	jrst	decin1
+;	movei	x1,iniint
+;	cain	p1,"2"
+;	jrst	decin1
 	movei	x1,inibeg
 decin1:	pushj	p,open.
-	  jrst	deci.1		;no can do, so don't bother
+  jrst [outstr  [asciz  "
+NO DECWARINI FILE. setting defaults."]
+        restor <p1,x1>
+        popj  p,
+        ]
+;  jrst	deci.1		;no can do, so don't bother
 
 	pushj	p,ttyon		;clear ^O
 	pushj	p,ocrl.
@@ -1394,7 +1403,11 @@ iich.2:	save	<x1,p1>
 	setzm	iniflg		;no longer getting input from DECWAR.INI
 	setom	blank		;no blank lines yet
 	restor	<p1,x1>
-	pjrst	ichr.		;now get character from TTY
+;	pjrst	ichr.		;now get character from TTY
+  setom bufptr
+  clrbfi
+  outstr  [asciz "[Reading Commands From TTY]"]
+  popj  p,
 
 	subttl	ECHON/ECHOFF/DMPBUF/TTYON
 
@@ -4133,6 +4146,15 @@ daytim:	mstime	0,
 	movem	0,@0(arg)
 	popj	p,
 
+;add date 'getdat' function here using gettab
+
+  entry getdat
+  sixbit  /getdat/
+  getdat: move 0,[%CNDAY]
+  gettab  0,
+    warn <Something went wrong in GETTAB call in getdat routine>,exit.
+  movem 0,@0(arg)
+  popj  p,
 
 	;Return the current run time.
 	;
