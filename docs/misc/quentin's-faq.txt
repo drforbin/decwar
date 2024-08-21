@@ -1,0 +1,437 @@
+https://www.quentin.org.uk/tops-10-faq/
+
+How do I create a standard user?
+How do I create a default account template?
+How do I manage user accounts?
+How do I restore a tape?
+How do I mount a tape?
+How do I access a subdirectory?
+How do I create a new subdirectory?
+Why is there no BCL: device on my system?
+Why won’t the TOPS-10 system printer work?
+But my TOPS-10 printer still doesn’t work. What now?
+ How do I create a standard user?
+First ensure that there is a default user template. See the FAQ for that. Next run the user account management utility REACT and insert a new user PPN following the example below. You will need to be on the OPR account to do this.
+
+.r react
+
+REACT>ins [27,101]
+[READPL Default profile loaded: [%,%]]
+New user name: test
+USER>done
+User [27,101] test inserted with password YEBOWUPUC
+
+A total of one user inserted
+REACT>exit
+
+Now login to the new user account using login and the password generated above.
+
+.login test
+Job 3 PDP10 TTY0
+Password:
+%LGNPCR A password change is required by the system administrator
+New password:
+Verification:
+[LGNPHC Password has been changed]
+16:37 28-Mar-118 Wednesday
+
+.
+
+Your user account is now ready for use.
+
+
+ Back to Index
+ How do I create a default account template?
+Start the REACT utility and follow the recipe below. I have been choosy about access-types, you could just use ALL if you aren’t worried about how your system’s users can access the system and its resources:
+
+.r react
+
+REACT>ins [%,%]
+USER>login-times
+LOGIN-TIMES>all
+LOGIN-TIMES>show
+Weekdays 0:23 Weekends 0:23
+LOGIN-TIMES>done
+USER>struct
+STRUCTURE-QUOTAS>add dskb infinite
+STRUCTURE-QUOTAS>show
+
+Structure Quota in Quota out Reserved Status
+--------- ----------- ---------- ---------- ----------
+DSKB -infinite- -infinite- 0
+STRUCTURE-QUOTAS>done
+USER>access-types
+ACCESS-TYPES>local
+ACCESS-TYPES>remote
+ACCESS-TYPES>batch
+ACCESS-TYPES>subj
+ACCESS-TYPES>show
+Local, Remote, Subjob of batch, Batch
+ACCESS-TYPES>done
+USER>core
+USER>show core
+Physical 512, Virtual 512
+USER>con 30 1000
+USER>ipcf 511 511 511
+%REARIQ Reducing IPCF send quota from 511 to 511
+%REARIQ Reducing IPCF receive quota from 511 to 511
+%REARIQ Reducing IPCF PID quota from 511 to 511
+USER>enq 511
+USER>req
+REQUIREMENTS>change pass both
+REQUIREMENTS>pass both
+REQUIREMENTS>show
+
+Account and remark strings are not required
+Name is not required
+Password under timesharing and batch
+Password change at next LOGIN
+Minimum password length: -none-
+Password change interval: -none-
+Password changes are allowed
+REQUIREMENTS>done
+USER>done
+REACT>show [%,%]
+
+PPN: [%,%]
+User name: *-DEFAULT
+Profile default: [777777,%] or [%,%]
+* Personal name: -none-
+* Distribution location: -none-
+* Mailing address: -none-
+
+* Expiration date: never
+LOGIN times: Weekdays 0:23 Weekends 0:23
+Access types: Local, Remote, Subjob of batch, Batch
+Requirements for LOGIN:
+Account and remark strings are not required
+Name is not required
+Password under timesharing and batch
+Password change at next LOGIN
+Minimum password length: -none-
+Password change interval: -none-
+Password changes are allowed
+* Schedular type: 0
+* Program to run: -none-
+
+* Context-quotas: Contexts 30, Total pages 10000
+* Core Limits: Physical 512, Virtual 512
+* ENQ/DEQ quota: 0
+* IPCF quotas: Send 511, Receive 511, PIDs 511
+* Privileges: -none-
+* Spooled device bits: -none-
+* Watch bits: -none-
+
+Structure quotas:
+Structure Quota in Quota out Reserved Status
+--------- ----------- ---------- ---------- ----------
+DSKB -infinite- -infinite- 0
+
+Administrative data:
+Profile last changed by [1,2] at 28-Mar-18 16:17:04
+Last access -never-
+Last password change at 7-Feb-18 22:05:09
+
+A total of one user listed
+REACT>exit
+
+You should now have a default user who can login, is forced to change/set a password on first login, has access to the disk storage and can submit batch jobs. There are infinite quotas on the disk and the maximum core use is 512 Pages. This is very generous, but unless you are intending on running a real timesharing service this will probably be the best options as it will put the lowest number of barriers in place for a user to do things.
+
+
+ Back to Index
+ How do I manage user accounts?
+As the OPR you can manage user accounts with the REACT utility. This utility allows you to create, delete, and modify user accounts and their attributes. You would normally use this for creating a standard user account. Before creating any standard user accounts it is a good idea to create a system wide user account template first so that any new accounts inherit some standard attributes such as the ability to login on a terminal. To execute REACT just type:
+
+.r react
+
+REACT>
+
+The REACT> prompt is where you can enter into a dialog about user accounts. HELP works in this dialog.
+
+
+ Back to Index
+ How do I restore a tape?
+First mount the tape, see the FAQ on how to do this.
+
+Second use the BACKUP utility to restore the files from tape. BACKUP uses “/” as a prompt.
+
+.r backup
+
+/tape tape:
+/rewind
+/protection 155
+/files
+/restore dsk:=*.*
+
+You will then get a list of files and directories being restored to your disk, at the end of which your will see the following to which you type ctrl-Z to exit from BACKUP:
+
+"Done
+
+/^Z
+
+.dismount tape:
+
+[MTA0:BCPL Read(C/H/S) = 2173280/0/0]
+[MTA0 dismounted]
+
+You will now find the files in the directory you were using when you ran backup.
+
+
+ Back to Index
+ How do I mount a tape?
+If you need to mount a tape from a operational TOPS-10 system as a user, use a command similar to the following:
+
+.mount tape:/reelid:label/nowait
+
+The reeled: parameter specifies the tape label.
+
+This will queue the tape mount request and the OPR console will then need to action the request.
+
+When using simh you will need to attach the tape file on the console and respond to the OPR console.
+
+14:44:01 -- Magtape mount request #4 --
+User: OPR [1,2] Job #2
+Volume-set name: TAPE
+
+Volume-ID Write Labels Track Density
+--------- ------- ------ ----- -------
+BCPL Locked No 9 1600
+OPR>
+Simulation stopped, PC: 000001 (SOJG 6,1)
+sim> att tu0 tapes/BCPL.tap
+sim> set tu0 lock
+sim> c
+
+14:44:16 Device MTA0 -- Unlabeled volume mounted --
+Density 1600 BPI, write-Locked
+
+OPR>sho que
+OPR>
+14:44:53 -- System Queues Listing --
+
+Mount Queue:
+Volume Status Type Write Req# Job# User
+------- -------- -------- ------- ------ ---- -------------------
+BCPL Waiting Magtape Locked 4 2 OPR [1,2]
+Volume-set: TAPE
+Label-Type: No, Tracks: 9, Density: 1600 BPI
+There is 1 request in the queue
+OPR>ide mta0: re 4
+OPR>
+14:45:04 Device MTA0 -- Volume BCPL reassigned --
+User: OPR [1,2] Job #2
+
+Your tape should now be mounted on the system and accessible through tools such as BACKUP.
+
+
+ Back to Index
+ How do I access a subdirectory?
+You can either include the subdirectory in the command PPN argument or change your working directory to where you want to be.
+
+To include the subdirectory in the command, simply append it after a comma in the PPN argument. Eg:
+
+.dir [,,mud]
+
+To temporarily change your working directory for a series of actions, use SETSRC as follows:
+
+.r setsrc
+
+*cp [,,BCPL]
+
+*^Z
+
+EXIT
+
+To return to your PPN just reference it with a PPN of [,] in any command.
+
+
+ Back to Index
+ How do I create a new subdirectory?
+To create a new SFD (subdirectory) in your own PPN you use CREDIR:
+
+.r credir
+
+Create directory: [,,BCPL]
+Created DSKB0:[27,100,BCPL].SFD/PROTECTION:775
+Create directory: ^Z
+
+.dir
+
+HELLO BAS 1 7-Feb-18 DSKB: [27,100]
+BCPL SFD 1 28-Mar-18
+Total of 2 blocks in 2 files on DSKB: [27,100]
+
+
+ Back to Index
+ Why is there no BCL: device on my system?
+BCPL needs to have a BCL: ersatz device to function effectively. You can use the PATH command to set one up on a use by use basis, but the recommended solution in the BCPL documentation is to configure a permanent ersatz device in MONGEN. This is how you do it based on the TOPS-10 configuration I am running. The key piece is the ersatz device line towards the end of the MONGEN program dialog:
+
+.r mongen
+
+Write MONGEN.MIC (YES,NO) : n
+MONGEN for 704 monitors
+
+MONGEN will generate any known TOPS-10 configuration. For information
+about which configurations are supported, please refer to the SPD.
+
+/HELP (PROMPT,SHORT,LONG) ]: prompt
+Which GEN (SYS,F) : s
+Output(DSK:SYSCNF.MAC):
+DECsystem10 (KL,KS) : ks
+System name : PDP10
+CPU0 serial number (1-10000) : 4097
+Exclude monitor overhead from user run time (YES,NO) : y
+Account verification (YES,NO) : n
+
+Autoconfigured device options:
+Include Ethernet service (NO,YES,PROMPT): n
+Prompt for RP0x/RM0x Massbus disks (NO,YES): n
+Include TM02/TM03 magtapes (NO,YES,PROMPT): y
+Include UNIBUS/LP20 printers (NO,YES,PROMPT): y
+Include UNIBUS/CD20 card readers (NO,YES,PROMPT): n
+
+Local terminal configuration:
+DZ-11 TTY lines (0-32) : 32
+
+OPR octal line number (CTY,0-37) : cty
+Data set lines
+
+Number of Jobs (1-511) : 127
+Maximum pages of core for each job (0,0-16384) :
+Total amount of system core in K (512-4096) : 1024
+Clock ticks per second (60,50) : 60
+Allow jobs to be locked in core (YES,NO) :
+Guaranteed number of pages for unlocked jobs (0,0-16384) :
+Number of pages reserved for locking jobs in Exec Virtual Memory (10,0-?) :
+Number of high priority interrupt queues (0,0-15): 15
+Meter (NO,YES) :
+KASER (NO,YES) :
+MPXSER (YES,NO) :
+PSISER (YES,NO) :
+IPCF (YES,NO) :
+ENQ/DEQ (YES,NO) :
+Disk sets (ALL) :
+Configure non-autoconfigured hardware (NO,YES) :
+Number of KMC/DUP Lines (0,0-2) :
+Number of PTYs (20,1-476) :
+
+Network software (YES,NO) : n
+
+Decimal "symbol,value"
+
+Octal "symbol,value"
+
+SIXBIT "symbol,value"
+
+Type "device-mnemonic,PI-channel" for special devices
+
+Type "device-mnemonic,PI-channel,no.-of-devices"
+
+Type "device-mnemonic,PI-channel,highest-ac-to-save"
+
+Type "ersatz-device,P,Pn,search-list-type"
+BCL,5,24,SYS
+
+Type "command-name,dispatch,flags,unique-bits,PRVTAB-name"
+
+Terminal class :
+
+Additional terminals for classes:
+
+Class to extend :
+
+System default terminal type (TTY) :
+File DSK:SYSCNF.MAC Closed
+
+Which GEN (SYS,F) : f
+Output(DSK:F.MAC):
+Feature set (KL10,KS10) : ks10
+Standard settings (YES,NO) :
+File DSK:F.MAC Closed
+
+Which GEN (SYS,F) : ^Z
+
+EXIT
+
+.compile/compile f,s
+MACRO: F
+MACRO: S
+
+EXIT
+
+.compile/compile devprm,dteprm,netprm,d36par
+MACRO: DEVPRM
+MACRO: DTEPRM
+MACRO: NETPRM
+MACRO: D36PAR
+
+EXIT
+
+.compile/compile syscnf+
+MACRO: COMMON
+MACRO: COMDEV
+MACRO: COMMOD
+
+EXIT
+
+.r link
+
+*sys2/save/noinitial/hash:13k = /locals -
+#common,comdev,commod,tops10[10,7,mon,ks]/search-
+#/patch:200/counters/go
+[LNKRLC Reloc. ctr. initial value current value limit value
+.LOW. 0 64443 344000
+.HIGH. 344000 607662 720000
+.INIT. 740000 764722 771000
+.TWIC. 771000 772401 1000000
+Absolute code loaded]
+
+EXIT
+
+.
+
+This has now created a new system monitor in [10,7,mon] called SYS2.EXE which should now include the BCL: ersatz device. You will need to boot from this new system monitor and also create a PPN of [5,24] to be the directory for the BCL: ersatz device.
+
+
+ Back to Index
+ Why won’t the TOPS-10 system printer work?
+Assuming you are using simh to run your TOPS-10 install on, you need to make sure the following lines are in your simh script or entered on the simh console before booting Tops-10.
+
+
+att lp20 printer.out
+set lp20 enable
+
+All printer output will now go to a file called printer.out in the directory to start simh in.
+
+Next you need to make sure that Tops-10 has started the printer and the spooler. To do this ensure that SYSTEM.CMD has the following:
+
+SET PRINTER 0 PAGE-LIMIT 2000
+START PRINTER 0
+
+You may not need to do the next step as the Galaxy system should just start the spooler when it is need, but for completeness I did do this. In the SYSJOB.INI ensure the following lines are included:
+
+LPTSPL
+LOG
+
+Finally you need to ensure there is a forms descriptor for the printer in LPFORM.INI
+
+.type sys:lpform.ini
+
+NORMAL/BANNER:1/HEADER:1/TRAILER:1/WIDTH:136/LINES:66/RAM:LP96
+
+This should allow output to be queued for printing and then appear in the printer.out file on the host.
+
+
+ Back to Index
+ But my TOPS-10 printer still doesn’t work. What now?
+I found that there may be an issue if you do not have a non-zero ANF-10 node number and networking enabled. In this case the system does not appear to correctly assign the device to printer 0. In this case, you need to manually assign the device as follows in OPR or amend the SYSTEM.CMD to include the /device switch on the start printer command.
+
+OPR>shutdown printer 0
+OPR>
+13:30:18 Printer 0 -- Shutdown --
+OPR>start printer 0/device:lpt0
+OPR>
+13:30:41 Printer 0 -- Startup Scheduled --
+OPR>
+
+If you then send something to the printer it should just work. The more comprehensive fix to this is to setup ANF-10 and give yourself a nod number greater than 0. The printer device identifier will then become LPTn00 where n is the ANF-10 node number, and this is supposed to fix the automatic start but I have not tested that. The simplest solution is just to put START PRINTER 0/DEVICE:LPT0 in the SYSTEM.CMD
