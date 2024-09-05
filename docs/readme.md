@@ -8,6 +8,7 @@ sections
 appendices
 
 - [appendix 1, tops-10 versions](app1-tops-10-versions.md)
+- [appendix 2, *.tap files](app2-tap-files.md)
 - [appendix 9, on the fly notes](app9-on-the-fly-notes.md)
 
 # notes
