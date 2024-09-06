@@ -63,6 +63,8 @@ meanwhile, onboard the raspi. first get [latest kermit](https://www.kermitprojec
     Please LOGIN or ATTACH
     .
 
+for escaping back to the raspi with ctrl-\c, be sure your keyboard is really sending backslash! had to switch keyboard config from english us to english uk to get the backslash.
+
 we're ready from the raspi side! now prepare the tops10 side. we need to be able to login from the raspi side! turns out, do walk through first [using react to create default user template](https://www.quentin.org.uk/tops-10-faq/#qaef-176). doesn't take as long as it looks! then [create your account](https://www.quentin.org.uk/tops-10-faq/#qaef-177). did that here for [27,101] usr noah pwd noah and logged in from the raspi kermit side.
 
     .login noah
@@ -89,20 +91,19 @@ create a little text file on tops10 side
     .type test2.txt
     00100	hello world
 
-now can start kermit on tops10 side and send it over to raspi side
+now can start kermit on tops10 side and send it over to raspi side. both 'r k10mit' and 'r kermit' seem to be same.
 
     .r k10mit
     TOPS-10 KERMIT version 3(136)
     Kermit-10>set file byte-size 36-bit
     Kermit-10>send test2.txt
-    , Sp\ @-#Y1~C
-    ----------------------------------------------------
-    ----------------------------------------------------
-    Kermit-10>
 
-check it on raspi side
+can check it on raspi side
 
     noah@raspberrypi:~/kermit $ cat test2.txt
-    0010�	hello world
 
-wootwoot!! we're hoppn!:)
+on tops10 side go into 'server mode'
+
+    Kermit-10> server
+
+escape back to raspi side with ctrl-\c. keyboard has to really be sending backslash! then can simply send files. especially, 'send *.*' from raspi decwar folder to copy them over to tops10 side.

@@ -4,6 +4,7 @@ sections
 
 - [section 1, boot disk](sec1-boot-disks.md)
 - [section 2, kermit](sec2-kermit.md)
+- [section 3, prep source files](sec3-prep-source-files.md)
 
 appendices
 
