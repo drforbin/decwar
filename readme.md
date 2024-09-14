@@ -1,10 +1,6 @@
 # decwar
 
-historic decwar fortran IV code which has been modified to run on simh (standard tops10 system)
-
-# 1982 letter from utexas to compuserve
-
-this seems to be a 1982 letter that utexas sent to compuserve, before sending the primordial decwar tape.
+historic decwar fortran IV code which has been modified to run on simh (standard tops10 system). here's a 1982 letter that utexas sent to compuserve, before sending the primordial decwar tape.
 
     I  have  received your request for sources to the DECWAR program.
     We will be pleased to send you the sources,  but  first  we  must
@@ -38,8 +34,8 @@ this seems to be a 1982 letter that utexas sent to compuserve, before sending th
   - utexas/tec are teco files for extracting fortran from macro
   - utexas/hlp are files used as part of building the game's help system
 - compuserve folder is fortran and macro files likely associated with compuserve
-  - compuserve/com folder is 'comments' files likely associated with compuserve
-- etc folder is miscellaneous
+  - compuserve/docs folder is files associated with compuserve documenting the primordial tape's arrival from utexas. also some related 'operational' files. decwar.map has logging from a compuserve ki10 dated 19820519.
+- deploy folder is files expected for 'deploying' the built game. these are generated, for example see utexas/hlp
 - scripts folder is build automations
 - docs are notes from 2024 forward
   - docs/misc are miscellaneous tops-10 related things
