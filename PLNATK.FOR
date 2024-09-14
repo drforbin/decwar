@@ -45,7 +45,7 @@ C	'BUILDS' the planet has undergone.
 	    if (j .gt. KNPLAY/2)  jtype = DXEPLN
 	    if ((pcode .eq. jtype) .or. (.not. alive(j)))  goto 200
 	    if (disp(shpcon(j,KVPOS),shpcon(j,KHPOS)) .le. 0)  goto 200
-	    if (.not. ldis (shpcon(j,KVPOS), shpcon(j,KHPOS),
+	    if (.not. ldis (shpcon(j,KVPOS), shpcon(j,KHPOS), 
      +	    locpln(k,KVPOS), locpln(k,KHPOS), 2))  goto 200	!in range?
 
 *	    Set up parameters for call to MAKHIT
@@ -59,11 +59,11 @@ C	'BUILDS' the planet has undergone.
 	    iwhat = 1  ;  phit = (50 + (30 * locpln(k,3))) / numply
 	    id = pdist (Vfrom, Hfrom, Vto, Hto)
 	    call phadam (2, j, id, phit, .FALSE.)	!hit him!
-	    if (pcode .ne. DXNPLN)  tmscor(pteam,KPEDAM) =
+	    if (pcode .ne. DXNPLN)  tmscor(pteam,KPEDAM) = 
      +	    tmscor(pteam,KPEDAM) + ihita
-	    if ((klflg .ne. 0) .and. (pcode .ne. DXNPLN))
+	    if ((klflg .ne. 0) .and. (pcode .ne. DXNPLN)) 
      +	    tmscor(pteam,KPEKIL) = tmscor(pteam,KPEKIL) + 5000
-	    call pridis (shpcon(j,KVPOS), shpcon(j,KHPOS), KRANGE,
+	    call pridis (shpcon(j,KVPOS), shpcon(j,KHPOS), KRANGE, 
      +	    pteam, 0)
 	    call pridis (shpcon(j,KVPOS), shpcon(j,KHPOS), 4, 0, 1)
 	    call makhit				!send hit message
@@ -72,7 +72,7 @@ C	'BUILDS' the planet has undergone.
 *.........Hit romulan if he's alive and in range
 
 	  if (.not. ROM)  goto 300
-	  if (.not. ldis(locr(KVPOS), locr(KHPOS), locpln(k,KVPOS),
+	  if (.not. ldis(locr(KVPOS), locr(KHPOS), locpln(k,KVPOS), 
      +	  locpln(k,KHPOS), 2))  goto 300
 	  dispfr = disp (locpln(k,KVPOS), locpln(k,KHPOS))
 	  dispto = DXROM * 100  ;  iwhat = 1
@@ -84,9 +84,9 @@ C	'BUILDS' the planet has undergone.
 	  id = pdist (Vfrom, Hfrom, Vto, Hto)
 	  call pharom (50 + (30 * locpln(k,3)), id)
 	  shstto = erom  ;  shcnto = 1
-	  if (pcode .ne. DXNPLN)  tmscor(pteam,KPRKIL) =
+	  if (pcode .ne. DXNPLN)  tmscor(pteam,KPRKIL) = 
      +	  tmscor(pteam,KPRKIL) + ihita
-	  if ((.not. ROM) .and. (pcode .ne. DXNPLN))
+	  if ((.not. ROM) .and. (pcode .ne. DXNPLN)) 
      +	  tmscor(pteam,KPRKIL) = tmscor(pteam,KPRKIL) + 5000
 	  call makhit				!send hit message
  300	continue

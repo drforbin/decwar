@@ -23,10 +23,10 @@ C	02110-1301, USA.
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 
-	data (device(i), i = 1, KNDEV)/
+	data (device(i), i = 1, KNDEV)/ 
      +	  2HSH, 2HWA, 2HIM, 2HLS, 2HTO, 2HPH, 2HCO, 2HRA, 2HTR /
 
-	data ((isaydo(i,j), i = 1, 2), j = 1, KNCMD)/
+	data ((isaydo(i,j), i = 1, 2), j = 1, KNCMD)/ 
      +    'BAses', '     ',
      +	  'BUild', '     ',
      +	  'Captu', 're   ',
@@ -61,7 +61,7 @@ C	02110-1301, USA.
      +    '*Debu' ,'g    ',
      +    '*Pass' ,'word '/
 
-	data ((xhelp(i,j), i = 1, 2), j = 1, KNXTR)/
+	data ((xhelp(i,j), i = 1, 2), j = 1, KNXTR)/ 
      +	  'CTL-C', '     ',
      +    '     ', '     ',
      +    'INTRO', '     ',
@@ -71,7 +71,7 @@ C	02110-1301, USA.
      +	  'PAuse', 's    ',
      +	  'PRega', 'me   '/
 
-	data ((ttydat(i,j), i = 1, 2), j = 1, KNTTY)/
+	data ((ttydat(i,j), i = 1, 2), j = 1, KNTTY)/ 
      +	  'ACT-I', 'V    ',
      +	  'ADM-2', '     ',
      +	  'ADM-3', 'a    ',
@@ -81,7 +81,7 @@ C	02110-1301, USA.
      +	  'BEEHI', 'VE   ',
      +	  'CRT  ', '     '/
 
-	data ((names(i,j), j = 1, 3), i = 1, KNPLAY)/
+	data ((names(i,j), j = 1, 3), i = 1, KNPLAY)/ 
      +	  'Lexin', 'gton ', ' L',
      +	  'Nimit', 'z    ', ' N',
      +	  'Savan', 'nah  ', ' S',
@@ -93,12 +93,12 @@ C	02110-1301, USA.
      +    'Jacka', 'l    ', ' J',
      +	  'Wolf ', '     ', ' W'/
 
-	data (bits(i), i = 1, 10)/
+	data (bits(i), i = 1, 10)/ 
      +	"1, "2, "4, "10, "20, "40, "100, "200, "400, "1000/
 
 	data (sbits(i), i = 0, 2)/ NEUBIT , FEDBIT , EMPBIT /
 
-	data (cmdbts(i), i = 1, KNCMD)/
+	data (cmdbts(i), i = 1, KNCMD)/ 
      +	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
      +	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/
 

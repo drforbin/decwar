@@ -100,7 +100,7 @@ C	searched for collisions, and the energy consumption computed.
 	if (oflg .ne. short)  call out (move5L,1)
 	if (oflg .eq. short)  call out (move5S,1)
 	tran = iran (100)
-	if (.not. (((tran .gt. 80) .and. (ia .ge. 6)) .or.
+	if (.not. (((tran .gt. 80) .and. (ia .ge. 6)) .or. 
      +	((tran .gt. 90) .and. (ia .eq. 5))))  goto 1900	!engines blown?
 
 *.......Warp engines damaged by overheating (ie speeding)
@@ -124,7 +124,7 @@ C	searched for collisions, and the energy consumption computed.
 
 *	move ship
 
-	if ((V1 .eq. shpcon(who,KVPOS)) .and.
+	if ((V1 .eq. shpcon(who,KVPOS)) .and. 
      +	(H1 .eq. shpcon(who,KHPOS)))  goto 2000
 	indxto = (v1-1)*25 + (h1 - 1)/3 + 1
 	indxfm = (shpcon(who, kvpos) - 1)*25 + (shpcon(who, khpos) - 1)/3 + 1
@@ -144,7 +144,7 @@ C	searched for collisions, and the energy consumption computed.
 	if (trstat(who) .eq. 0)  goto 2000
 	tl = disp(shpcon(trstat(who),KVPOS),shpcon(trstat(who),KHPOS))
 	call setdsp (V1-int(disV), H1-int(disH), tl)
-	call setdsp (shpcon(trstat(who),KVPOS),
+	call setdsp (shpcon(trstat(who),KVPOS), 
      +	shpcon(trstat(who),KHPOS), 0)
 	shpcon(trstat(who),KVPOS) = V1 - disV
 	shpcon(trstat(who),KHPOS) = H1 - disH

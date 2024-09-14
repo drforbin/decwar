@@ -32,7 +32,7 @@ C	sets up many of the variables eventually needed by MAKHIT.
 
 *.......Has the target already been destroyed?
 
-	if ((nplc .lt. DXFBAS) .and. ((shpcon(j,KSDAM) .ge. KENDAM)
+	if ((nplc .lt. DXFBAS) .and. ((shpcon(j,KSDAM) .ge. KENDAM) 
      +	.or. (shpcon(j,KSNRGY) .le. 0)))  return
 	if ((nplc .ge. DXFBAS) .and. (base(j,3,nplc-2) .le. 0))  return
 	iwhat = 2
@@ -50,13 +50,13 @@ C	sets up many of the variables eventually needed by MAKHIT.
 	if (shpcon(j,KSHCON) .gt. 0)  1000, 300
  100	if (nplc .ge. DXFBAS)  goto 200
 	hita = hit * (1000.0 - shpcon(j,KSSHPC)) * 0.001
-	shpcon(j,KSSHPC) = shpcon(j,KSSHPC) -
+	shpcon(j,KSSHPC) = shpcon(j,KSSHPC) - 
      +	(hit * amax1 (float(shpcon(j,KSSHPC)) * 0.001, 0.1)
      +  + 10) * 0.03
 	if (shpcon(j, ksshpc) .lt. 0) shpcon(j, ksshpc) = 0
 	goto 300
  200	hita = hit * (1000 - base(j,3,nplc-2)) * 0.001
-	base(j,3,nplc-2) = base(j,3,nplc-2) -
+	base(j,3,nplc-2) = base(j,3,nplc-2) - 
      +  (hit * amax1(float(base(j,3,nplc-2)) * 0.001, 0.1) + 10) * 0.03
 	goto 400
  300	if (shpcon(j,KSHCON) .lt. 0)  hita = hit
@@ -64,9 +64,9 @@ C	sets up many of the variables eventually needed by MAKHIT.
 *.......Determine if hit critical.
 
  400	ihita = hita
-	if (((hita * (rana + 0.1)) .lt. 1700.0) .and. (nplc .lt. DXFBAS))
+	if (((hita * (rana + 0.1)) .lt. 1700.0) .and. (nplc .lt. DXFBAS)) 
      +	goto 500
-	if (((hita * (rana + 0.1)) .lt. 1700.0) .and. (nplc .ge. DXFBAS))
+	if (((hita * (rana + 0.1)) .lt. 1700.0) .and. (nplc .ge. DXFBAS)) 
      +	goto 600
 	if ((iran(5) .eq. 5) .and. (nplc .ge. DXFBAS))  goto 1400
 	if (nplc .ge. DXFBAS)  goto 600
@@ -83,26 +83,26 @@ C	sets up many of the variables eventually needed by MAKHIT.
 
  500	shpcon(j,KSDAM) = shpcon(j,KSDAM) + hita
 	shpcon(j,KSNRGY) = shpcon(j,KSNRGY) - hita
- 600	if (nplc .ge. DXFBAS)  base(j,3,nplc-2) =
+ 600	if (nplc .ge. DXFBAS)  base(j,3,nplc-2) = 
      +	max0 (int(base(j,3,nplc-2) - hita * 0.01), 0)
- 700	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSSHPC) .le. 0))
+ 700	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSSHPC) .le. 0)) 
      +	shpcon(j,KSHCON) = -1
 
 *.......Update scoring information
 
-	if (SHIP .and. PLAYER .and. (5-team .eq. nplc))
+	if (SHIP .and. PLAYER .and. (5-team .eq. nplc)) 
      +	tpoint(KPBDAM) = tpoint(KPBDAM) + hita
-	if (SHIP .and. (.not. PLAYER) .and. (nplc .ge. DXFBAS))
+	if (SHIP .and. (.not. PLAYER) .and. (nplc .ge. DXFBAS)) 
      +	rsr(KPBDAM) = rsr(KPBDAM) + hita
-	if (PLAYER .and. SHIP .and. (3-team .eq. nplc))
+	if (PLAYER .and. SHIP .and. (3-team .eq. nplc)) 
      +	tpoint(KPEDAM) = tpoint(KPEDAM) + hita
-	if (SHIP .and. (.not. PLAYER) .and. (nplc .lt. DXFBAS))
+	if (SHIP .and. (.not. PLAYER) .and. (nplc .lt. DXFBAS)) 
      +	rsr(KPEDAM) = rsr(KPEDAM) + hita
 
 	if (nplc .ge. DXFBAS)  goto 1300	!base?
 	shpcon(j,KSPCON) = RED
 	shstto = shpcon(j,KSSHPC)  ;  shcnto = shpcon(j,KSHCON)
-	if ((shpcon(j,KSDAM) .ge. KENDAM) .or.
+	if ((shpcon(j,KSDAM) .ge. KENDAM) .or. 
      +	(shpcon(j,KSNRGY) .le. 0))  klflg = 2
 
 	if (klflg .ne. 0)  goto 750		!player destroyed?
@@ -125,7 +125,7 @@ C	sets up many of the variables eventually needed by MAKHIT.
 	powfac = 80
 	rana = ran(0)
 	hit  = 0.0
-	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSHCON) .gt. 0))
+	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSHCON) .gt. 0)) 
      +	powfac = powfac / 2
 	if (nplc .ge. DXFBAS)  powfac = powfac / 2
 	hit = pwr ((0.9 + 0.02 * ran(0)), id)
@@ -133,32 +133,32 @@ C	sets up many of the variables eventually needed by MAKHIT.
 *.......If player firing, check if computer or phaser damaged.
 *.......Modify size of hit if true.
 
-	if (PLAYER .and. SHIP .and. ((shpdam(who,KDPHAS) .gt. 0) .or.
+	if (PLAYER .and. SHIP .and. ((shpdam(who,KDPHAS) .gt. 0) .or. 
      +	(shpdam(who,KDCOMP) .gt. 0)))  hit = hit * 0.8
 	if (nplc .ge. DXFBAS)  goto 900
 	if (shpcon(j,KSHCON) .lt. 0)  goto 800
 	hita = hit
 	hit = (1000 - shpcon(j,KSSHPC)) * hita * 0.001
-	shpcon(j,KSSHPC) = shpcon(j,KSSHPC) - (hita * powfac * phit *
+	shpcon(j,KSSHPC) = shpcon(j,KSSHPC) - (hita * powfac * phit * 
      +	amax1 (float(shpcon(j,KSSHPC)) * 0.001, 0.1) + 10) * 0.03
 	if (shpcon(j, ksshpc) .lt. 0) shpcon(j, ksshpc) = 0
  800	hita = hit * powfac * phit
 	goto 400			!use damage and scoring code in common with TORDAM
  900	hita = hit
 	hit = (1000 - base(j,3,nplc-2)) * hita * 0.001
-	base(j,3,nplc-2) = base(j,3,nplc-2) - (hita * powfac * phit *
+	base(j,3,nplc-2) = base(j,3,nplc-2) - (hita * powfac * phit * 
      +	amax1 (float(base(j,3,nplc-2)) * 0.001, 0.1) + 10) * 0.03
 	goto 800
 
 *.......See if torpedo deflected by shields
 
 1000	rand = rana - (shpcon(j,KSSHPC) * 0.001 * rand) + 0.1
-1100	if (nplc .ge. DXFBAS)  rand = rana - (base(j,3,nplc-2)
+1100	if (nplc .ge. DXFBAS)  rand = rana - (base(j,3,nplc-2) 
      +	* 0.001 * rand) + 0.1
 	if (rand .gt. 0.0)  goto 100	!torpedo deflected?
 	iwhat = 3  ;  ihita = 0
 	if (nplc .ge. DXFBAS)  base(j,3,nplc-2) =
-     +	amax1((float(base(j,3,nplc-2)) - 50.0 * rana), 0.0)
+     +	amax1((float(base(j,3,nplc-2)) - 50.0 * rana), 0.0) 
 	if (nplc .ge. DXFBAS)  goto 1200
 	shpcon(j,KSSHPC) = amax1((float(shpcon(j,KSSHPC))-50.*rana),0.)
 	if (shpcon(j, ksshpc) .lt. 0) shpcon(j, ksshpc) = 0

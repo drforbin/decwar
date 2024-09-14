@@ -39,7 +39,7 @@ C	of operational starbases at that time).
 	goto 100
 
  200	Vloc = vallst(1)  ;  Hloc = vallst(2)
-	if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), Vloc,
+	if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), Vloc, 
      +	Hloc, 1))  goto 900			!adjacent to sector given?
 	c = dispc (Vloc,Hloc)
 	if ((c .lt. DXNPLN) .or. (c .gt. DXEPLN))  goto 800	!is it a planet?

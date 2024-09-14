@@ -83,7 +83,7 @@ C	retargeted as the situation requires.
 	  dispto = l  ;  dispfr = DXROM * 100  ;  iwhat = 2
 	  call pridis (iVc, iHc, KRANGE, 0, 0)
 	  call makhit				!send hit message
-	  if ((nplc .lt. DXFBAS) .and. (trstat(j) .ne. 0))
+	  if ((nplc .lt. DXFBAS) .and. (trstat(j) .ne. 0)) 
      +	  call trcoff (j)				!break tractor beam?
 
 *	  Base destroyed?

@@ -43,9 +43,9 @@ C	side's bases.
 
 	    do 300 k = (KNPLAY/2) * (2 - i) + 1, (KNPLAY/2) * (3 - i)
 	      if (.not. alive(k))  goto 300		!player dead?
-	      if (disp(shpcon(k,KVPOS), shpcon(k,KHPOS)) .le. 0)
+	      if (disp(shpcon(k,KVPOS), shpcon(k,KHPOS)) .le. 0) 
      +	      goto 300					!player cloaked?
-	      if (.not. ldis(shpcon(k,KVPOS), shpcon(k,KHPOS),
+	      if (.not. ldis(shpcon(k,KVPOS), shpcon(k,KHPOS), 
      +	      base(j,KVPOS,i), base(j,KHPOS,i), 4))  goto 300	!player in range?
 	      Vfrom = base(j,KVPOS,i)  ;  Hfrom = base(j,KHPOS,i)
 	      Vto   = shpcon(k,KVPOS)  ;  Hto   = shpcon(k,KHPOS)
@@ -56,7 +56,7 @@ C	side's bases.
 	      tmscor(i,KPEDAM) = tmscor(i,KPEDAM) + ihita
 	      shstfr = base(j,3,i)       ;  shcnfr = 1
 	      if (klflg .ne. 0) tmscor(i,KPEKIL) = tmscor(i,KPEKIL) + 5000
- 200	      call pridis (shpcon(k,KVPOS), shpcon(k,KHPOS), KRANGE,
+ 200	      call pridis (shpcon(k,KVPOS), shpcon(k,KHPOS), KRANGE, 
      +        team, 0)
 	      call pridis (shpcon(k,KVPOS), shpcon(k,KHPOS), 4, 0, 1)
 	      dbits = dbits .or. bits(k)

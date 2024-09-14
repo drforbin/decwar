@@ -18,7 +18,7 @@ C	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
 C	02110-1301, USA.  
 
 
-	common /lowseg/
+	common /lowseg/ 
      +	lfz, ntok, tknlst, vallst, typlst, ptrlst, who, iwhat, 
      +	ihita, Vto, Hto, Vfrom, Hfrom, critdv, critdm, klflg, 
      +	dispfr, dispto, dbits, shcnto, shstto, shcnfr, shstfr, shjump, 

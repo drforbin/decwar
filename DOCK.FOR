@@ -35,7 +35,7 @@ C	supply twice the energy and supplies per dock as do planets.
 	ifract=0
 	do 100 j = 1, KNBASE
 	  if (base(j,3,team) .le. 0)  goto 100			!is base alive?
-	  if (ldis (shpcon(who,KVPOS), shpcon(who,KHPOS),
+	  if (ldis (shpcon(who,KVPOS), shpcon(who,KHPOS), 
      +	  base(j,KVPOS,team), base(j,KHPOS,team), 1))
      +    ifract = ifract + 2	!is base within 1 sector?
  100	continue
@@ -44,9 +44,9 @@ C	supply twice the energy and supplies per dock as do planets.
 
 	if (numcap(team) .le. 0)  goto 300
 	do 200 i = 1, nplnet
-	  if ((team + DXNPLN) .ne. dispc(locpln(i,KVPOS),locpln(i,KHPOS)))
+	  if ((team + DXNPLN) .ne. dispc(locpln(i,KVPOS),locpln(i,KHPOS))) 
      +	  goto 200						!planet friendly?
-	  if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS),
+	  if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), 
      +	  locpln(i,KVPOS), locpln(i,KHPOS), 1))  goto 200	!planet within 1 sector?
 	  ifract=ifract + 1
  200	continue
@@ -63,18 +63,18 @@ C	supply twice the energy and supplies per dock as do planets.
 
  400	if (.not. alive(who))  return 1		!ship already dead
 	shpcon(who,KNTORP) = min0((shpcon(who,KNTORP) + (ifract*5)), 10)
-	shpcon(who,KSNRGY) = min0((shpcon(who,KSNRGY) + (ifract*5000)),
+	shpcon(who,KSNRGY) = min0((shpcon(who,KSNRGY) + (ifract*5000)), 
      +	50000)
-	shpcon(who,KSSHPC) = min0((shpcon(who,KSSHPC) + (100*ifract)),
+	shpcon(who,KSSHPC) = min0((shpcon(who,KSSHPC) + (100*ifract)), 
      +	1000)
 	shpcon(who,KSDAM) = max0 ((shpcon(who,KSDAM) - (ifract*500)), 0)
-	if (docked(who))  shpcon(who,KSDAM) = max0((shpcon(who,KSDAM) -
+	if (docked(who))  shpcon(who,KSDAM) = max0((shpcon(who,KSDAM) - 
      +	(ifract*500)), 0)
 	docked(who) = .TRUE.
 	shpcon(who,KLFSUP) = 5  ;  shpcon(who,KSPCON) = GREEN
 
 	call out (dockin,1)
-	if (equal(tknlst(2), 'STATUS'))
+	if (equal(tknlst(2), 'STATUS')) 
      +	call status (3)			!status report?
 
 	ptime = v - etim(tim0)		!compute pause time for DOCK.

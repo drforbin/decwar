@@ -58,7 +58,7 @@ C	if it's allowed to be listed (or included in a summary).
 
  600	if (d .gt. clsest)  goto 700		!looking for closest
 	clsest = d  ;  Vposc = Vpos  ;  Hposc = Hpos
- 700	grpbts = grpbts .or. (xf .and. (IRNBIT .or. ISRBIT .or.
+ 700	grpbts = grpbts .or. (xf .and. (IRNBIT .or. ISRBIT .or. 
      +	IGMBIT .or. ORNBIT))
 	xxf = xxf .or. xf
 	return

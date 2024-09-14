@@ -125,10 +125,10 @@ C	SCAN CORNER dV dH
 
 	if (nplnet .le. 0)  goto 800		!no planets
 	do 700 i = 1, nplnet
-	  if (.not. ldis (locpln(i,KVPOS), locpln(i,KHPOS), Vpos, Hpos,
+	  if (.not. ldis (locpln(i,KVPOS), locpln(i,KHPOS), Vpos, Hpos, 
      +	  KRANGE))  goto 700
 	  locpln(i,4) = locpln(i,4) .or. team	!our side has seen this planet
-	  if (dispc(locpln(i,KVPOS),locpln(i,KHPOS))-DXNPLN .ne. enemy)
+	  if (dispc(locpln(i,KVPOS),locpln(i,KHPOS))-DXNPLN .ne. enemy) 
      +    goto 700				!not an enemy planet
 	  if (warn)  call mark (locpln(i,KVPOS), locpln(i,KHPOS), 2)
  700	continue
@@ -137,7 +137,7 @@ C	SCAN CORNER dV dH
 
  800	do 900 i = 1, KNBASE
 	  if (base(i,3,enemy) .le. 0)  goto 900	!not a live base
-	  if (.not. ldis (base(i,KVPOS,enemy), base(i,KHPOS,enemy),
+	  if (.not. ldis (base(i,KVPOS,enemy), base(i,KHPOS,enemy), 
      +	  Vpos, Hpos, KRANGE))
      +	  goto 900
 	  base(i,4,enemy) = base(i,4,enemy) .or. team

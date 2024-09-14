@@ -60,7 +60,7 @@ C	called from a STATUS string appended to DOCK.
 *.......Identify and report on specified items
 
  900	do 5700 i = stoken, KMAXTK
-	  if ((typlst(i) .ne. KALF) .and. (oflg .eq. short))
+	  if ((typlst(i) .ne. KALF) .and. (oflg .eq. short)) 
      +	  call crlf
 	  if (typlst(i) .ne. KALF)  return
 	  if (equal (tknlst(i), 'SHIELDS'))  goto 1000
@@ -93,7 +93,7 @@ C	called from a STATUS string appended to DOCK.
 1500	  if (oflg)  1800, 1600, 1700
 1600	  call out (stat6M, 0)  ;  goto 1800
 1700	  call out (stat6L, 0)
-1800	  call prloc(shpcon(who,KVPOS), shpcon(who,KHPOS), 0, 0,
+1800	  call prloc(shpcon(who,KVPOS), shpcon(who,KHPOS), 0, 0, 
      +	  KABS, SHORT)
 	  if (oflg)  1900, 2000, 2000
 1900	  call space  ;  goto 5700

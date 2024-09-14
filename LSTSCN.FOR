@@ -91,7 +91,7 @@ C	include a summary, unless the command was LIST.
 	return
 
 C.......Check for coordinate and range
- 800	if ((typlst(p) .eq. KINT) .and. (typlst(p+1) .eq. KINT))
+ 800	if ((typlst(p) .eq. KINT) .and. (typlst(p+1) .eq. KINT)) 
      +	goto 2200
 						!coordinate
 	if (typlst(p) .eq. KINT)  goto 2900	!range
@@ -105,7 +105,7 @@ C.......Check for ship name (Romulan counts as ship name)
 	if (equal(token, 'ROMULAN'))  goto 1700
 
 C.......Check for other keywords
-1000	if ((cmd .ne. LSTCMD) .and. (cmd .ne. SUMCMD) .and.
+1000	if ((cmd .ne. LSTCMD) .and. (cmd .ne. SUMCMD) .and. 
      +	(cmd .ne. TARCMD))  goto 1100
 	if (equal(token, 'SHIPS'))    goto 1900
 	if (equal(token, 'BASES'))    goto 2000
@@ -129,7 +129,7 @@ C.......Check for other keywords
 
 	if ((cmd .ne. SUMCMD) .and. equal(token, 'CLOSEST'))  goto 3000
 
-	if ((cmd .ne. LSTCMD) .and. (cmd .ne. SUMCMD) .and.
+	if ((cmd .ne. LSTCMD) .and. (cmd .ne. SUMCMD) .and. 
      +	equal(token, 'LIST'))  goto 3100
 	if ((cmd .ne. SUMCMD) .and. (equal(token, 'SUMMARY')))  goto 3200
 
@@ -157,7 +157,7 @@ C.......ship name
 	goto 500
 
 C.......SHIP
-1900	if ((imask .and. (OBJMSK .or. NEUBIT .or. CAPBIT)) .ne. 0)
+1900	if ((imask .and. (OBJMSK .or. NEUBIT .or. CAPBIT)) .ne. 0) 
      +	goto 1500
 	imask = imask .or. SHPBIT
 	omask = SHPBIT
@@ -165,7 +165,7 @@ C.......SHIP
 	goto 500
 
 C.......BASE
-2000	if ((imask .and. (OBJMSK .or. NEUBIT .or. CAPBIT)) .ne. 0)
+2000	if ((imask .and. (OBJMSK .or. NEUBIT .or. CAPBIT)) .ne. 0) 
      +	goto 1500
 	imask = imask .or. BASBIT
 	omask = BASBIT
@@ -190,7 +190,7 @@ C.......PORT
 
 C.......Coordinate
 2200	if (cmd .eq. SUMCMD)  goto 1500
-	if ((imask .and. (OBJMSK .or. SIDMSK .or. ALLBIT .or. RNGBIT .or.
+	if ((imask .and. (OBJMSK .or. SIDMSK .or. ALLBIT .or. RNGBIT .or. 
      +	CLSBIT .or. OUTMSK)) .ne. 0)  goto 1500
 	imask = imask .or. CRDBIT
 	Vpos = vallst(p)  ;  Hpos = vallst(p+1)
@@ -228,7 +228,7 @@ C.......Empire, Klingon
 	goto 500
 
 C.......Neutral
-2700	if ((imask .and. (SIDMSK .or. (OBJMSK .and. .not. PLNBIT)))
+2700	if ((imask .and. (SIDMSK .or. (OBJMSK .and. .not. PLNBIT))) 
      +	.ne. 0)  goto 1500
 	imask = imask .or. NEUBIT
 	smask = NEUBIT
@@ -236,7 +236,7 @@ C.......Neutral
 	goto 500
 
 C.......Captured
-2800	if ((imask .and. (SIDMSK .or. (OBJMSK .and. .not. PLNBIT)))
+2800	if ((imask .and. (SIDMSK .or. (OBJMSK .and. .not. PLNBIT))) 
      +	.ne. 0)  goto 1500
 	imask = imask .or. CAPBIT
 	smask = FEDBIT .or. EMPBIT
@@ -246,7 +246,7 @@ C.......Captured
 C.......ALL
 2850	if ((imask .and. (ALLBIT .or. CRDBIT)) .ne. 0)  goto 1500
 	imask = imask .or. ALLBIT
-	if (((imask .and. SIDMSK) .eq. 0) .and. (cmd .ne. TARCMD))
+	if (((imask .and. SIDMSK) .eq. 0) .and. (cmd .ne. TARCMD)) 
      +	smask = FEDBIT .or. EMPBIT .or. NEUBIT .or. ROMBIT
 	if ((imask .and. RNGBIT) .eq. 0)  range = MAXINT
 	goto 500
@@ -261,7 +261,7 @@ C.......Range
 
 C.......Closest
 3000	if (who .eq. 0)  goto 1500		!Pre-game?
-	if ((imask .and. (CLSBIT .or. CRDBIT .or. OUTMSK)) .ne. 0)
+	if ((imask .and. (CLSBIT .or. CRDBIT .or. OUTMSK)) .ne. 0) 
      +	goto 1500
 	imask = imask .or. CLSBIT
 	lmask = LSTBIT
@@ -273,21 +273,21 @@ C		List and summary selection
 C----------------------------------------------------------------------
 
 C.......LIST
-3100	if ((imask .and. (OUTMSK .or. CRDBIT .or. CLSBIT .or. NAMBIT))
+3100	if ((imask .and. (OUTMSK .or. CRDBIT .or. CLSBIT .or. NAMBIT)) 
      +	.ne. 0)  goto 1500
 	imask = imask .or. LSTBIT
 	lmask = lmask .or. LSTBIT
-	if ((cmd .ne. SUMCMD) .and. ((imask .and. SUMBIT) .eq. 0))
+	if ((cmd .ne. SUMCMD) .and. ((imask .and. SUMBIT) .eq. 0)) 
      +	lmask = LSTBIT
 	goto 500
 
 C.......SUMMARY
-3200	if ((imask .and. (OUTMSK .or. CRDBIT .or. CLSBIT .or. NAMBIT))
+3200	if ((imask .and. (OUTMSK .or. CRDBIT .or. CLSBIT .or. NAMBIT)) 
      +	.ne. 0)  goto 1500
 	imask = imask .or. SUMBIT
 	if ((imask .and. RNGBIT) .eq. 0)  range = MAXINT
 	lmask = lmask .or. SUMBIT
-	if ((cmd .ne. LSTCMD) .and. ((imask .and. LSTBIT) .eq. 0))
+	if ((cmd .ne. LSTCMD) .and. ((imask .and. LSTBIT) .eq. 0)) 
      +	lmask = SUMBIT
 	goto 500
 

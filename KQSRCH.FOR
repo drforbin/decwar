@@ -32,9 +32,9 @@ C	the matching KILQUE row number, else it returns as zero.
 	if (nkill .eq. 0)  return	!no one has been killed yet
 	do 100 ii = 1, nkill
 	    i = ii
-	  if ((jobnum .eq. kilque(i,1)) .and. (ppn .eq. kilque(i,2)))
+	  if ((jobnum .eq. kilque(i,1)) .and. (ppn .eq. kilque(i,2))) 
      +	  goto 200
-c--	  if ((ttynum .eq. kilque(i,3)) .and.
+c--	  if ((ttynum .eq. kilque(i,3)) .and. 
 c--     +	  (etim(kilque(i,4)) .lt. 180000))  goto 200
  100	continue
 	return				!player not found in kill queue

@@ -32,7 +32,7 @@ C	friendly ships.  There is a 10% loss during the transfer.
 
 *.......Input ship name and energy to transfer
 
- 100	if ((typlst(index) .eq. KALF) .and. (typlst(index+1) .eq. KINT))
+ 100	if ((typlst(index) .eq. KALF) .and. (typlst(index+1) .eq. KINT)) 
      +	goto 500
 	if (oflg)  200, 200, 300
  200	call out (ener1S, 0)  ;  goto 400
@@ -72,7 +72,7 @@ C	friendly ships.  There is a 10% loss during the transfer.
 
 *.......Adjacent to destination ship?
 
-1000	if (ldis(shpcon(who,KVPOS),shpcon(who,KHPOS),shpcon(i,KVPOS),
+1000	if (ldis(shpcon(who,KVPOS),shpcon(who,KHPOS),shpcon(i,KVPOS), 
      +	shpcon(i,KHPOS),1))  goto 1100
 	call out (energ3,1)
 	return

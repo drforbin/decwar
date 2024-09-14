@@ -38,7 +38,7 @@ C	format (usually oflg, but sometimes SHORT).
 	call outc ('-')
 	call odec (h,w)
 
- 100	if ((pdist(v, h, shpcon(who,KVPOS), shpcon(who,KHPOS)) .eq. 0)
+ 100	if ((pdist(v, h, shpcon(who,KVPOS), shpcon(who,KHPOS)) .eq. 0) 
      +	.and. (w .eq. 0))  goto 200
 	if (prlflg .eq. KBOTH)  call space
 

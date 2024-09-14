@@ -56,7 +56,7 @@ C	burst is read in, checked for syntax errors, and executed.
  400	if (vallst(1) .le. 0)  return 1			!negative # of torps aborts burst
 	ntorp = vallst(1)
 	if (ntorp .gt. shpcon(who,KNTORP))  call out (torp03,1)
-	if ((ntorp .gt. shpcon(who,KNTORP)) .or. (ntorp .gt. 3) .or.
+	if ((ntorp .gt. shpcon(who,KNTORP)) .or. (ntorp .gt. 3) .or. 
      +	(ntorp .lt. 1))  goto 2600
 	if (tem .ne. 1)  goto 600			!target locations already given?
  500	tem = reloc(-ntorp * 2)
@@ -80,9 +80,9 @@ C	burst is read in, checked for syntax errors, and executed.
 *	Input own location or out-of-range location?
 
  700	do 800 i = 1, ntorp
-	  if ((torpl(i,1) .eq. shpcon(who,KVPOS)) .and.
+	  if ((torpl(i,1) .eq. shpcon(who,KVPOS)) .and. 
      +	  (torpl(i,2) .eq. shpcon(who,KHPOS)))  goto 2100
-	  if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS),
+	  if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), 
      +	  torpl(i,1), torpl(i,2), KRANGE))  goto 2700
  800	continue
 
@@ -100,9 +100,9 @@ C	burst is read in, checked for syntax errors, and executed.
 *.........Calculate deflection--normal, shields, damage to tubes or computer?
 
 	  d = (ran(0) - 0.5) / 5.0
-	  if ((shpdam(who,KDTORP) .gt. 0) .or. (shpdam(who,KDCOMP)
+	  if ((shpdam(who,KDTORP) .gt. 0) .or. (shpdam(who,KDCOMP) 
      +	  .gt. 0))  d = d + (ran(0) - 0.5) / 10.0
-	  if (shpcon(who,KSHCON) .gt. 0)  d = d +
+	  if (shpcon(who,KSHCON) .gt. 0)  d = d + 
      +	  (float(shpcon(who,KSSHPC)) * (ran(0) - 0.5)) / 10000.
 	  iV = torpl(id,1) - shpcon(who,KVPOS)
 	  iH = torpl(id,2) - shpcon(who,KHPOS)
@@ -114,7 +114,7 @@ C	burst is read in, checked for syntax errors, and executed.
 
  900	  idis = KRANGE - 2 + int((ran(0) - 0.5) * 4.0 + 0.5)
 	  tpaus = tpaus + (slwest + 1) * 1000 + shpdam(who,KDTORP)
-	  call check (shpcon(who,KVPOS), shpcon(who,KHPOS), iV, iH,
+	  call check (shpcon(who,KVPOS), shpcon(who,KHPOS), iV, iH, 
      +    idis, d)
 	  if (dcode .eq. 0)  goto 1600
 	  aran = iran(100)
@@ -178,7 +178,7 @@ C	burst is read in, checked for syntax errors, and executed.
 	  dispto = dcode
 	  call pridis (iVc, iHc, KRANGE, 0, 0)
 	  call makhit				!send hit message
-	  if ((nplc .lt. DXFBAS) .and. (trstat(j) .ne. 0))
+	  if ((nplc .lt. DXFBAS) .and. (trstat(j) .ne. 0)) 
      +	  call trcoff (j)
 
 *	  Base destroyed?

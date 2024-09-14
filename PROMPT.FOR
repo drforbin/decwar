@@ -39,10 +39,10 @@ C				    of n stardates.
 
 *.......Analyse and output pertinent ship conditions.
 
- 100	if (shpdam(who,KDLIFE) .ge. KCRIT)
+ 100	if (shpdam(who,KDLIFE) .ge. KCRIT) 
      +	call odec (shpcon(who,KLFSUP), 0)
 	if (shpdam(who,KDLIFE) .ge. KCRIT)  call outc ('L')
-	if ((shpcon(who,KSSHPC) .le. 100) .or. (shpcon(who,KSHCON)
+	if ((shpcon(who,KSSHPC) .le. 100) .or. (shpcon(who,KSHCON) 
      +	.lt. 0))  call outc ('S')
 	if (shpcon(who,KSDAM) .ge. 20000)  call outc ('D')	!ship damages > 2000?
 	if (shpcon(who,KSNRGY) .le. 10000)  call outc ('E')	!yellow alert?

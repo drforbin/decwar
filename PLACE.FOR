@@ -39,14 +39,14 @@ C	single call.  It is called by SETUP and ROMDRV.
 	  pteam = 3 - (object/100)
 	  if (nbase(pteam) .le. 0)  goto 300
 	  do 200 i = 1, KNBASE
-	    if (ldis (V, H, base(i,KVPOS,pteam), base(i,KHPOS,pteam), 4))
+	    if (ldis (V, H, base(i,KVPOS,pteam), base(i,KHPOS,pteam), 4)) 
      +	    goto 100
  200	  continue
  300	  if ((nplnet .le. 0) .or. (numcap(pteam) .le. 0))  goto 500
 	  do 400 i = 1, nplnet
-	    if (pteam .ne. dispc (locpln(i,KVPOS), locpln(i,KHPOS)))
+	    if (pteam .ne. dispc (locpln(i,KVPOS), locpln(i,KHPOS))) 
      +	    goto 400
-	    if (ldis (V, H, locpln(i,KVPOS), locpln(i,KHPOS), 2))
+	    if (ldis (V, H, locpln(i,KVPOS), locpln(i,KHPOS), 2)) 
      +	    goto 100
  400	  continue
  500	  call setdsp (V, H, object)		!set up display code

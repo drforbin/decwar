@@ -66,7 +66,7 @@ C	and the job is returned to monitor level.
 	txtem = team - 1
 	call points (.TRUE.)
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy,
+	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
      +		txtem, who)
 	call free (who)
 	who = 0

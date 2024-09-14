@@ -38,7 +38,7 @@ C	message.  If ZERO = 0, then DBITS is initially set to 0.
 	if (zero .eq. 0)  dbits = 0
 	do 100 i = li, lj
 	  if (alive(i) .gt. 0)  goto 100	!alive?
-	  if (ldis(iV,iH,shpcon(i,KVPOS),shpcon(i,KHPOS),ilim))
+	  if (ldis(iV,iH,shpcon(i,KVPOS),shpcon(i,KHPOS),ilim)) 
      +	  dbits = dbits .or. bits(i)		!add to DBITS if in range
  100	continue
 	return

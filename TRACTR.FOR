@@ -86,7 +86,7 @@ C	used to break an active tractor beam.
 
 *.......Adjacent to destination ship?
 
- 900	if (ldis(shpcon(who,KVPOS), shpcon(who,KHPOS),
+ 900	if (ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), 
      +	shpcon(i,KVPOS), shpcon(i,KHPOS), 1))  goto 1000
 	call out (energ3,1)
 	return

@@ -86,7 +86,7 @@ C.......bases
 	    code = object * 100 + index
 	    vpos = base(index,KVPOS,side) ; hpos = base(index,KHPOS,side)
 	    call lstobj
-	    if ((xf .and. PASBIT) .eq. 0)
+	    if ((xf .and. PASBIT) .eq. 0) 
      +	    base(index,4,side) = base(index,4,side) .or. team
   350	    if ((xf .and. SUMBIT) .eq. 0)  goto 400
 	    sum(side) = sum(side) + 1
@@ -111,7 +111,7 @@ C.......planets
 	  if ((xf .and. LSTBIT) .eq. 0)  goto 650
 	  code = object * 100 + index
 	  call lstobj
-	  if ((xf .and. PASBIT) .eq. 0)
+	  if ((xf .and. PASBIT) .eq. 0) 
      +	  locpln(index,4) = locpln(index,4) .or. team
   650	  if ((xf .and. SUMBIT) .eq. 0)  goto 700
 	  sum(side) = sum(side) + 1

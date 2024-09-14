@@ -47,7 +47,7 @@ C	call royaln('CSIS86') drforbin(merlyn)
 		icflg  = kabs
 		goto 4
 
-2	if(vallst(1).ne.2.and.(equal(tknlst(1),'INTERMEDIATE').eq.0))
+2	if(vallst(1).ne.2.and.(equal(tknlst(1),'INTERMEDIATE').eq.0)) 
      +		goto 3
 		scnflg = long
 		prtype = -1
@@ -71,7 +71,7 @@ C	call royaln('CSIS86') drforbin(merlyn)
 	call ttyon
 	call setup			!start up player in game
 	call aprset($9999)		! set up trap for data out of bounds
-	call place ((100 * team) + who, 1, shpcon(who,KVPOS),
+	call place ((100 * team) + who, 1, shpcon(who,KVPOS), 
      +	shpcon(who,KHPOS))
 
 49	continue
@@ -81,7 +81,7 @@ d	call timin ('GETCMD')
 d	call timout('GETCMD')
 	if (who .eq. 0) goto 1		! hmmm....he died, so reincarnate him!
 
-	goto (100,200,300,400,500,600,700,800,900,1000,1100,1200,
+	goto (100,200,300,400,500,600,700,800,900,1000,1100,1200, 
      +	1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,
      +	2400,2500,2600,2700,2800,2900,3000,3100,3200,3300) n
 
@@ -343,7 +343,7 @@ d	call timout('BASBLD')
 	txtem = team - 1
 	call points (.TRUE.)		!show final point totals
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy,
+	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
      +	txtem, who)
 	call free (who)			! release the ship
 	who = 0

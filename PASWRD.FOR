@@ -30,7 +30,7 @@ C	debugging, cheating, etc.
 	PASFLG = equal(tknlst(2), KPASS, 1)	!match the password?
 	if (PASFLG .eq. -1)  PASFLG = 0		!not an exact match
 C	70725 project added by merlyn (drforbin)
-	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and.
+	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and. 
      +		(usrprj(0) .ne. "70006)
      +.and. (usrprj(0) .ne. "70725))		!added
      +		pasflg = 0

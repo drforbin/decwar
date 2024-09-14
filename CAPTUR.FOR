@@ -38,7 +38,7 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 	goto 100
 
  200	Vloc = vallst(1)  ;  Hloc = vallst(2)
-	if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), Vloc,
+	if (.not. ldis(shpcon(who,KVPOS), shpcon(who,KHPOS), Vloc, 
      +	Hloc, 1))  goto 500			!adjacent to sector specified?
 	c = dispc (Vloc, Hloc)
 	if ((c .lt. DXNPLN) .or. (c .gt. DXEPLN))  goto 400	!is there a planet here?
@@ -74,9 +74,9 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 	id = pdist (Vfrom, Hfrom, Vto, Hto)
 	call phadam (team, who, id, phit, .FALSE.) !planet defends itself!
 	if (tcap .ne. 0) tmscor(tcap,KPEDAM) = tmscor(tcap,KPEDAM) + ihita
-	if ((klflg .ne. 0) .and. (tcap .ne. 0))
+	if ((klflg .ne. 0) .and. (tcap .ne. 0)) 
      +	tmscor(tcap,KPEKIL) = tmscor(tcap,KPEKIL) + 5000
-	call pridis (shpcon(who,KVPOS), shpcon(who,KHPOS), KRANGE,
+	call pridis (shpcon(who,KVPOS), shpcon(who,KHPOS), KRANGE, 
      +	team, 0)
 	call pridis (shpcon(who,KVPOS), shpcon(who,KHPOS), 4, 0, 1)
 
@@ -90,7 +90,7 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
 	call makhit
 	tpoint(KPPCAP) = tpoint(KPPCAP) + 1000	!get points
 	ptime = v - etim(tim0)			!pause for capture
-	if ((shpcon(who,KSDAM) .lt. KENDAM) .and.
+	if ((shpcon(who,KSDAM) .lt. KENDAM) .and. 
      +	(shpcon(who,KSNRGY) .gt. 0))  return	!if player alive, return
 
 *.......Player dies!
@@ -106,7 +106,7 @@ C	attacking ship's energy is reduced 50 units for each BUILD.
  400	idsp = dispc (Vloc, Hloc)		!no planet at location
 	if (idsp .le. 0)  call out (noplnt,1)
 	if ((team .eq. idsp) .or. (team+2 .eq. idsp))  call out (nosur1,1)
-	if ((3-team .eq. idsp) .or. (5-team .eq. idsp))
+	if ((3-team .eq. idsp) .or. (5-team .eq. idsp)) 
      +	call out (nosur2,1)
 	if (idsp .eq. DXROM)  call out (nosur3,1)
 	if (idsp .ge. DXSTAR)  call out (nosur4,1)

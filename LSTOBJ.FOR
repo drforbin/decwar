@@ -40,7 +40,7 @@ C	  SIDE		which side the object is on
 C	  CMD		command being executed
 C	  XF		ORNBIT
 
-	if ((side .eq. 0) .or. (side .eq. team) .or. (cmd .eq. TARCMD))
+	if ((side .eq. 0) .or. (side .eq. team) .or. (cmd .eq. TARCMD)) 
      +	goto 100
 	call outc ('*')  ;  goto 200
   100	call space

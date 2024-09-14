@@ -34,7 +34,7 @@ C	to the masks returned by LSTSCN for the LIST command.
 	if ((imask .and. RNGBIT) .ne. 0)  gxf = ISRBIT	!"in specified range"
 
 	grpbts = 0
-	if ((smask .ne. sbits(team)) .and. (range .gt. KRANGE) .and.
+	if ((smask .ne. sbits(team)) .and. (range .gt. KRANGE) .and. 
      +	(gxf .ne. IGMBIT))  grpbts = KNOBIT
 
 	gxf = gxf .or. lmask
@@ -168,7 +168,7 @@ C	BASE ----------------------------------------------------------
 	  do 3300 i = 1, KNBASE
 	    if (base(i,3,side) .le. 0)  goto 3300	!base is dead
 	    Vpos = base(i,KVPOS,side)  ;  Hpos = base(i,KHPOS,side)
-	    call lstupd (baslst(i,side), basctr(side), base(i,4,side),
+	    call lstupd (baslst(i,side), basctr(side), base(i,4,side), 
      +	                bxf(side))
 3300	  continue
 3400	continue
@@ -204,9 +204,9 @@ C	---------------------------------------------------------------
 	if (smask .eq. NEUBIT)  msg = locf(lstf08)	!" neutral"
 	if (smask .eq. FEDBIT)  msg = locf(lstf09)	!" Federation"
 	if (smask .eq. EMPBIT)  msg = locf(lstf10)	!" Empire"
-	if ((smask .eq. (FEDBIT .or. EMPBIT)) .and. (omask .eq. PLNBIT))
+	if ((smask .eq. (FEDBIT .or. EMPBIT)) .and. (omask .eq. PLNBIT)) 
      +	msg = locf(lstf11)				!" captured"
-	if (((smask .and. ROMBIT) .ne. 0) .and. (smask .and. NEUBIT)
+	if (((smask .and. ROMBIT) .ne. 0) .and. (smask .and. NEUBIT) 
      +	.eq. 0)  msg = locf(lstf12)			!" enemy"
 	call out (msg,0)
 
@@ -214,7 +214,7 @@ C	---------------------------------------------------------------
 	if (omask .eq. BASBIT)  msg = locf(lstf14)	!" bases"
 	if (omask .eq. SHPBIT)  msg = locf(lstf15)	!" ships"
 	if (omask .eq. (BASBIT .or. PLNBIT))  msg = locf(lstf16) !" ports"
-	if (omask .eq. (PLNBIT .or. BASBIT .or. SHPBIT))
+	if (omask .eq. (PLNBIT .or. BASBIT .or. SHPBIT)) 
      +	msg = locf(lstf17)				!" forces"
 	call out (msg,0)
 

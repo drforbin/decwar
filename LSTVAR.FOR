@@ -18,7 +18,7 @@ C	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
 C	02110-1301, USA.  
 
 
-	common /local/
+	common /local/ 
      +	lstfz,
      +	shpctr(2), shplst(KNPLAY), sxf(2),
      +	romctr, romlst, rxf,

@@ -42,7 +42,7 @@ C	if true.  ITYPE = team of destroyed port.
 	  if (nbase(itype) .le. 0)  goto 200	!any bases alive?
 	  do 100 j = 1, KNBASE
 	    if (base(j,3,itype) .le. 0)  goto 100
-	    if (ldis(shpcon(i,KVPOS), shpcon(i,KHPOS),
+	    if (ldis(shpcon(i,KVPOS), shpcon(i,KHPOS), 
      +	    base(j,KVPOS,itype), base(j,KHPOS,itype), 1))  goto 400
  100	  continue
 
@@ -50,9 +50,9 @@ C	if true.  ITYPE = team of destroyed port.
 
  200	  if (numcap(itype) .le. 0)  goto 400	!any friendly planets?
 	  do 300 j = 1, nplnet
-	    if ((itype + DXNPLN) .ne. dispc(locpln(j,KVPOS),
+	    if ((itype + DXNPLN) .ne. dispc(locpln(j,KVPOS), 
      +	    locpln(j,KHPOS)))  goto 300
-	    if (ldis(shpcon(i,KVPOS), shpcon(i,KHPOS), locpln(j,KVPOS),
+	    if (ldis(shpcon(i,KVPOS), shpcon(i,KHPOS), locpln(j,KVPOS), 
      +	    locpln(j,KHPOS), 1))  goto 400
  300	  continue
 

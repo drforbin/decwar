@@ -41,14 +41,14 @@ C	02110-1301, USA.
 
   50	do 600 i = 2, KMAXTK
 	  if (typlst(i) .ne. KALF)  goto 700
-	  if (.not. (equal(tknlst(i), 'ME') .or.
+	  if (.not. (equal(tknlst(i), 'ME') .or. 
      +	  equal(tknlst(i), 'I')))  goto 100
 	  if (who .eq. 0)  goto 100		!No IFLG option in Pre-game
 	  iflg = .TRUE.  ;  goto 600
- 100	  if (.not. (equal(tknlst(i), federa) .or.
+ 100	  if (.not. (equal(tknlst(i), federa) .or. 
      +	  equal(tknlst(i), 'HUMANS')))  goto 200
 	  fflg = .TRUE.  ;  goto 600
- 200	  if (.not. (equal(tknlst(i), 'EMPIRE') .or.
+ 200	  if (.not. (equal(tknlst(i), 'EMPIRE') .or. 
      +	  equal(tknlst(i), 'KLINGONS')))  goto 300
 	  eflg = .TRUE.  ;  goto 600
  300	  if (.not. equal(tknlst(i), 'ROMULANS'))  goto 400
@@ -93,7 +93,7 @@ C	drforbin mod following lines
 *.......Print out itemized scoring information
 
 	do 3000 i = 1, KNPOIN
-	  if (.not. ((iflg .and. (score(i, who) .ne. 0)) .or. (fflg .and.
+	  if (.not. ((iflg .and. (score(i, who) .ne. 0)) .or. (fflg .and. 
      +	  (tmscor(1,i) .ne. 0)) .or. (eflg .and. (tmscor(2,i) .ne. 0))
      +	  .or. (rflg .and. (rsr(i) .ne. 0))))  goto 3000
 

@@ -18,7 +18,7 @@ C	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
 C	02110-1301, USA.  
 
 
-	common /hiseg/
+	common /hiseg/ 
      +	hfz, shpcon, shpdam, base, nbase, board, locpln, locr, 
      +	erom, eromo, rsr, nplnet, rom, romcnt, rtpaus, rppaus, 
      +	job, msgflg, hitflg, numcap, romopt, blhopt, endflg, nomsg, 

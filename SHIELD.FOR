@@ -68,9 +68,9 @@ C	TRANSFER.
 
 *	Make energy transfer
 
- 700	if ((-1 * senrgy) .gt. (shpcon(who,KSSHPC) * 25))
+ 700	if ((-1 * senrgy) .gt. (shpcon(who,KSSHPC) * 25)) 
      +	senrgy = -25 * shpcon(who,KSSHPC)
-	if ((shpcon(who,KSNRGY) - senrgy) .gt. 50000)
+	if ((shpcon(who,KSNRGY) - senrgy) .gt. 50000) 
      +	senrgy = -(50000-shpcon(who,KSNRGY))
 	shpcon(who,KSSHPC) = shpcon(who,KSSHPC) + (senrgy / 25)
 	shpcon(who,KSNRGY) = shpcon(who,KSNRGY) - senrgy

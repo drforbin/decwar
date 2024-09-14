@@ -43,7 +43,7 @@ C	14=Tractor beam broken, 15=torpedo neutralized.
 
 *.......Go to proper section of code depending on type of message
 
-	goto (200,200,200,4600,4600,200,200,200,6000,6000,6800,6900,
+	goto (200,200,200,4600,4600,200,200,200,6000,6000,6800,6900, 
      +	7300,7600,4600)  iwhat
 	goto 100
 
@@ -173,7 +173,7 @@ C	14=Tractor beam broken, 15=torpedo neutralized.
 
 *	Critical hit on base?
 
-3900	if ((oflg .ne. LONG) .or. ((nplct .ne. DXFBAS) .and.
+3900	if ((oflg .ne. LONG) .or. ((nplct .ne. DXFBAS) .and. 
      +	(nplct .ne. DXEBAS)))  goto 4100
 	if ((klflg .eq. 0) .and. (critdm .eq. 0))  goto 4500
 	call out2c ('  ')

@@ -58,7 +58,7 @@ C	the hit is made, and the appropriate messages are printed.
  400	call out (error2,1)  ;  return 1
  500	call out (error1,1)  ;  return 1
 
- 600	if ((nplc .eq. team) .or. (nplc .eq. team+2) .or.
+ 600	if ((nplc .eq. team) .or. (nplc .eq. team+2) .or. 
      +	(nplc .eq. team+DXNPLN))  goto 1800
 	if (id .le. KRANGE)  goto 700
 	call out (phacn1,1)  ;  return 1
@@ -77,7 +77,7 @@ C	the hit is made, and the appropriate messages are printed.
  900	if ((iran(100) * phit) .le. 18900)  goto 1000		!phasers overheat?
 	call out (phacn4,1)
 	if (oflg .eq. long)  call out (phacn5,1)
-	shpdam(who,KDPHAS) = shpdam(who,KDPHAS) + 750 +
+	shpdam(who,KDPHAS) = shpdam(who,KDPHAS) + 750 + 
      +	(iran(100) * phit * 7.5) / 100
 
 *.......Check target, hit and damage
@@ -92,7 +92,7 @@ C	the hit is made, and the appropriate messages are printed.
 	dispfr = who + (team * 100)
 	dispto = disp(iV,iH)  ;  iwhat = 1
 	call pridis (iV, iH, KRANGE, 0, 0)
-	if ((iran(100) * phit) / (25 * id) .gt. 150)  locpln(ip,3) =
+	if ((iran(100) * phit) / (25 * id) .gt. 150)  locpln(ip,3) = 
      +	max0 (locpln(ip,3) - 1, 0)
 	shstto = locpln(ip,3)
 	call makhit
@@ -150,7 +150,7 @@ C	the hit is made, and the appropriate messages are printed.
 
 1500	shpcon(who,KSNRGY) = shpcon(who,KSNRGY) - (phit * 10)
 	shpcon(who,KSPCON) = RED
-	phbank(bank) = etim (tim0) + (slwest + 1) * 1500 +
+	phbank(bank) = etim (tim0) + (slwest + 1) * 1500 + 
      +	shpdam(who,KDPHAS)
 	return
 

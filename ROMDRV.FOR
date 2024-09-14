@@ -149,14 +149,14 @@ d	call timout ('ROMDRV')
 
 *	Compute desired new location
 
-1400	if ((i-locr(KVPOS)) .lt. 0)  i = locr(KVPOS) -
+1400	if ((i-locr(KVPOS)) .lt. 0)  i = locr(KVPOS) - 
      +	(iabs(i - locr(KVPOS)) - 1)
-	if ((i-locr(KVPOS)) .gt. 0)  i = locr(KVPOS) +
+	if ((i-locr(KVPOS)) .gt. 0)  i = locr(KVPOS) + 
      +	(iabs(i - locr(KVPOS)) - 1)
 	if ((i-locr(KVPOS)) .eq. 0)  i = locr(KVPOS)
-	if ((j-locr(KHPOS)) .lt. 0)  j = locr(KHPOS) -
+	if ((j-locr(KHPOS)) .lt. 0)  j = locr(KHPOS) - 
      +	(iabs(j - locr(KHPOS)) - 1)
-	if ((j-locr(KHPOS)) .gt. 0)  j = locr(KHPOS) +
+	if ((j-locr(KHPOS)) .gt. 0)  j = locr(KHPOS) + 
      +	(iabs(j - locr(KHPOS)) - 1)
 	if ((j-locr(KHPOS)) .eq. 0)  j = locr(KHPOS)
 	l = 4				!Maximum speed warp 4

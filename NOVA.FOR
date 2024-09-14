@@ -39,7 +39,7 @@ C	killing the object specified.
 
 	d = 1000
 	if (nplc .ge. DXFBAS)  d = d - base(j,3,nplc-2)
-	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSHCON) .gt. 0))
+	if ((nplc .lt. DXFBAS) .and. (shpcon(j,KSHCON) .gt. 0)) 
      +	d = d - shpcon(j,KSSHPC)
 	if (d .lt. 200)  d = 250
 	if (nplc .ge. DXFBAS)  goto 200		!base?
@@ -54,17 +54,17 @@ C	killing the object specified.
 *.......Update scoring due to nova
 
  200	ihita = d * 8 + iran (1000)
-	if (PLAYER .and. (5-team .eq. nplc))  tpoint(KPBDAM) =
+	if (PLAYER .and. (5-team .eq. nplc))  tpoint(KPBDAM) = 
      +	tpoint(KPBDAM) + ihita
-	if ((.not. PLAYER) .and. (nplc .ge. DXFBAS))  rsr(KPBDAM) =
+	if ((.not. PLAYER) .and. (nplc .ge. DXFBAS))  rsr(KPBDAM) = 
      +	rsr(KPBDAM) + ihita
-	if (PLAYER .and. (3-team .eq. nplc))  tpoint(KPEDAM) =
+	if (PLAYER .and. (3-team .eq. nplc))  tpoint(KPEDAM) = 
      +	tpoint(KPEDAM) + ihita
-	if ((.not. PLAYER) .and. (nplc .lt. DXFBAS))  rsr(KPEDAM) =
+	if ((.not. PLAYER) .and. (nplc .lt. DXFBAS))  rsr(KPEDAM) = 
      +	rsr(KPEDAM) + ihita
-	if (PLAYER .and. (team+2 .eq. nplc))  tpoint(KPBDAM) =
+	if (PLAYER .and. (team+2 .eq. nplc))  tpoint(KPBDAM) = 
      +	tpoint(KPBDAM) - ihita
-	if (PLAYER .and. (team .eq. nplc))  tpoint(KPEDAM) =
+	if (PLAYER .and. (team .eq. nplc))  tpoint(KPEDAM) = 
      +	tpoint(KPEDAM) - ihita
 
 *.......Damage ship
@@ -72,13 +72,13 @@ C	killing the object specified.
 	if (nplc .ge. DXFBAS)  goto 500		!base?
 	shpcon(j,KSDAM) = shpcon(j,KSDAM) + ihita
 	shpcon(j,KSNRGY) = shpcon(j,KSNRGY) - ihita * ran(0)
-	if (shpcon(j,KSHCON) .gt. 0)  shpcon(j,KSSHPC) = max0(
+	if (shpcon(j,KSHCON) .gt. 0)  shpcon(j,KSSHPC) = max0( 
      +	shpcon(j,KSSHPC) - 300 + iran(100), 0)
 	if (shpcon(j,KSSHPC) .le. 0)  shpcon(j,KSHCON) = -1
 
 *	Ship destroyed?  Else, displace it
 
-	if ((shpcon(j,KSDAM) .lt. KENDAM) .and. (shpcon(j,KSNRGY) .gt. 0))
+	if ((shpcon(j,KSDAM) .lt. KENDAM) .and. (shpcon(j,KSNRGY) .gt. 0)) 
      +	goto 300
 	call setdsp (shpcon(j,KVPOS), shpcon(j,KHPOS), 0)
 	alive(j) = 0  ;  klflg = 2
@@ -87,11 +87,11 @@ C	killing the object specified.
  400	dispfr = DXSTAR * 100  ;  dispto = (nplc * 100) + j  ;  iwhat = 8
 	Vto = shpcon(j,KVPOS)  ;  Hto = shpcon(j,KHPOS)
 	shstto = shpcon(j,KSSHPC)  ;  shcnto = shpcon(j,KSHCON)
-	if ((klflg .ne. 0) .and. PLAYER .and. (team .eq. nplc))
+	if ((klflg .ne. 0) .and. PLAYER .and. (team .eq. nplc)) 
      +	tmscor(team,KPEKIL) = tmscor(team,KPEKIL) - 5000
-	if ((klflg .ne. 0) .and. PLAYER .and. (team .ne. nplc))
+	if ((klflg .ne. 0) .and. PLAYER .and. (team .ne. nplc)) 
      +	tmscor(team,KPEKIL) = tmscor(team,KPEKIL) + 5000
-	if ((klflg .ne. 0) .and. (.not. PLAYER))
+	if ((klflg .ne. 0) .and. (.not. PLAYER)) 
      +	rsr(KPEKIL) = rsr(KPEKIL) + 5000
 	call pridis (shpcon(j,KVPOS), shpcon(j,KHPOS), KRANGE, 0, 0)
 	call makhit			!send hit message
@@ -115,14 +115,14 @@ C	killing the object specified.
 	shstto = base(j,3,jbase)  ;  shcnto = 1
 	if (base(j,3,jbase) .gt. 0)  goto 700
 	if (.not. PLAYER)  rsr(KPBDAM) = rsr(KPBDAM) + 10000
-	if (PLAYER .and. (team .eq. jbase))  tpoint(KPBDAM) =
+	if (PLAYER .and. (team .eq. jbase))  tpoint(KPBDAM) = 
      +	tpoint(KPBDAM) - 10000
-	if (PLAYER .and. (team .ne. jbase))  tpoint(KPBDAM) =
+	if (PLAYER .and. (team .ne. jbase))  tpoint(KPBDAM) = 
      +	tpoint(KPBDAM) + 10000
 	nbase(jbase) = nbase(jbase) - 1
 	call baskil (jbase)
 	klflg = 2
- 700	call pridis (base(j,KVPOS,jbase), base(j,KHPOS,jbase),
+ 700	call pridis (base(j,KVPOS,jbase), base(j,KHPOS,jbase), 
      +	KRANGE, 0, 0)
 	call makhit
 

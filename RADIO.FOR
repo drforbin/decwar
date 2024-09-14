@@ -40,7 +40,7 @@ C	Messages from individual ships may also be gagged.
 	call crlf
  200	if (equal (tknlst(index), 'ON'))   goto 1000
 	if (equal (tknlst(index), 'OFF'))  goto 900
-	if (.not. (equal(tknlst(index), 'GAG') .or.
+	if (.not. (equal(tknlst(index), 'GAG') .or. 
      +	equal(tknlst(index), 'UNGAG')))  goto 100
 	gagtyp = 0
 	if (equal (tknlst(index), 'UNGAG'))  gagtyp = 1

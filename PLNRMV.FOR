@@ -50,7 +50,7 @@ C	the game or undocks a player.
 
 	if ((nplnet .le. 0) .or. (i .gt. nplnet))  go to 300
 	do 200 j = i, nplnet
-	  call setdsp (locpln(j,KVPOS), locpln(j,KHPOS),
+	  call setdsp (locpln(j,KVPOS), locpln(j,KHPOS), 
      +	  (disp (locpln(j,KVPOS), locpln(j,KHPOS)) - 1))
  200	continue
 

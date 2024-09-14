@@ -152,7 +152,7 @@ C	if (.not. chkpay(0)) goto 50 drforbin(merlyn)
 
   50	call xgtcmd (n)          	!get next command to execute
 
-	goto (100,305,200,300,310,400,500,600,710,700,800,810,900,
+	goto (100,305,200,300,310,400,500,600,710,700,800,810,900, 
      +		1000,1100,1200), n
 
 
@@ -163,7 +163,7 @@ C	if (.not. chkpay(0)) goto 50 drforbin(merlyn)
  300	call help			!help
 	goto 50
 C	305	call pdwdoc		!drforbin edit
-305	call out ('This is where CompuServe rips you off for
+305	call out ('This is where CompuServe rips you off for 
      + Documentation!',1)
 C	305	if (chkpay(0)) call pdwdoc drforbin(merlyn)		! print DECWAR.DOC
 	goto 50				! purchase DECWAR documentation
@@ -274,7 +274,7 @@ C	goto 700			!added by drforbin
 	if (hungup) call cc1
 C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. KEOL)  goto 700
-	if ((.not. equal(tknlst(1), 'YES')) .and.
+	if ((.not. equal(tknlst(1), 'YES')) .and. 
      +	(.not. equal(tknlst(1), 'NO')))  goto 600
 	if (equal (tknlst(1), 'NO'))  ROMOPT = .FALSE.
 
@@ -297,13 +297,13 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 c--	nplnet = int(20.0 + ran(0) * 61.0)
 	nplnet = 60			! ALWAYS insert max. # of planets
 	do 900 i = 1 , KNBASE
-	  call place (((DXFBAS*100) + i), 1, base(i,KVPOS,1),
+	  call place (((DXFBAS*100) + i), 1, base(i,KVPOS,1), 
      +	  base(i,KHPOS,1))
-	  call place (((DXEBAS*100) + i), 1, base(i,KVPOS,2),
+	  call place (((DXEBAS*100) + i), 1, base(i,KVPOS,2), 
      +	  base(i,KHPOS, 2))
  900	continue
 	do 1000 i = 1 , nplnet
-	  call place (((DXNPLN*100) + i), 1, locpln(i,KVPOS),
+	  call place (((DXNPLN*100) + i), 1, locpln(i,KVPOS), 
      +	  locpln(i,KHPOS))
 1000	continue
 	call place (dxstar*100, nstar, dm1, dm2)
@@ -322,7 +322,7 @@ C	goto 1400
 	if (CCFLG .or. hungup)  goto 1400
 C	if (lofchk(0)) goto 1400 drforbin(merlyn)
 	if (typlst(1) .eq. KEOL)  goto 1400
-	if (.not. (equal(tknlst(1), 'YES') .or.
+	if (.not. (equal(tknlst(1), 'YES') .or. 
      +	equal(tknlst(1), 'NO')))  goto 1100
 	if (equal (tknlst(1), 'YES'))  BLHOPT = .TRUE.
 	if (BLHOPT)  call place ((DXBHOL*100), nhole, i, j)
@@ -456,7 +456,7 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	group (7,1) = 'ENEMY'       ;  group (7,2) = group (2+team,2)
 
 	call cctrap (clrbuf)		 !clear input buffer on ^C
-	call jobsta (
+	call jobsta ( 
      +		job(who,KJOB),
      +		job(who,KNAM1),
      +		job(who,KNAM2),
@@ -502,7 +502,7 @@ C	(before a side and ship have been chosen).
 	include 'extern/nolist'
 	include 'setext/nolist'
 	dimension precmd(2,KNPCMD)
-	data ((precmd(i,j), i = 1, 2), j = 1, KNPCMD)/
+	data ((precmd(i,j), i = 1, 2), j = 1, KNPCMD)/ 
      +	  'Activ', 'ate  ',
      +    'DOcum', 'ent  ',
      +	  'Gripe', '     ',

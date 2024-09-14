@@ -36,7 +36,7 @@ C	object (ship or base).
 	do 100 j = 1, KNPLAY / 2
 	  if (.not. alive(j))  goto 100
 	  if (disp(shpcon(j,KVPOS),shpcon(j,KHPOS)) .le. 0)  goto 100
-	  ztem = (RV - shpcon(j,KVPOS)) * (RV - shpcon(j,KVPOS)) +
+	  ztem = (RV - shpcon(j,KVPOS)) * (RV - shpcon(j,KVPOS)) + 
      +	  (RH - shpcon(j,KHPOS)) * (RH - shpcon(j,KHPOS))
 	  if (ztem .ge. z(1))  goto 100
 	  iV(1) = j  ;  z(1) = ztem
@@ -48,7 +48,7 @@ C	object (ship or base).
 	do 200 j = (KNPLAY / 2) + 1, KNPLAY
 	  if (shpcon(j,KVPOS) .eq. 0)  goto 200
 	  if (disp(shpcon(j,KVPOS),shpcon(j,KHPOS)) .le. 0)  goto 200
-	  ztem = (RV - shpcon(j,KVPOS)) * (RV - shpcon(j,KVPOS)) +
+	  ztem = (RV - shpcon(j,KVPOS)) * (RV - shpcon(j,KVPOS)) + 
      +	  (RH - shpcon(j,KHPOS)) * (RH - shpcon(j,KHPOS))
 	  if (ztem .ge. z(2))  goto 200
 	  iV(2) = j  ;  z(2) = ztem
@@ -62,7 +62,7 @@ C	object (ship or base).
 	  do 300 j = 1, KNBASE
 	    if (base(j,3,k) .le. 0)  goto 300
 	    if (disp (base(j,KVPOS,k), base(j,KHPOS,k)) .eq. 0)  goto 300
-	    ztem = (RV - base(j,KVPOS,k)) * (RV - base(j,KVPOS,k)) +
+	    ztem = (RV - base(j,KVPOS,k)) * (RV - base(j,KVPOS,k)) + 
      +	    (RH - base(j,KHPOS,k)) * (RH - base(j,KHPOS,k))
 	    if (ztem .ge. z(2+k))  goto 300
 	    iV(2+k) = j  ;  z(2+k) = ztem
@@ -73,11 +73,11 @@ C	object (ship or base).
 *.......Figure out which of the above is closest of all
 
 	np = 1
-	if ((z(2) .lt. z(1))  .or. ((z(1) .eq. z(2))  .and.
+	if ((z(2) .lt. z(1))  .or. ((z(1) .eq. z(2))  .and. 
      +	(iran(2) .eq. 1)))  np = 2
-	if ((z(3) .lt. z(np)) .or. ((z(3) .eq. z(np)) .and.
+	if ((z(3) .lt. z(np)) .or. ((z(3) .eq. z(np)) .and. 
      +	(iran(2) .eq. 1)))  np = 3
-	if ((z(4) .lt. z(np)) .or. ((z(4) .eq. z(np)) .and.
+	if ((z(4) .lt. z(np)) .or. ((z(4) .eq. z(np)) .and. 
      +	(iran(2) .eq. 1)))  np = 4
 	ip = iV(np)
 	num = pdist (V(np), H(np), RV, RH)

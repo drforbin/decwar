@@ -32,7 +32,7 @@ C	will be lost.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 
-	common /frlocl/ tship, tshpco(10), tshpda(KNDEV), tjob(KNJBST),
+	common /frlocl/ tship, tshpco(10), tshpda(KNDEV), tjob(KNJBST), 
      +	dum(16)
 
 	if (alive(snum) .gt. 0)  return
@@ -43,7 +43,7 @@ C	will be lost.
 	tteam = 1  ;  if (snum .gt. (KNPLAY / 2))  tteam = 2
 	tship = (tteam * 100) + snum
 	numply = numply - 1
-	if ((numply .eq. 0) .and. .not. ENDFLG)  hitime =
+	if ((numply .eq. 0) .and. .not. ENDFLG)  hitime = 
      +	daytim(d) + 300000		!preserve high segment for 5 minutes
 	numsid(tteam) = numsid(tteam) - 1
 	if (trstat(snum) .ne. 0)  call trcoff (snum)
@@ -51,7 +51,7 @@ C	will be lost.
 C.......Record the player in the killed player queue, along with the
 C.......time when he will again be eligible to play.
 
-	call kqsrch (job(snum,KTTYN), job(snum,KJOB), job(snum,KPPN),
+	call kqsrch (job(snum,KTTYN), job(snum,KJOB), job(snum,KPPN), 
      +	kindex)
 	if (kindex .ne. 0)  goto 100
 	if (nkill .lt. KQLEN) nkill = nkill + 1
@@ -100,7 +100,7 @@ C.......time when he will again be eligible to play.
 	entry RSTART (snum)
 
  800	if (shpcon(snum,KVPOS) .ne. 0)  goto 1100	!tship in use
-	if (disp(tshpco(KVPOS),tshpco(KHPOS)) .gt. 0)
+	if (disp(tshpco(KVPOS),tshpco(KHPOS)) .gt. 0) 
      +	goto 1200   !  spot on board is taken
 801	call lock (frelok,'RSTART')
 	if (lkfail) goto 801			! keep trying!
@@ -118,7 +118,7 @@ C.......time when he will again be eligible to play.
 	  shpdam(snum,i) = tshpda(i)
 1000	continue
 
-	call jobsta (
+	call jobsta ( 
      +		job(snum,KJOB),
      +		dummy,
      +		dummy,

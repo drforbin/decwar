@@ -116,7 +116,7 @@ C	if (lofchk(0))	goto 500	! drforbin(merlyn) dump user whose time limit is over
 	txtem = team - 1
 	call points (.TRUE.)
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy,
+	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
      +	txtem, who)
 	call free (who)			!player is dead
 c--	call	shosta(0)

@@ -144,7 +144,7 @@ C	sub-space radio.
 1400	  mask = mask * 2				!update mask
 1500	continue
 
-	if (player)
+	if (player) 
      +	dbits = dbits .and. (.not. bits(who))		!remove self
 	gagmsg = gagmsg .and. (.not. dbits)		!update individual gag
 	if (dbits .ne. 0)  goto 1600			!anyone to send to?
