@@ -1,0 +1,75 @@
+;	This file is part of Decwar.
+;	Copyright 1979, 2011 Bob Hysick, Jeff Potter, The University of Texas
+;	Computation Center and Harris Newman.
+
+;	This program is free software; you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation; either version 3, or (at your option)
+;	any later version.
+
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+
+;	You should have received a copy of the GNU General Public License
+;	along with this program; if not, write to the Free Software
+;	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+;	02110-1301, USA.  
+
+
+;;;	This subroutine controls access to a routine that can be
+;	accessed by only one job at a time.  To use it, at the
+;	beginning of each controlled routine, put the code
+;
+;		MOVEI	T1,lock
+;		PUSHJ	P,ENTR.
+;
+;	lock must be a word in a shared, write enabled high
+;	segment (being used by several jobs).  ENTR. will put
+;	the job in a queue until the routine is available (jobs
+;	will wait in line for access to the routine -- the first
+;	ones to request access will be the first ones to get it,
+;	so the correct order is guaranteed).  It will then lock
+;	the routine and fix up the stack to unlock it when access
+;	is complete (when the routine completes execution and
+;	executes a POPJ P,).
+;
+;	lock must be initialized to -1 before this routine is
+;	ever called (one time only).
+
+	sixbit	/ENTR./
+entr.:	aosn	t2,(t1)		;is anyone currently executing the routine?
+	jrst	entr.3		;no, it's safe
+	subi	t2,1
+
+entr.1:	movei	t3,ntry		;# of cycles before adjusting lock
+	movei	t4,stry		;sleep time between tries
+entr.2:	hiber	t4,		;wait a while
+	  halt
+	camn	t2,(t1)		;my turn yet?
+	jrst	entr.3		;yep
+	sojg	t3,entr.2	;try again
+
+	;By now it is assumed that something has gone wrong
+	;(probably the routine that had control aborted), so
+	;the lock must be adjusted to let the next job in line
+	;get control of the locked routine.
+
+	msg	<%Locked routine time out, modifying lock>
+	sos	t3,(t1)		;adjust lock by 1
+	caile	t2,(t3)		;my turn yet?
+	jrst	entr.1		;no, wait some more
+
+	;It's ok to enter the routine now.  Fix up the stack to
+	;unlock the routine when done.
+
+entr.3:	movei	t1,entr.4	;address of unlock code
+	exch	t1,(p)		;fix up stack
+	jrst	(t1)		;return
+
+	;The locked routine has finished executing.  Make it
+	;available to the next job in line.
+
+entr.4:	sos	%%lock%%
+	popj	p,

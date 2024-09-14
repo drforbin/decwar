@@ -1,0 +1,797 @@
+;	This file is part of Decwar.
+;	Copyright 1979, 2011 Bob Hysick, Jeff Potter, The University of Texas
+;	Computation Center and Harris Newman.
+
+;	This program is free software; you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation; either version 3, or (at your option)
+;	any later version.
+
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+
+;	You should have received a copy of the GNU General Public License
+;	along with this program; if not, write to the Free Software
+;	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+;	02110-1301, USA.  
+
+
+title	getlin
+;        Table of Contents for Line Input/Editing Routines
+;
+;
+;			   Section			      Page
+;
+;    1. GETLIN
+;         1.1   INLI. ........................................   5
+;         1.2   NXCH./RUBT. ..................................   6
+;         1.3   CTAB. ........................................   7
+;         1.4   DELE. ........................................   8
+;         1.5   ECHR. ........................................   9
+;         1.6   DISP. ........................................  10
+;         1.7   ECHG. ........................................  11
+;    2. SCAN
+;         2.1   SCAN. ........................................  12
+;         2.2   NXTT. ........................................  13
+	search	UUOSYM, MACTEN
+	twoseg
+	sall
+
+	f=0
+	t1=1
+	t2=2
+	t3=3
+	t4=4
+	x1=5
+	x2=6
+	x3=7
+	x4=10
+	chr=11
+	bytptr=12
+	arg=16
+	p=17
+
+	cr=15			;carriage return
+	lf=12			;line feed
+	tab=11			;horizontal tab
+
+	tty==0			;channel to open TTY on
+	pdlsiz==^D20		;size of push down list
+	maxcnt==^D80		;maximum number of characters per line
+	maxtok==^D15		;maximum number of tokens per line
+	maxchr==^D10		;maximum number of characters per token
+
+	;Token types
+
+	typ.mt==0		;null
+	typ.in==1		;integer
+	typ.fl==2		;floating point
+	typ.ch==3		;non-numeric character
+	typ.el==4		;end of line
+
+	;Token flag bits
+
+	tf.num==1		;token had some leading digits
+	tf.nnm==2		;token is non-numeric
+	tf.eol==4		;eol was seen after token
+	tf.chr==10		;token has characters (isn't null)
+	tf.sgn==20		;token has a sign (+/-)
+	tf.pnt==40		;token has a decimal point
+	tf.neg==100		;token started with a minus sign
+
+
+define	save	(arg)
+<
+	irp	arg, <push p,arg>
+>
+
+define	restore	(arg)
+<
+	irp	arg, <pop p,arg>
+>
+
+define	msg	(txt)
+<
+	outstr	[asciz	/txt
+/]
+>
+
+
+	reloc	0
+
+pdl:	block	pdlsiz		;push down list
+
+noecho:	block	1		;< 0 if echoing is permanenetly off
+echflg:	block	1		;< 0 if echoing is currently off
+
+hpos:	block	1		;horizontal position of carriage
+
+scale:	block	1		;scale factor used by ANUM.
+
+chrcnt:	block	1		;count of number of characters on line
+linbuf:	block	maxcnt+1	;buffer to store input line
+
+ntok:	block	1		;number of tokens on input line
+tknlst:	block	<maxtok+1>*2	;buffer for tokens from input line
+vallst:	block	maxtok+1	;numeric values of tokens, else 0
+typlst:	block	maxtok+1	;types for corresponding tokens
+
+	reloc	400000
+
+crlf:	byte	(7) CR,LF
+
+eonblk:	.IOASC!IO.LEM		;ASCII mode, special editor mode
+	sixbit	/TTY/
+	z
+
+eofblk:	.IOASC!IO.LEM!IO.SUP	;ASCII, special editor mode, suppress echoing
+	sixbit	/TTY/
+	z
+	bit..==1
+
+define	flgbit	(mnemonic)
+<
+	mnemonic==bit..
+	bit..=bit.._1
+	show.	mnemonic
+>
+
+	flgbit	cf.bsc		;delete previous character
+	flgbit	cf.bsw		;delete previous word
+	flgbit	cf.bsl		;delete entire line
+	flgbit	cf.ign		;ignore this character
+	flgbit	cf.cr		;this character outputs a carriage return
+	flgbit	cf.ff		;this character outputs one or more line feeds
+	flgbit	cf.rpt		;repeat previous command
+	flgbit	cf.eol		;end of line character
+	flgbit	cf.dsp		;display the line
+	flgbit	cf.etg		;toggle echo
+	flgbit	cf.eon		;turn echo on
+	flgbit	cf.eof		;turn echo off
+	flgbit	cf.spc		;spacing character
+	flgbit	cf.dlm		;delimiter
+	flgbit	cf.sgn		;sign (+ or -)
+	flgbit	cf.dig		;digit (0 - 9)
+	flgbit	cf.pnt		;decimal point (.)
+	flgbit	cf.com		;comment character (;)
+
+	cf.del==cf.bsc!cf.bsw!cf.bsl
+	cf.ecc==cf.etg!cf.eon!cf.eof
+	cf.spe==cf.del!cf.ecc!cf.eol!cf.dsp
+	cf.num==cf.sgn!cf.dig!cf.pnt
+
+define	c	(width,bits<0>)
+<
+	xwd	width,bits
+>
+
+cbits:	phase 0
+	c 0			;^@
+	c 2,cf.rpt		;^A
+	c 2			;^B
+	c 2,cf.eol!cf.cr!cf.ff	;^C
+	c 2,cf.eon		;^D
+	c 2,cf.etg		;^E
+	c 2			;^F
+	c 0,cf.bsc		;^G <BEL>
+	c -1,cf.bsc		;^H <BS>
+	c 8,cf.spc!cf.dlm	;^I <TAB> <HT>
+	c 0,cf.eol!cf.ff	;^J <LF>
+	c 0,cf.eol!cf.ff	;^K <VT>
+	c 0,cf.eol!cf.ff	;^L <FF>
+	c 0,cf.cr!cf.ign	;^M <CR>
+	c 2,cf.eof		;^N
+	c 2,cf.cr!cf.ff		;^O never passed to the program
+	c 2			;^P
+	c 2			;^Q if TTY NO PAGE is set
+	c 2,cf.dsp		;^R if TTY RTCOMP is set or char mode
+	c 2			;^S if TTY NO PAGE is set
+	c 2			;^T if TTY RTCOMP is set
+	c 0,cf.bsl		;^U
+	c 2			;^V
+	c 2,cf.bsw		;^W
+	c 2			;^X
+	c 2			;^Y
+	c 2,cf.cr!cf.ff!cf.eol	;^Z
+	c 1			;^[ <ALT> altmode
+	c 2			;^\
+	c 2			;^]
+	c 2			;^^
+	c 2			;^_
+	c 1,cf.spc!cf.dlm	;<SP> blank
+	c 1			;!
+	c 1			;"
+	c 1			;#
+	c 1			;$
+	c 1			;%
+	c 1			;%
+	c 1			;'
+	c 1			;(
+	c 1			;)
+	c 1			;*
+	c 1,cf.sgn		;+
+	c 1,cf.dlm		;,
+	c 1,cf.sgn		;-
+	c 1,cf.pnt		;.
+	c 1			;/
+	c 1,cf.dig		;0
+	c 1,cf.dig		;1
+	c 1,cf.dig		;2
+	c 1,cf.dig		;3
+	c 1,cf.dig		;4
+	c 1,cf.dig		;5
+	c 1,cf.dig		;6
+	c 1,cf.dig		;7
+	c 1,cf.dig		;8
+	c 1,cf.dig		;9
+	c 1			;:
+	c 1,cf.com		;;
+	c 1			;<
+	c 1			;=
+	c 1			;>
+	c 1			;?
+	c 1			;@
+	c 1			;A
+	c 1			;B
+	c 1			;C
+	c 1			;D
+	c 1			;E
+	c 1			;F
+	c 1			;G
+	c 1			;H
+	c 1			;I
+	c 1			;J
+	c 1			;K
+	c 1			;L
+	c 1			;M
+	c 1			;N
+	c 1			;O
+	c 1			;P
+	c 1			;Q
+	c 1			;R
+	c 1			;S
+	c 1			;T
+	c 1			;U
+	c 1			;V
+	c 1			;W
+	c 1			;X
+	c 1			;Y
+	c 1			;Z
+	c 1			;[
+	c 1			;/
+	c 1			;]
+	c 1			;^
+	c 1			;_
+	c 1			;`
+	c 1			;a
+	c 1			;b
+	c 1			;c
+	c 1			;d
+	c 1			;e
+	c 1			;f
+	c 1			;g
+	c 1			;h
+	c 1			;i
+	c 1			;j
+	c 1			;k
+	c 1			;l
+	c 1			;m
+	c 1			;n
+	c 1			;o
+	c 1			;p
+	c 1			;q
+	c 1			;r
+	c 1			;s
+	c 1			;t
+	c 1			;u
+	c 1			;v
+	c 1			;w
+	c 1			;x
+	c 1			;y
+	c 1			;z
+	c 1			;{
+	c 1			;\
+	c 1			;}
+	c 1			;~
+	c 0,cf.bsc		;<DEL>
+	dephase
+main.:	reset
+	move	p,[iowd pdlsiz,pdl]
+	pushj	p,econ.		;make sure echoing is on
+
+main.1:	outstr	crlf
+	outstr	crlf
+	outstr	[asciz /Command: /]
+	movei	t1,^D9
+	movem	t1,hpos
+	pushj	p,scan.		;get command line
+
+	move	x1,ntok
+	pushj	p,onum.
+	outstr	[asciz / word/]
+	caie	x1,1
+	outchr	["s"]
+	outstr	[asciz /: /]
+	movei	x1,linbuf
+main.2:	move	chr,(x1)
+	jumpe	chr,main.3
+	pushj	p,echr.		;output the character
+	aoja	x1,main.2
+
+main.3:	outstr	[byte (7) CR,LF,LF]
+	msg	<#	type		value	word>
+	msg	<--	----		-----	---->
+
+	movei	x2,1
+main.4:	movei	x1,(x2)
+	pushj	p,onum.
+	outchr	[TAB]
+
+	move	t1,typlst-1(x2)
+	cain	t1,typ.mt
+	outstr	[asciz /Null	/]
+	cain	t1,typ.in
+	outstr	[asciz /Integer	/]
+	cain	t1,typ.fl
+	outstr	[asciz	/Floating Point/]
+	cain	t1,typ.ch
+	outstr	[asciz /Character/]
+	cain	t1,typ.el
+	outstr	[asciz /EOL	/]
+	outchr	[TAB]
+
+	move	x1,vallst-1(x2)
+	pushj	p,onum.
+	outchr	[TAB]
+
+	outchr	["<"]
+	movei	bytptr,-1(x2)
+	lsh	bytptr,1
+	add	bytptr,[point 7,tknlst]
+	movei	x3,maxchr
+main.5:	ildb	chr,bytptr
+	jumpe	chr,main.6
+	pushj	p,echr.
+	sojg	x3,main.5
+main.6:	outchr	[">"]
+
+	outstr	crlf
+	camg	x2,ntok
+	aoja	x2,main.4
+	jrst	main.1
+
+
+	sixbit	/ONUM./
+onum.:	jumpge	x1,.+2		;negative?
+	outchr	["-"]		;yep
+	movm	t1,x1
+	tlnn	t1,(677B8)	;integer?
+	pjrst	oint.		;yes
+
+	save	<x1,x2>
+	movm	x2,x1
+	fix	x1,x2		;get integer part of floating point number
+	move	t1,x1
+	pushj	p,oint.		;output integer part
+	outchr	["."]
+	movei	t2,4		;maximum number of digits after decimal point
+onum.4:	fltr	x1,x1
+	fsb	x2,x1		;X1 get fractional part only
+	jumpe	x2,onum.5	;number is 0, so we're done
+	fmpri	x2,(10.0)	;get next digit in integer part of number
+	fix	x1,x2		;get next digit
+	movei	t1,"0"(x1)	;change it to ASCII
+	outchr	t1		;and output it
+	sojg	t2,onum.4
+onum.5:	restore	<x2,x1>
+	popj	p,
+
+
+	sixbit	/OINT./
+oint.:	idivi	t1,^D10		;get next digit
+	hrlm	t2,(p)		;save it
+	caie	t1,0		;done yet?
+	pushj	p,oint.		;no
+
+	hlrz	t1,(p)		;get next digit
+	addi	t1,"0"		;change it to ASCII
+	outchr	t1		;output it
+	popj	p,
+	subttl	GETLIN -- INLI.
+
+	;Read a line from the TTY and store it in LINBUF.
+	;Before this routine is called,
+	;ECON. or ECOF. should have been called, and
+	;HPOS should be set to the current horizontal carriage position.
+
+	sixbit	/INLI./
+inli.:	pushj	p,nxch.		;get first character
+	trnn	f,cf.rpt	;repeat previous command?
+	jrst	inli.1		;no
+	pushj	p,rubt.
+	jrst	inli.4
+
+inli.1:	setzm	chrcnt		;no characters read yet
+	jrst	.+2
+
+inli.2:	pushj	p,nxch.		;get next character
+	trne	f,cf.spe	;character requires special action?
+	jrst	inli.3		;yes
+	aos	t1,chrcnt	;increment input character count
+	movem	chr,linbuf-1(t1);store character in line buffer
+	caige	t1,maxcnt	;buffer full yet?
+	jrst	inli.2		;no, get next character
+	jrst	inli.4		;yes, terminate input line
+
+inli.3:	trnn	f,cf.eol	;end of line character?
+	jrst	inli.5		;no
+inli.4:	outchr	[15]		;return to the left margin
+	trnn	f,cf.ff		;character already echoed form feed?
+	outchr	[12]		;no, goto next output line
+	aos	t1,chrcnt
+	setzm	linbuf-1(t1)	;end input with a null character
+	skipl	noecho		;echoing permanently turned off?
+	pushj	p,econ.		;no, so make sure echoing is on again
+	popj	p,
+
+inli.5:	pushj	p,rubt.		;erase the character from the screen
+
+	trnn	f,cf.del	;character to delete earlier characters?
+	jrst	inli.6		;no
+	pushj	p,dele.
+	jrst	inli.2
+
+inli.6:	trnn	f,cf.dsp	;display line?
+	jrst	inli.7		;no
+	pushj	p,disp.
+	jrst	inli.2
+
+inli.7:	trnn	f,cf.ecc	;echo modifying character?
+	jrst	inli.8		;no
+	pushj	p,echg.
+	jrst	inli.2
+
+inli.8:	jrst	inli.2
+	subttl	GETLIN -- NXCH./RUBT.
+
+	;Get the next character and return it's flag bits and width.
+	;
+	;Input
+	;  F	LH  line processing flags (global to all characters)
+	;  HPOS	Current horizontal carriage position
+	;Output
+	;  F	RH  flag bits for character
+	;  CHR	RH  character
+	;	LH  width of character
+	;  HPOS	New horizontal carriage position
+
+	sixbit	/NXCH./
+nxch.:	inchrw	chr		;get the next character
+	hrr	f,cbits(chr)	;get the character type bits
+	hlre	t1,cbits(chr)	;get the character width
+
+	trne	f,cf.ign	;ignore this character?
+	jrst	nxch.		;yes
+
+	cain	chr,TAB		;character is <TAB>?
+	pushj	p,ctab.		;yes, compute it's width
+
+	skipl	echflg		;characters are being echoed?
+	jrst	nxch.1		;yes
+	setz	t1,		;not echoed, so width is zero
+	trz	f,cf.cr!cf.ff	;didn't echo <CR> or <LF>,<VT>,<FF>
+
+nxch.1:	hrli	chr,(t1)	;save width
+	addm	t1,hpos		;increment horizontal carriage position
+
+	popj	p,
+
+
+	;Erase a character from the screen.
+	;
+	;Input
+	;  CHR	LH  Output width of character
+
+	sixbit	/RUBT./
+rubt.:	hlre	t1,chr		;get number of characters to wipe out
+	jumpe	t1,rubt.2	;character didn't echo anything
+	subm	t1,hpos
+	movns	hpos		;update horizontal carriage position
+	jumpg	t1,rubt.1	;character spaced forward
+
+	outchr	[" "]		;space forward to erase character
+	aojl	t1,.-1
+	jrst	rubt.2
+
+rubt.1:	outstr	[byte (7) 10," ",10] ;space backward to erase character
+	sojg	t1,.-1
+
+rubt.2:	popj	p,
+	subttl	GETLIN -- CTAB.
+
+	;Compute horizontal carriage position after tab.
+
+	sixbit	/CTAB./
+ctab.:	move	t1,hpos		;get current horizontal carrige position
+	andi	t1,7
+	subi	t1,^D8
+	movn	t1,t1
+	popj	p,
+	subttl	GETLIN -- DELE.
+
+	;Delete 1 or more characters, depending on the character
+	;flags in F.  (Erase it from the screen and back over it
+	;in LINBUF.)
+
+	sixbit	/DELE./
+dele.:	save	<x1>
+	skipg	x1,chrcnt	;get count of charcters in buffer
+	jrst	dele.6		;buffer is empty, can't delete anything
+
+	trnn	f,cf.bsc	;back up over one character?
+	jrst	dele.1		;no
+
+	;Back up over a single character
+
+	move	chr,linbuf-1(x1);get character to back up over
+	pushj	p,rubt.		;erase it from the screen
+	soj	x1,		;remove it from the buffer
+	jrst	dele.6
+
+dele.1:	trnn	f,cf.bsw	;back up over one word?
+	jrst	dele.5		;no
+
+	;Back up over a word
+
+dele.2:	move	chr,linbuf-1(x1);get character from buffer
+	hrrz	t1,cbits(chr)	;get character type bits
+	trnn	t1,cf.spc	;spacing character?
+	jrst	dele.4		;no, don't skip it
+	pushj	p,rubt.		;erase the character from the screen
+	sojg	x1,dele.2
+	jrst	dele.6		;buffer is now empty
+
+dele.3:	move	chr,linbuf-1(x1);get character from buffer
+	hrrz	t1,cbits(chr)	;get character type bits
+	trne	t1,cf.dlm	;delimiter?
+	jrst	dele.6		;yes, finished backing up over word
+dele.4:	pushj	p,rubt.		;erase the character from the screen
+	sojg	x1,dele.3
+	jrst	dele.6
+
+	;Back up over the entire line
+
+dele.5:	move	chr,linbuf-1(x1);get character from buffer
+	pushj	p,rubt.		;erase it from the screen
+	sojg	x1,.-2
+	setzm	hpos		;*** until ^U monitor bug is fixed ***
+
+dele.6:	movem	x1,chrcnt
+	restore	<x1>
+	popj	p,
+	subttl	GETLIN -- ECHR.
+
+	sixbit	/ECHR./
+echr.:	hrrzi	t1,(chr)	;get only character (no width)
+	cail	t1,007
+	caile	t1,015
+	cail	t1,040
+	jrst	echr.2		;printing character
+	cain	t1,033
+	jrst	echr.1		;altmode
+	outchr	["^"]
+	addi	t1,100
+	jrst	.+2
+echr.1:	movei	t1,"$"
+echr.2:	outchr	t1
+	popj	p,
+	subttl	GETLIN -- DISP.
+
+	sixbit	/DISP./
+disp.:	save	<x1>
+	outstr	crlf		;start new line
+	setzm	hpos
+	skipge	echflg		;is echoing turned on?
+	pushj	p,econ.		;no, turn it on
+
+	movn	x1,chrcnt	;negative number of characters in buffer
+	hrlzi	x1,-1(x1)
+	hrri	x1,linbuf-1
+
+disp.2:	aobjp	x1,disp.3	;no more characters to echo
+	hrrz	chr,(x1)	;get character from buffer
+	hlre	t1,cbits(chr)	;get the character's width
+	cain	chr,TAB		;character is <TAB>?
+	pushj	p,ctab.		;yes, compute it's width
+	hrli	chr,(t1)	;save width
+	addm	t1,hpos
+	movem	chr,(x1)	;put character back in buffer as being echoed
+	pushj	p,echr.		;echo character
+	jrst	disp.2
+
+disp.3:	restore	<x1>
+	popj	p,
+	subttl	GETLIN -- ECHG.
+
+	sixbit	/ECHG./
+echg.:	trnn	f,cf.etg	;toggle echo?
+	jrst	echg.1		;no
+	skipge	echflg		;echo on?
+	pjrst	econ.		;no, turn echo on
+	pjrst	ecof.		;yes, turn echo off
+
+echg.1:	trne	f,cf.eon
+	pjrst	econ.		;turn echo on
+	pjrst	ecof.		;turn echo off
+
+
+	sixbit	/ECON./
+econ.:	open	tty,eonblk	;open TTY with echoing turned on
+	  halt
+	setzm	echflg
+	popj	p,
+
+
+	sixbit	/ECOF./
+ecof.:	open	tty,eofblk	;open TTY with echoing turned off
+	  halt
+	setom	echflg
+	popj	p,
+	subttl	SCAN -- SCAN.
+
+	sixbit	/SCAN./
+scan.:	pushj	p,inli.		;get input line
+	setz	f,
+	movei	x1,linbuf	;where the first token starts
+	movei	x2,maxchr	;maximum number of characters to return
+	hrlzi	x4,-maxtok	;maximum number of tokens to return
+
+scan.1:	hrrzi	bytptr,(x4)	;number of tokens read so far
+	lsh	bytptr,1	;multiply by 2 (double word array entries)
+	add	bytptr,[point 7,tknlst]
+	setzm	(bytptr)	;entries are initially zero
+	setzm	1(bytptr)
+
+	pushj	p,nxtt.		;scan off next token
+	movem	x3,vallst(x4)	;store numeric value of token
+
+	movei	t1,typ.mt	;assume token is blank
+	trne	f,tf.num
+	movei	t1,typ.in	;token is integer
+	trne	f,tf.pnt
+	movei	t1,typ.fl	;token is floating point
+	trne	f,tf.nnm
+	movei	t1,typ.ch	;token is non-numeric characters
+	movem	t1,typlst(x4)	;store token type
+	trne	f,tf.eol	;end of line?
+	jrst	scan.2		;yes
+
+	aobjn	x4,scan.1
+	msg	<Too many words -- line ignored>
+	setz	x4,
+	jrst	scan.3
+
+scan.2:	trnn	f,tf.chr	;any characters in token?
+	trne	x4,777777	;no, is this the first token?
+	hrrzi	x4,1(x4)	;increment token count
+	hrrzi	x4,(x4)
+
+scan.3:	movem	x4,ntok
+	movei	t1,typ.el	;type of last token is end of line
+	movem	t1,typlst(x4)
+	setzm	vallst(x4)
+	movei	t1,(x4)
+	lsh	t1,1
+	setzm	tknlst(t1)
+	setzm	tknlst+1(t1)
+	popj	p,
+	subttl	SCAN -- NXTT.
+
+	;Get the next token from the input line
+	;
+	;Input
+	;  X1	  starting address of next token
+	;  X2	  maximum number of characters to store
+	;  BYTPTR pointer to destination of token
+	;Output
+	;  F	  LH  input line flag bits (LF.EOL)
+	;	  RH  token flag bits
+	;  X1	  start address of next token
+	;  X3	  numeric value of token, else 0
+
+	sixbit	/NXTT./
+nxtt.:	save	<x2>
+	hllz	f,f		;zero out local flag bits
+	setz	x3,		;numeric value of token
+
+	move	chr,(x1)
+	pushj	p,skpb.		;skip leading spacing characters
+	jrst	.+2
+nxtt.1:	hrrz	chr,(x1)	;get character from input line
+	jumpe	chr,nxtt.3	;no more characters
+	hrl	chr,cbits(chr)	;get character type bits
+	tlne	chr,cf.com	;comment character?
+	jrst	nxtt.3		;yes, end of line
+	tlne	chr,cf.dlm	;delimiter?
+	jrst	nxtt.2		;yes, done with this token
+	trnn	f,tf.nnm	;non-numeric chars seen already?
+	tlnn	chr,cf.num	;numeric character?
+	troa	f,tf.nnm
+	pushj	p,anum.		;add character to number
+	sojl	x2,.+2		;make sure there's room for this character
+	idpb	chr,bytptr	;add character to token
+	tro	f,tf.chr	;flag that a character has been seen
+	aoja	x1,nxtt.1
+
+nxtt.2:	pushj	p,skpb.		;skip trailing spacing characters
+	tlne	chr,cf.dlm	;terminating character is a delimiter?
+	aoj	x1,		;yes, skip it
+	tlnn	chr,cf.com	;terminating character is comment character?
+	jumpn	chr,.+2		;terminating character is EOL?
+nxtt.3:	tro	f,tf.eol	;yes, flag it
+
+	trnn	f,tf.nnm	;non-numeric character seen?
+	jrst	nxtt.4		;no
+	setz	x3,		;make sure 0 is returned for numeric value
+	trz	f,tf.num!tf.sgn!tf.neg!tf.pnt
+nxtt.4:	trne	f,tf.neg	;number is negative?
+	movn	x3,x3		;yes, take care of it
+	restore	<x2>
+	popj	p,
+
+
+
+	;Skip string of spacing characters pointed to by X1.
+
+	sixbit	/SKPB./
+skpb.:	move	chr,(x1)	;get next character
+	hrl	chr,cbits(chr)	;get character type bits
+	tlne	chr,cf.spc	;spacing character?
+	aoja	x1,skpb.	;yes, skip it
+	popj	p,
+
+
+
+	;Add CHR to the partially built number in X3.
+
+	sixbit	/ANUM./
+anum.:	tlnn	chr,cf.sgn	;sign?
+	jrst	anum.1		;no
+	troe	f,tf.sgn!tf.chr	;flag that sign has been seen
+	jrst	anum.4		;this isn't the first character
+	hrrzi	t1,(chr)	;get character only (no flag bits)
+	cain	t1,"-"		;minus sign?
+	tro	f,tf.neg	;yes, remember that
+	popj	p,
+
+anum.1:	tlnn	chr,cf.pnt	;decimal point?
+	jrst	anum.2		;no
+	troe	f,tf.pnt	;flag that decimal point has been seen
+	jrst	anum.4		;this is the second decimal point
+	fltr	x3,x3		;float the number
+	hrlzi	x2,(10.0)
+	movem	x2,scale	;scaling factor for first fractional digit
+	popj	p,
+
+anum.2:	tro	f,tf.num	;digit seen
+	trne	f,tf.pnt	;working on fraction portion?
+	jrst	anum.3		;yes
+	imuli	x3,^D10
+	addi	x3,-"0"(chr)	;add digit into integer
+	popj	p,
+
+anum.3:	movei	t1,-"0"(chr)	;get digit to add to fraction
+	fltr	t1,t1		;float it
+	move	t2,scale	;get scaling factor
+	fdv	t1,t2		;scale it
+	fad	x3,t1		;add it into the number
+	fmpri	t2,(10.0)	;adjust scaling factor for next digit
+	movem	t2,scale
+	popj	p,
+
+anum.4:	tro	f,tf.nnm	;illegal sequence of numeric characters
+	setz	x3,
+	popj	p,
+	end	main.

@@ -5,11 +5,15 @@ sections
 - [section 1, boot disk](sec1-boot-disks.md)
 - [section 2, kermit](sec2-kermit.md)
 - [section 3, prep source files](sec3-prep-source-files.md)
+- [section 4, building decwar](sec4-compiling-decwar.md)
+- [section 4a, build files](sec4a-build-files.md)
+- [section 4b, continuation line issue](sec4b-continuation-line-issue.md)
 
 appendices
 
 - [appendix 1, tops-10 versions](app1-tops-10-versions.md)
-- [appendix 2, *.tap files](app2-tap-files.md)
+- [appendix 2, tap files](app2-tap-files.md)
+- [appendix 3, sos](app3-sos.md)
 - [appendix 9, on the fly notes](app9-on-the-fly-notes.md)
 
 # notes

@@ -1,0 +1,120 @@
+;	This file is part of Decwar.
+;	Copyright 1979, 2011 Bob Hysick, Jeff Potter, The University of Texas
+;	Computation Center and Harris Newman.
+
+;	This program is free software; you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation; either version 3, or (at your option)
+;	any later version.
+
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+
+;	You should have received a copy of the GNU General Public License
+;	along with this program; if not, write to the Free Software
+;	Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+;	02110-1301, USA.  
+
+
+Title cishng - establish a hang-up intercept (CIS monitor)
+
+	Search SYSMAC
+	twoseg
+	reloc	400000
+opdef	getnam	[calli	-14]
+OPDEF	STINI.	[CALLI	-162]
+OPDEF	SCHNA.	[CALLI	-163]
+OPDEF	SCHND.	[CALLI	-164]
+OPDEF	SEVTA.	[CALLI	-165]
+OPDEF	SEVTD.	[CALLI	-166]
+OPDEF	DEBRK.	[CALLI	-174]
+OPDEF	SRISW.	[CALLI	-175]
+
+	Internal cishng
+	Routine  cishng
+	DMOVE	TA,[	-1
+			[	2,,CHNTBL
+				2,,LVLTBL
+				0,,0
+			]
+		]
+	STINI.	TA,
+	  JRST	[OUTSTR	[ASCIZ "
+? STINI. failed!
+"]
+		 EXIT]
+	DMOVE	TA,[	-1
+			3,,1
+		]
+	SEVTA.	TA,
+	  JRST	SEVFLD
+	dmove	ta,[	-1
+			104,,2
+		]
+	sevta.	ta,
+	  jrst	sevfld
+	DMOVE	TA,[	-1
+			700000,,0
+			]
+	SCHNA.	TA,
+	  JRST	SCHFLD
+	RETURN
+;;;
+havenq:	setom	hv.lok		; tell lock. routine that we have resource
+	movem	$v,save$v
+	seto	$v,
+	wake	$v,		; wake the lock. routine immediately
+	  jfcl
+	move	$v,save$v
+	debrk.			; return to lock.
+
+hang:	setom	hungup##	; set hung up flag
+	debrk.	1,		; debreak and retain control
+	  jfcl
+	movem	$v,hang$v	; save a register
+	movem	ta,hangta	; and another
+	move	$v,lvltbl	; if executing a ttcall
+hang.0:	move	ta,0($v)	; get the current instruction being executed
+	camn	ta,[output 0,]	; or "output tty,"
+	jrst	hang.1
+	and	ta,[777000,,0]	; mask everything but instruction bits
+	camn	ta,[xct]	; if doing an execute
+	jrst	[hrrz	$v,0($v)	; then get the address of that instr.
+		 cain	$v,$v		; if one of the saved regs
+		 movei	$v,hang$v	; then map it into proper one
+		 cain	$v,ta
+		 movei	$v,hangta
+		 jrst	hang.0]		; and look at the xct'ed instr.
+	camn	ta,[ttcall]	; if doing a ttcall
+hang.1:	aos	lvltbl		; then return to the ttcall + 1
+	seto	$v,		; wake any hibernate going on
+	wake	$v,
+	  jfcl
+	move	$v,hang$v
+	move	ta,hangta
+	jrstf	@lvltbl
+
+SCHFLD:	OUTSTR	[ASCIZ "
+? SCHNA. failed!
+"]
+	EXIT
+SEVFLD:	OUTSTR	[ASCIZ "
+?SEVTA> failed!
+"]
+	EXIT
+
+chntbl:
+	XWD	1,HANG
+	xwd	2,havenq
+
+	lit		; put lits in hiseg
+	reloc	0		; rest must be in impure core
+save$v:	block	1		; saves contents of $v in havenq
+hang$v:	block	1		; saves contents of $v in hang
+hangta:	block	1		; save for register ta
+hv.lok::block	1		; set to -1 when enq. request is granted
+LVLTBL:	block	2
+	reloc
+	END
