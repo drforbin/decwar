@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "ipwr",
+            "command": "gfortran docs/algebra/ipwr.for -g -O0 -fbacktrace -fcheck=all -ffpe-trap=zero,overflow,underflow -Wall -Wextra -Warray-temporaries -Wconversion -ffree-line-length-0",
+        }
+    ]
+}

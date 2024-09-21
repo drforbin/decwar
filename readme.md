@@ -32,6 +32,10 @@ _DECWAR is a sophisticated real-time space battle game designed to be played by 
 - [appendix 2, tap files](docs/app2-tap-files.md)
 - [appendix 3, sos](docs/app3-sos.md)
 
+the below is just an experiment where we're exploring new things
+
+- [algebra (python, fortran10, macro10)](docs/algebra/readme.md)
+
 # special thanks to merlyn
 
 here's the original note from merlyn concerning the work he did to get things working on simh pdp10.
