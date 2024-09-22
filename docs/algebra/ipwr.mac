@@ -1,0 +1,68 @@
+a=1
+b=2
+c=3
+digit=4
+tmp=5
+sqr=6
+x=10
+y=11
+x2=12
+y2=13
+newlin: asciz   /
+/
+start:  reset
+        movei   y,^d225
+        fltr    y,y
+        fmpr    y,[0.00001]
+        move    a,y
+        fmp     a,a
+        movei   x,^d1
+        fltr    x,x
+        fsb     x,a
+        movei   sqr,1
+sqrloop:jsr     nxtsqr
+        addi    sqr,1
+        caig    sqr,13
+        jrst    sqrloop
+        exit
+nxtsqr: 0 ;next iteration on x and y
+        move    a,x
+        jsr     prflt
+        movei   tmp," "
+        outchr  tmp
+        move    a,y
+        jsr     prflt
+        outstr  newlin
+        move    x2,x
+        fmp     x2,x2
+        move    tmp,y
+        fmp     tmp,tmp
+        fsb     x2,tmp
+        move    y2,y
+        fmp     y2,x2
+        fmp     y2,[2.0]
+        move    x,x2
+        move    y,y2
+        jrstf   @nxtsqr
+prflt:  0 ;print float less than one in accum a
+        fix     b,a
+        fltr    c,b
+        fsbr    a,c
+        jumpge  b,point
+        movei   tmp,"-"
+        outchr  tmp
+point:  movei   tmp,"."
+        outchr  tmp
+        movei   digit,1
+digloop:fmpr    a,[10.0]
+        fix     tmp,a
+        fltr    c,tmp
+        fsbr    a,c
+        addi    tmp,"0"
+        outchr  tmp
+        addi    digit,1
+        caig    digit,5
+        jrst    digloop
+        jrstf   @prflt
+end start
+        
