@@ -146,7 +146,7 @@ before that, first step is to do the same but for an accumulator containing a fi
 
 printing floating point is a modification of the above, bringing in the pdp10 floating point instructions. there's a numerical value to be printed out to the terminal, and that's done one character at a time using the 'outchr' tops10 muuo. this is a request to tops10 to print a character on the terminal, and it's used repeatedly to print each character of the numerical value, including negative sign and decimal point.
 
-as part of understanding this, it became apparent that a stack isn't needed. the code above is from the gorin book and it's oriented towards academic computer science. here's a minimalist numerical computing approach. for feynman's table 22-3, the need is to print five digits after the decimal point. that's all this code does. at the start, accumulator 'a' contains a float that is less than one. it's 'after the decimal point'. the machinery repeats five times, cranking five digits out 'in front of the decimal point', one by one, to print them with 'outchr'.
+as part of understanding all of this, it became apparent that a stack isn't needed. the code above is from the gorin book and it's oriented towards academic computer science. here's a minimalist numerical computing approach. for feynman's table 22-3, the need is to print five digits after the decimal point. that's all this code does. at the start, accumulator 'a' contains a float that is less than one. it's 'after the decimal point'. the machinery repeats five times, cranking five digits out 'in front of the decimal point', one by one, to print them with 'outchr'.
 
             movei   tmp,"."
             outchr  tmp   
@@ -162,3 +162,72 @@ as part of understanding this, it became apparent that a stack isn't needed. the
             jrst    loop
             ...
 
+the code below works. it reproduces feynman's table 22-3 and the results of the python and fortran10 code. something interesting happens though, from about the sixth or seventh of the eleven iterations. this is actually an opportunity to learn more about the early days of floating point and its practical use, so will be tackled deliberately going forward. the code below is using standard single precision pdp10 floating point, so 27 bits of precision. the first diagnosis has to be that using double precision would cure the problem. if this turns out to be true, it will be an excellent example of real-world effects of floating point precision, and will mean that feynman's table 22-3 is an excellent detector of poor numerical precision. 
+
+    a=1
+    b=2
+    c=3
+    digit=4
+    tmp=5
+    sqr=6
+    x=10
+    y=11
+    x2=12
+    y2=13
+    newlin: asciz   /
+    /
+    start:  reset
+            movei   y,^d225
+            fltr    y,y
+            fmpr    y,[0.00001]
+            move    a,y
+            fmp     a,a
+            movei   x,^d1
+            fltr    x,x
+            fsb     x,a
+            movei   sqr,1
+    sqrloop:jsr     nxtsqr
+            addi    sqr,1
+            caig    sqr,13
+            jrst    sqrloop
+            exit
+    nxtsqr: 0 ;next iteration on x and y
+            move    a,x
+            jsr     prflt
+            movei   tmp," "
+            outchr  tmp
+            move    a,y
+            jsr     prflt
+            outstr  newlin
+            move    x2,x
+            fmp     x2,x2
+            move    tmp,y
+            fmp     tmp,tmp
+            fsb     x2,tmp
+            move    y2,y
+            fmp     y2,x2
+            fmp     y2,[2.0]
+            move    x,x2
+            move    y,y2
+            jrstf   @nxtsqr
+    prflt:  0 ;print float less than one in accum a
+            fix     b,a
+            fltr    c,b
+            fsbr    a,c
+            jumpge  b,point
+            movei   tmp,"-"
+            outchr  tmp
+    point:  movei   tmp,"."
+            outchr  tmp
+            movei   digit,1
+    digloop:fmpr    a,[10.0]
+            fix     tmp,a
+            fltr    c,tmp
+            fsbr    a,c
+            addi    tmp,"0"
+            outchr  tmp
+            addi    digit,1
+            caig    digit,5
+            jrst    digloop
+            jrstf   @prflt
+    end start
