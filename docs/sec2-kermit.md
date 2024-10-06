@@ -2,12 +2,19 @@
 
 on raspi side.
 
-     set transfer mode manual
-     set file type binary
+    ./kermit/wermit
+    C-Kermit>set transfer mode manual
+    C-Kermit>set file type binary
+    C-Kermit>set host localhost 2010 /raw-socket
+    C-Kermit>c
 
 on tops10 side.
 
-    set file byte-size 36-bit
+    .r kermit
+    Kermit-10>set file byte-size 36-bit
+    Kermit-10>server
+
+ctrl-\c back over to raspi side.
     
 # intro
 
@@ -80,7 +87,13 @@ then
 
 for escaping back to the raspi with ctrl-\c, be sure your keyboard is really sending backslash! had to switch keyboard config to exactly the right one by trial and error.
 
-we're ready from the raspi side! now prepare the tops10 side. we need to be able to login from the raspi side! turns out, do walk through first [using react to create default user template](https://www.quentin.org.uk/tops-10-faq/#qaef-176). doesn't take as long as it looks! then [create your account](https://www.quentin.org.uk/tops-10-faq/#qaef-177). did that here for [27,101] usr noah pwd noah and logged in from the raspi kermit side.
+we're ready from the raspi side! now prepare the tops10 side. we need to be able to login from the raspi side! turns out, do walk through first [using react to create default user template](https://www.quentin.org.uk/tops-10-faq/#qaef-176). doesn't take as long as it looks! then [create your account](https://www.quentin.org.uk/tops-10-faq/#qaef-177). 
+
+note, if it's not already there, create p,pn [1,27] using react, then copy DECWAR.EXE, DECWAR.GRP, DECWAR.HLP, DECWAR.NWS to its home folder to 'deploy/install' it. [1,27] is where decwar was deployed for compuserve. for utexas it was logical device name 'gam:', assigned to [5,30].
+
+so probly better to create [1,27] usr decwar pwd decwar
+
+did that here for [27,101] usr noah pwd noah and logged in from the raspi kermit side.
 
     .login noah
     Job 3  VNW  TTY0

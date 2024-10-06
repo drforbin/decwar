@@ -2,13 +2,20 @@
 
 on raspi side.
 
-     set transfer mode manual
-     set file type binary
+    ./kermit/wermit
+    C-Kermit>set transfer mode manual
+    C-Kermit>set file type binary
+    C-Kermit>set host localhost 2010 /raw-socket
+    C-Kermit>c
 
 on tops10 side.
 
-    set file byte-size 36-bit
-    
+    .r kermit
+    Kermit-10>set file byte-size 36-bit
+    Kermit-10>server
+
+ctrl-\c back over to raspi side.
+
 # fortran continuation line issue
 
 seems the beginning line preceding a continuation line needs to end with a space character. examples from hiseg.for and lowseg.for

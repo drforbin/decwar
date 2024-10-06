@@ -3,6 +3,8 @@ assume you've started simh pdp10 and it's listening on 2010 for connections.
 # on raspi side, start kermit
 
     ./kermit/wermit
+    C-Kermit>set transfer mode manual
+    C-Kermit>set file type binary
     C-Kermit>set host localhost 2010 /raw-socket
     C-Kermit>c
 
@@ -17,12 +19,10 @@ assume you've created a subfolder [,,decwar] in your home folder [,].
     Kermit-10>set file byte-size 36-bit
     Kermit-10>server
     
-ctrl-\c back over to raspi kermit
+ctrl-\c back over to raspi side.
 
 # in raspi kermit
 
-    C-Kermit>set transfer mode manual
-    C-Kermit>set file type binary
     C-Kermit>send utexas/*.*
     C-Kermit>send compuserve/*.*
     C-Kermit>send scripts/COM1.CMD
