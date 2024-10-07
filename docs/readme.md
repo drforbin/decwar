@@ -1,24 +1,6 @@
-# toc
+20240819 had an awesome chat with merlyn yesterday and have many things to begin remembering. will just focus on decwar here. my starting point - 'new' raspi5 prepped and ready to integrate into pidp-10 front panel. pidp-10 software is installed and running great for months now. first played with its - emacs, lisp, spacewar, adventure, etc. then switched to tops-10 - sos, macro, fortran.
 
-sections
-
-- [section 1, boot disk](sec1-boot-disks.md)
-- [section 2, kermit](sec2-kermit.md)
-- [section 3, prep source files](sec3-prep-source-files.md)
-
-appendices
-
-- [appendix 1, tops-10 versions](app1-tops-10-versions.md)
-- [appendix 2, *.tap files](app2-tap-files.md)
-- [appendix 9, on the fly notes](app9-on-the-fly-notes.md)
-
-# notes
-
-had an awesome chat with merlyn yesterday and have many things to begin remembering. will just focus on decwar here.
-
-my starting point - 'new' raspi5 prepped and ready to integrate into pidp-10 front panel. pidp-10 software is installed and running great for months now. first played with its - emacs, lisp, spacewar, adventure, etc. then switched to tops-10 - sos, macro, fortran.
-
-yesterday merlyn shared the disk image he has built up - this is a treasure box - has a working decwar, old fortran iv needed for that, tops-10 7.03 monitor, etc. here's a minimal simh script which roughly speaking could boot it
+yesterday merlyn shared the disk image he's built up. it has a working decwar, old fortran iv needed for that, tops-10 7.03 monitor, etc. here's a minimal simh script which roughly speaking could boot it
 
 ```
 set cons telnet=1025
