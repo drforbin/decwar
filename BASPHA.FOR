@@ -53,6 +53,8 @@ C	side's bases.
 
 
 C	added by drforbin for cloaking device
+C ka added to stop index mod warning
+        ka = k!placed to cure (due index change in loop warn)
 
 
 	      if ( .not. ((cloak(k, clstat) .eq. clon)
@@ -63,11 +65,7 @@ C	added by drforbin for cloaking device
               goto 300 
 C	end
 
-
-
 C	added by drforbin for cloaking device
-C ka added to stop index mod warning
-	        ka = k!placed to cure (due index change in loop warn)
 101	      id = id + cldist(id, ka, cloak)
 C	end
 
@@ -76,9 +74,9 @@ C	end
 	      tmscor(i,KPEDAM) = tmscor(i,KPEDAM) + ihita
 	      shstfr = base(j,3,i)       ;  shcnfr = 1
 	      if (klflg .ne. 0) tmscor(i,KPEKIL) = tmscor(i,KPEKIL) + 5000
- 200	      call pridis (shpcon(k,KVPOS), shpcon(k,KHPOS), KRANGE,
-     +        team, 0)
-	      call pridis (shpcon(k,KVPOS), shpcon(k,KHPOS), 4, 0, 1)
+ 200	      call pridis (shpcon(ka,KVPOS), shpcon(ka,KHPOS), KRANGE,
+     +        team, 0)!changed for loop index
+	      call pridis (shpcon(ka,KVPOS), shpcon(ka,KHPOS), 4, 0, 1)!mod changed
 	      dbits = dbits .or. bits(k)
 	      call makhit				!send hit message
  300	    continue

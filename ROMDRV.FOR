@@ -62,10 +62,6 @@ C	erom = iran(200) + 200!added by drforbin
 	if (PASFLG)  dbits = dbits .or. bits(who)
 	call makhit
 
-	if ( .not. (iran (10) .le. 1)) goto 99		! let the Romulan speak!DRF
-	call tell
-99	continue
-
 *.......Romulan searches for a target in range
 
  100	call dist (iplace, nplc, numsec)

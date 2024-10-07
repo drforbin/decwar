@@ -90,7 +90,7 @@ C	call type (2)
 C	call summar
 
 49	continue
-  50	PLAYER = .TRUE.			!regular player, not a Romulan
+50	PLAYER = .TRUE.			!regular player, not a Romulan
 d	call timin ('GETCMD')
 	call getcmd (n)          	!get next command to execute
 d	call timout('GETCMD')
@@ -283,7 +283,6 @@ d	call timout('CMDUSE')
 	if (dotime .lt. numply) goto 3501	! if time to do rebuilding etc
 	dotime = 0
 
-
 C	editied out by drforbin
 Cd	call timin ('BASPHA')
 C3502	call baspha	!label added by dr! activate enemy starbase defense
@@ -296,7 +295,6 @@ C	call basbld			!partially rebuild enemy bases
 Cd	call timout('BASBLD')
 C	if (ROMOPT)	call romdrv(d1,d2)	!activate Romulan?
 C	end
-
 
 3501	shpcon(who,KNTURN) = shpcon(who,KNTURN) + 1	!update stardate
 	tmturn(team) = tmturn(team) + 1

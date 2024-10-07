@@ -466,7 +466,6 @@ lall
 	logical	alive,<KNPLAY>		;true if player is alive
 	integer comknt			;dead ship monitor count
 	integer hitime			;time to reinitialize HISEG
-  integer datime      ;day of HISEG creation
 	logical	dead			;true if KILHGH already called
 	integer	docked,<KNPLAY>		;docked flags
 	integer	hlz			;last location to zero out
@@ -4091,6 +4090,8 @@ clear:	skipe	hungup		; if job is not hungup
 	clrbfi			;clear the input buffer
 	setom	bufptr		;clear multiple command line
 	popj	p,
+
+
 	subttl	BLKSET/BLKMOV/LOCF
 
 ;;;	BLKSET -- Fill a array or data area with a value.

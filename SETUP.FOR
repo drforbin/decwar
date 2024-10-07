@@ -71,6 +71,7 @@ C	time, or are implementors of the game and know the password.
 	external trap
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
 
+	if (ENDFLG) call endgam
 	call cctrap(trap)
 	PASFLG = .FALSE.
 	call kqsrch (ttynum, jobnum, ppn, kindex)
@@ -235,7 +236,6 @@ C	call	frcchk			! force scan of jobsequence numbers !commented drforbin
 	call cctrap(cc1)
 	call setran (daytim (d))
 	if (tim0 .lt. 0)  goto 200
-	if (getdat(d) .gt. datime) goto 200
 	if ((numply .ne. 1) .or. ((hitime-daytim(d)) .gt. 0))  goto 1200	!universe already set up?
 
 C	edited drforbin

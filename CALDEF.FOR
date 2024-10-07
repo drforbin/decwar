@@ -14,6 +14,7 @@ C	defenses
 	call cllock
 
 	if (ROMOPT) call romdrv(d1,d2)            !activate Romulan?
+	PLAYER = .TRUE.                           !make sure player set
 	call baspha                               !activate enemy starbase defense
 	call plnatk                               !activate neutral and enemy planets
 	call basbld                               !partially rebuild enemy bases
