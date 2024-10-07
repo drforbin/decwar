@@ -51,7 +51,7 @@ Connecting to host ayeka:2020
 Type the escape character followed by C to get back,
 or followed by ? to see other options.
 ----------------------------------------------------
-ÿû"ÿûÿûÿûÿý
+ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
            
 Connected to the PDP-10 simulator
 
