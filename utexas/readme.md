@@ -15,9 +15,7 @@ https://en.wikipedia.org/wiki/Star_Trek_(1971_video_game) In 1971, Mike Mayfield
 
 https://en.wikipedia.org/wiki/Decwar#Original_versions Version 1.0 of DECWAR was released in August 1978. The university would make copies available on tape for the nominal fee of $50, and it soon appeared on PDP-10s around the world. The greatly updated 2.0 was released in July 1979, and another major version, 2.3, on 20 November 1981. concerning the [utexas center for american history](https://briscoecenter.org/) catalog items and 
  
-### utexas library catalog item v2.2
-
-[v2.2](https://repositories.lib.utexas.edu/items/1aa48343-09ab-4b3b-a9f2-e2e525074a4d), files migrated from a Decus magnetic tape, and include only binary executables. [june 3, 1980 v2.2 utexas](decwar22-utexas.md) player instructions. eighteen playable ships, what this correspondent experienced at the southwest texas state university computation center, san marcos texas, circa 1983 and 1984
+utexas brisco center for american history catalog item [v2.2](https://repositories.lib.utexas.edu/items/1aa48343-09ab-4b3b-a9f2-e2e525074a4d) has files migrated from a Decus magnetic tape, including a 'patched' binary executable. no source code. here's the instructions a utexas player saw [june 3, 1980 v2.2 utexas](decwar22-utexas.md). eighteen playable ships, this is also what players at the southwest texas state university computation center, san marcos texas, saw circa 1983 and 1984
 
                  Federation ships               Empire ships
                  ----------------               ------------
@@ -31,9 +29,7 @@ https://en.wikipedia.org/wiki/Decwar#Original_versions Version 1.0 of DECWAR was
                     Vulcan                        Panther
                     Yorktown                      Wolf
 
-### utexas library catalog item v2.3
-
-[v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4), files ported by Merlyn Cousins from Harris Newman's Decwar 2.3 source code to a Simh/Tops 10 emulator environment. Newman's 2.3 version reflected changes made to the UT-developed Decwar, which were made so the game could be installed on a Compuserve (CIS) system, circa 1981. [november 20, 1981 v2.3 compuserve](decwar23-compuserve.md) player instructions. compuserve modified the code, limiting to ten playable ships
+utexas brisco center for american history catalog item [v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4), has files ported by Merlyn Cousins from Harris Newman's Decwar 2.3 source code to a Simh/Tops 10 emulator environment. Newman's 2.3 version reflected changes made to the UT-developed Decwar, which were made so the game could be installed on a Compuserve (CIS) system, circa 1981. here's the instructions a compuserve player saw [november 20, 1981 v2.3 compuserve](decwar23-compuserve.md). compuserve modified the code, limiting to ten playable ships
 
                  Federation ships               Empire ships
                  ----------------               ------------
@@ -43,26 +39,68 @@ https://en.wikipedia.org/wiki/Decwar#Original_versions Version 1.0 of DECWAR was
                     Vulcan                        Jackal
                     Yorktown                      Wolf
 
-## local project structure
+# project utexas structure
 
-in the root folder are four important files from the primordial tape sent from utexas to compuserve. these give a good picture of what the primordial tape and original utexas decwar2.3 were like.
-  - decwar.ltr 'letter' from utexas concerning the distribution tape
-  - decwar.com 'comments' around individual files
-  - decwar.imp 'important' additional comments
-  - decwar.tap 'tape' listing
+- docs, various howto and note related docs accumulating around the project
+    - msc folder, miscellaneous useful docs collected from the internet
+    - utexas22 folder, interesting reading from the v22 catalog item discussed above
+- msc, miscellaneous shell scripts and related code
+- simh, simh scripts
+- utexas23-reconstruction, a reconstruction attempt, at least on the surface layers, of the primordial utexas tape received by compuserve
+    - hlp folder, help.com comment file. note decwar.imp important file!
+    - msc folder, msc.com comment file.
+    - tec folder, for teco files to autogen fortran include files
+    
+# project utexas in action
 
-step1 is what merlyn got working on simh pdp10, _all changes commented and additions noted by DrForbin AKA Merlyn Cousins. search for (drforbin), all things yet to be fixed, search (tofix)_ here's [more info](docs/app0-foundations.md) from merlyn around that.
-  - utexas folder is migrated up to step2 and backward in time towards the primordial tape 
-  - compuserve folder is fortran and macro files likely associated with compuserve, or at least not definitely shown as part of the primordial tape. they're not shown in decwar.imp and decwar.tap!
-    - compuserve/docs folder is files associated with compuserve documenting the primordial tape's arrival from utexas. also some related 'operational' files. decwar.map has logging from a compuserve ki10 dated 19820519.
-    - scripts folder is build automations
+the script msc/create-archive-project-utexas was used to create project-utexas-archive-20250506.tar.gz
+- download the archive by hitting this [archive link](https://drive.google.com/file/d/1aLbaDcyIBG6pUwKbhw9UbuXFTfXkR1Cd/view?usp=sharing)
+- dearchive the contents and have it placed in the root of project utexas
+    - dec10blinken simh exe that will drive console panel if you have one
+    - dec10 simh exe that is plain vanilla and does not drive console panel
+    - dec10test simh exe that is just for testing console front panel
+    - back10 exe that handles writing and listing tapes
+    - tapes folder with tape images
+    - bts folder with kl-10 boot loader exe needed by the simh scripts
+    
+create/recreate boot disk. this is no big deal, can do it repeatedly and often, can treat the disk as expendable. the script is simh/create-boot-disk-from-tape.ini and is a good resource for learning about tops-10. run it with the following command and the disk will appear as folder dsk.
 
-step2 is just one way to go backwards. take what we have in step1, strip it down to bare metal, !always still working!, then stepbystep reintroduce things so we end up with something like v2.2 with eighteen ships. at least on the surface layers, the primordial utexas tape?
-  - hlp folder. help.com comment file. note decwar.imp important file!
-  - msc folder. msc.com comment file.
-  - tec folder for teco files to autogen fortran include files
+    ./dec10blinken simh/create-boot-disk-from-tape.ini
+    
+at tops-10 monitor prompt run kjob to make sure you're logged out, then ctrl-e to get simh prompt, and quit to leave simh.
 
-seven 'non include' code files. the high.for and low.for are stubs, and somewhat likewise for msg.mac and setmsg.mac.
+create/recreate the file tapes/utexas23-reconstruction.tap
+
+    msc/create-tape-utexas23-reconstruction
+
+now boot from disk using the script simh/boot-from-disk.ini with its line 'do utexas.do' uncommented to install/reinstall utexas.
+
+    ./dec10blinken simh/boot-from-disk.ini
+    
+this will leave you logged in as 1,2 and you can just leave that as is and open other terminals. telnet in from them and run decwar.
+
+    $ telnet localhost 2030
+    Trying ::1...
+    Connected to localhost.
+    Escape character is '^]'.
+    Connected to the KL-10 simulator TTY device, line 0
+    KL703 11:01:21 TTY4 system 1025
+    Connected to Node KL10(1) Line # 4
+    Please LOGIN
+    .login demo
+    Job 3  KL703  TTY4
+    11:01   19-Mar-86   Wednesday
+    .r gam:decwar
+    DECWAR, Edit    16
+    [DECWAR Version 2.3, 20-Nov-81]
+    Are you:  
+    1 Beginner
+    2 Intermediate 
+    3 Expert  
+
+# primordial utexas tape reconstruction
+
+there were seven key 'non include' code files. the high.for and low.for are stubs, and somewhat likewise for msg.mac and setmsg.mac.
     
     DECWAR.FOR  FORTRAN source.
     WARMAC.MAC  MACRO source.
@@ -83,18 +121,15 @@ six include files. five teco scripts in the tec folder originally were used to a
 
 probably the scripts simply search through warmac.mac and pick out 'variables' that need to appear in the include for files. this can be done manually. if there's an update to warmac.mac, include for files can be manually updated. the teco scripts probably just automate this, generating the include for 'from scratch'. so it's not a 'must have'. can be done by hand. but possibly nice. and an interesting usage of teco.
 
-## build and deploy, or 'dist'
-
 at utexas the build was done in [10,30,decwar] and then deployed to gam: which was a 'logical device name' assigned to [5,30]. 10,30 seems to have been the 'dist' account, which is 10,7 for many simh scripts. let's just accept that dist is [10,7] now, not [10,30]. it means leaving many scripts as is. here's some comments from merlyn
 
     The original place where decwar was placed was 5,30 which was the GAM:
     ersatz device, CIS was using [1,27] was the multiplayer decwar directory.
-    Everyone would be handed off from their original hosts to that HOST and logged onto that directory.
-    The CIS source is Always referencing it.
+    Everyone would be handed off from their original hosts to that HOST and logged onto that directory. The CIS source is Always referencing it.
 
 for compuserve, create p,pn [1,27] using react, then copy DECWAR.EXE, DECWAR.GRP, DECWAR.HLP, DECWAR.NWS to its home folder to 'deploy/install' it. [1,27] is where decwar was deployed for compuserve. this appear in warmac line 674, search for sysppn
 
-## notes
+# notes
 
 v2.2 31 commands - bases, build, capture, damages, dock, energy, gripe, help, impulse, list, move, news, planets, points, quit, radio, repair, scan, set, shields, srscan, status, summary, targets, tell, time, torpedoes, tractor, type, users
 
@@ -119,32 +154,3 @@ this absolutely does work, after the little trick of first doing
     decwar/save
 
 then the remainder from low/seg:low
-
-## dec10
-
-target here is to get the f66 code in projects algebra and inverse running on dec10 in an 'ephemeral' way. the dec10 should boot, run the f66 code, and exit out.
-
-## to make decwar go
-
-uncomment 'do decwar.do' in disk-boot.ini.
-
-it wants decwar.tap file to be in the tapes folder. can also generate that fresh using tape-decwar.sh
-
-    noah@raspberrypi:~/starid/dec10 $ telnet localhost 2030
-    Trying ::1...
-    Connected to localhost.
-    Escape character is '^]'.
-    Connected to the KL-10 simulator TTY device, line 0
-    KL703 11:01:21 TTY4 system 1025
-    Connected to Node KL10(1) Line # 4
-    Please LOGIN
-    .login dist
-    Job 3  KL703  TTY4
-    11:01   19-Mar-86   Wednesday
-    .r [10,7]decwar
-    DECWAR, Edit    16
-    [DECWAR Version 2.3, 20-Nov-81]
-    Are you:  
-    1 Beginner
-    2 Intermediate 
-    3 Expert  

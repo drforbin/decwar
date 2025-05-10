@@ -1,0 +1,15 @@
+#!/bin/bash
+UTEXAS=utexas23-reconstruction
+
+rm -rf ./tmp
+mkdir ./tmp
+
+cp $UTEXAS/*.FOR ./tmp
+cp $UTEXAS/*.MAC ./tmp
+cp $UTEXAS/hlp/DECWAR.HLP ./tmp
+cp $UTEXAS/hlp/DECWAR.NWS ./tmp
+cp $UTEXAS/hlp/DECWAR.GRP ./tmp
+
+./back10 -cf ./tapes/$UTEXAS.tap ./tmp/*
+./back10 -lf ./tapes/$UTEXAS.tap
+
