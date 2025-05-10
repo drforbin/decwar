@@ -1,0 +1,18 @@
+erWARMAC.MAC
+_subttl	FORTRAN interface -- low 0l 4k !L1! "f a oL1'
+[Building LOWSEG.FOR]
+ ewLOWSEG.FOR
+j i	common /lowseg/ b,.xc b,.k  999un
+!L2! 1a"e oL3' .u1 l 2r :q1,.fs;!"s r' .u2
+:q1,q2ss"u l oL2'
+:q1,q2s,"s r fs,<( fs>) q2-3u2 .-q1-1u3 q3-(q3/8*8)-6"g	''
+q1j ss ss .u3 s[(,	] r q3,.xs l .u1 j gc %n-999"l i, ' qn-7"g i
+     +	 0un' gs b,.xc b,.k q3j l oL2
+!L3! j gc i
+
+ zj i
+
+
+ hp ef 
+Don't forget to recompile LOW
+ ^C

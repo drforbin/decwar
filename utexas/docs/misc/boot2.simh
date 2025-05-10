@@ -1,0 +1,13 @@
+set cons telnet=1026
+set cpu tops10
+set dz 8b
+set tim y2k
+set dz lines=32 
+att -am dz 2010 speed=*32,buffer=1024k
+att rp0 dskb.dsk
+att rp1 dskc.dsk
+att rp2 dskd.dsk
+att lp20 printer.out
+set cpu idle
+;set throttle 2M
+boot rp

@@ -1,0 +1,70 @@
+The following files are included on the DECWAR source distribution tape:
+
+DECWAR.IMP	This file.
+
+Files to be installed on GAM:
+DECWAR.EXE	DECWAR game.  Protected for EXECUTE access.
+DECWAR.HLP	Help for DECWAR.  Source for on line help system.
+		Protected for READ access.
+DECWAR.NWS	News file (recent developments).  Protected for READ access.
+DECWAR.GRP	Gripe file.  Initially empty, added to by the DECWAR GRIPE
+		command.  Must be protected to allow write access.
+
+Files from which the GAM: files are derived:
+DECWAR.EXE:
+  HIGH.FOR	Used to force common block into high segment.
+  LOW.FOR	Used to force common block into low segment.
+  DECWAR.FOR	FORTRAN source.
+  WARMAC.MAC	MACRO source.
+  MSG.MAC	Output text source (to force text into the high segment,
+		and to get rid of the annoying trailing blanks FORTRAN
+		generates for literals).
+  SETUP.FOR	Once only code, deleted from core after initialization.
+  SETMSG.MAC	Equivalent to MSG.MAC for SETUP text strings.
+DECWAR.RNH	Help file source.
+DECNWS.RNO	News file source.
+
+Files INCLUDEd in DECWAR.FOR (extracted from WARMAC.MAC by TECO macros):
+PARAM.FOR	Parameters (constants).
+HISEG.FOR	High segment common block.
+LOWSEG.FOR	Low segment common block.
+
+Other files INCLUDEd in DECWAR.FOR:
+EXTERN.FOR	External declarations for strings used in DECWAR (extracted
+		from MSG.MAC).
+SETEXT.FOR	Equivalent external declarations used by SETUP (extracted
+		from SETMSG.MAC).
+LSTVAR.FOR	Common block INCLUDEd by all LIST routines (LST???).
+
+Relocatable files needed to produce DECWAR.EXE:
+HIGH.REL	High segment common block.
+LOW.REL		Low segment common block.
+DECWAR.REL	From DECWAR.FOR source.
+WARMAC.REL	From WARMAC.MAC source.
+MSG.REL		From MSG.MAC source.
+SETUP.REL	From SETUP.FOR source.
+SETMSG.REL	From SETMSG.MAC source.
+
+Tools used to build game (.SAV files generated from TECO macros):
+L.MIC		Load REL files in proper sequence into right segments.
+		Note you can DO L/H for help on building the DECWAR core
+		image.
+PARAM.SAV	Build PARAM.FOR from WARMAC.MAC.
+HISEG.SAV	Build HISEG.FOR from WARMAC.MAC.
+LOWSEG.SAV	Build LOWSEG.FOR from WARMAC.MAC.
+EXTERN.SAV	Build EXTERN.FOR from MSG.MAC.
+SETEXT.SAV	Build SETEXT.FOR from SETMSG.MAC.
+
+TECO macros used to build game (require TECO 124):
+PARAM.TEC	Source for PARAM.SAV.
+HISEG.TEC	Source for HISEG.SAV.
+LOWSEG.TEC	Source for LOWSEG.SAV.
+EXTERN.TEC	Source for EXTERN.SAV.
+SETEXT.TEC	Source for SETEXT.SAV.
+
+Misc. utilities:
+MAKHLP.MIC	Build DECWAR.HLP file from DECWAR.RNH using RUNOFF.
+MAKNWS.MIC	Build DECWAR.NWS file from DECNWS.RNO using RUNOFF.
+NDX.TEC		Build DECWAR.NDX file to be used by PAGE.TEC.
+PAGE.TEC	Search DECWAR.NDX file for page number of desired
+		DECWAR.FOR subprogram.

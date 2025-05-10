@@ -1,0 +1,16 @@
+The current version of DECWAR has
+a new interlocking precedure which
+should alleviate many of the long
+delays formerly encountered. 
+It also has parameter settings for
+beginner, intermediate, and expert
+players.  You will be asked which
+settings you wish to use once you
+are into the game.
+The edit number, which is typed
+out when you enter the program,
+will be incremented whenever major
+changes have been made.  You can
+use the NEWs command whenever you
+notice a new version number to find
+out what has changed.

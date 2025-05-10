@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source=../algebra/algebra.mac
+
+cat $source > job.mac
+./back10 -cf ./job.tap job.mac
+./back10 -lf ./job.tap
+
+./dec10 simh/mac-runner.ini
+
