@@ -73,6 +73,8 @@ the reconstruction was straightforward again, and worked on basically the first 
     
 # utexas in action
 
+baseline situation is to be on a raspberry pi that is/can be used for the pidp-10 stuff. pidp-10 is not necessary, but simply guessing most decwar will be associated with pidp-10 raspi. then also have a local clone of the decwar repo. checkout/be in the utexas branch. and 'in the utexas folder' within the utexas branch. so you're seeing the git tracked files, this is the 'utexas folder'. now you want to add some relatively large and static binary files that aren't included in the git tracking, these are downloaded as an archive in the step1.
+
 ### step1 have the contents of the downloadable archive in your utexas folder
 
 the script msc/create-archive-project-utexas was used to create project-utexas-archive-20250506.tar.gz. download the archive by hitting this [archive link](https://drive.google.com/file/d/1aLbaDcyIBG6pUwKbhw9UbuXFTfXkR1Cd/view?usp=sharing) and dearchive the contents and have them placed in your utexas folder
