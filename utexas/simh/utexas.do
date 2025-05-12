@@ -9,11 +9,11 @@ expect "\r\n/" send "exit\r"; continue
 
 expect "\r\n." send "compile/comp decwar, high, low, setup\r"; continue
 expect "\r\n." send "compile/comp warmac, warver, msg, setmsg\r"; continue
-expect "\r\n." send ""; continue
-; above is hack for expect issues, hit return once if it hangs here
+
+expect "\r\n." send "get decwar\r"; continue
+expect "\r\n." send "ssave\r"; continue
 
 expect "\r\n." send "r link\r"; continue
-expect "\r\n*" send "decwar/save\r"; continue
 expect "\r\n*" send "low/seg:low\r"; continue
 expect "\r\n*" send "high/seg:high\r"; continue
 expect "\r\n*" send "decwar/seg:def\r"; continue
@@ -24,8 +24,6 @@ expect "\r\n*" send "setup/seg:low\r"; continue
 expect "\r\n*" send "setmsg\r"; continue
 expect "\r\n*" send "sys:forlib/sea/seg:low\r"; continue
 expect "\r\n*" send "/g\r"; continue
-expect "\r\n." send ""; continue
-; above is hack for expect issues, hit return once if it hangs here
 
 expect "\r\n." send "get decwar\r"; continue
 expect "\r\n." send "ssave\r"; continue
@@ -36,10 +34,6 @@ expect "\r\n." send "protect decwar.grp <055>\r"; continue
 expect "\r\n." send "k/f\r"; continue
 
 expect "\r\n." send -t after=1000k "login 1,2\r"; continue
-;expect "\r\n." send "copy [5,30]decwar.exe<055>=[10,7]decwar.exe\r"; continue
-;expect "\r\n." send "copy [5,30]decwar.hlp<055>=[10,7]decwar.hlp\r"; continue
-;expect "\r\n." send "copy [5,30]decwar.nws<055>=[10,7]decwar.nws\r"; continue
-;expect "\r\n." send "copy [5,30]decwar.grp<055>=[10,7]decwar.grp\r"; continue
 expect "\r\n." send "assign gam: dskb:[5,30]\r"; continue
 
 ;expect "\r\n." send "k/f\r"; continue
