@@ -49,7 +49,7 @@ utexas center for american history catalog item [v2.3](https://repositories.lib.
 
 thanks to merlyn cousins, there's a [working decwar](https://github.com/drforbin/decwar). it's a little different than the primordial utexas decwar however. [project utexas](https://github.com/drforbin/decwar/tree/utexas/utexas) is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
 
-the first reconstruction concerns where the game is installed. at utexas the players typed 'r gam:decwar' and the virtual device 'gam:' was assigned to ppn [5,30]. the install involved commands like 'copy [5,30]decwar.exe<055>=[10,7]decwar.exe' and 'assign gam: dskb:[5,30]'. the tape contents were originally copied into [10,30] and compiled and linked there, you can see that in this [primordial tape listing](https://github.com/drforbin/decwar/blob/utexas/utexas/utexas23-reconstruction/hlp/DECWAR.TAP). for now, project utexas is using [10,7] as it matches with install scripts for fortran, kermit, etc in the utexas simh folder.
+the first reconstruction concerns where the game is installed. at utexas the players typed 'r gam:decwar' and the virtual device 'gam:' was assigned to ppn [5,30]. the install involved commands like 'copy [5,30]decwar.exe<055>=[10,7]decwar.exe' and 'assign gam: dskb:[5,30]'. the tape contents were originally copied into [10,30] and compiled and linked there, you can see that in this [primordial tape listing](https://github.com/drforbin/decwar/blob/utexas/utexas/utexas23-reconstruction/hlp/DECWAR.TAP). for now, project utexas is looking at using [10,7] as it matches with install scripts for fortran, kermit, etc in the utexas simh folder. meanwhile, utexas is simply copying tape contents directly into [5,30] then compiling and linking 'in place'.
 
 compuserve changed the target install directory. they had players coming from various host machines across their network. they brought the players to a central machine with the game installed in [1,27] using commands like 'copy [1,27]decwar.exe<055>=[10,7]decwar.exe'. the players effectively did 'r [1,27]decwar', without a virtual device like 'gam:'.
 
@@ -101,7 +101,7 @@ this bash script will copy the decwar source code into tape file tapes/utexas23-
 
     ./dec10blinken simh/boot-from-disk.ini
 
-have the line 'do utexas.do' uncommented in the ini file to install/reinstall utexas. simh 'expect' usage is not yet top-notch and there are some hacky workarounds. if the script pauses/hangs, hit return and it should continue onward. it should finish by copying the decwar exe, assigning the gam: device, and leave you logged in as oper. leave that as is and open other terminals. 
+have the line 'do utexas.do' uncommented in the ini file to install/reinstall utexas. simh 'expect' usage is not yet top-notch and there are some hacky workarounds. it should finish by setting permissions on decwar exe so its playable by all and assigning the gam: device. 
 
 ### step5 telnet in
 
