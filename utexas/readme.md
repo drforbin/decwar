@@ -23,7 +23,7 @@ historic fortran and assembly code running on simh pdp10 and standard tops10. th
                     Vulcan                        Panther
                     Yorktown                      Wolf
 
-[utexas center for american history](https://briscoecenter.org/) catalog item [v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4), has files ported by merlyn cousins from harris newman's decwar 2.3 source code to a simh/tops 10 emulator environment. newman's 2.3 version reflected changes made to the ut-developed decwar, which were made so the game could be installed on a compuserve (cis) system, circa 1981. here's the instructions a compuserve player saw [november 20, 1981 v2.3 compuserve](docs/decwar23-compuserve.md). compuserve modified the code, limiting to ten playable ships
+[utexas center for american history](https://briscoecenter.org/) catalog item [v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4), has files ported by merlyn cousins from harris newman's decwar 2.3 source code to a simh pdp10. newman's 2.3 version reflected changes made to utexas decwar which were made so the game could be installed on a compuserve pdp10, circa 1981. here's the instructions a compuserve player saw [november 20, 1981 v2.3 compuserve](docs/decwar23-compuserve.md). compuserve decwar has ten playable ships
 
                  Federation ships               Empire ships
                  ----------------               ------------
@@ -35,7 +35,7 @@ historic fortran and assembly code running on simh pdp10 and standard tops10. th
 
 # project utexas
 
-thanks to merlyn cousins, there's a [working decwar](https://github.com/drforbin/decwar). it's a little different than the primordial utexas decwar however. [project utexas](https://github.com/drforbin/decwar/tree/utexas/utexas) is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
+thanks to merlyn cousins, there's a [working decwar](https://github.com/drforbin/decwar). it's a little different than the primordial utexas decwar. [project utexas](https://github.com/drforbin/decwar/tree/utexas/utexas) is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
 
 the first reconstruction concerns where the game is installed. at utexas the players typed 'r gam:decwar' and the virtual device 'gam:' was assigned to ppn [5,30]. the install involved commands like 'copy [5,30]decwar.exe<055>=[10,7]decwar.exe' and 'assign gam: dskb:[5,30]'. the tape contents were originally copied into [10,30] and compiled and linked there, you can see that in this [primordial tape listing](https://github.com/drforbin/decwar/blob/utexas/utexas/utexas23-reconstruction/hlp/DECWAR.TAP). for now, project utexas is looking at using [10,7] as it matches with install scripts for fortran, kermit, etc in the utexas simh folder. meanwhile, utexas is simply copying tape contents directly into [5,30] then compiling and linking 'in place'.
 
@@ -82,25 +82,25 @@ the script msc/create-archive-project-utexas was used to create project-utexas-a
 - tapes folder with tape images
 - bts folder with kl-10 boot loader exe needed by the simh scripts
     
-### step2 prep boot disk
+### step2 prep tops10 boot disk
 
     ./dec10blinken simh/create-boot-disk-from-tape.ini
     
 this is no big deal, can do it repeatedly and often, can treat the disk as replaceable/expendable. the simh ini script is a good resource for learning about tops10. the disk will appear as folder dsk. the script should leave you at tops10 monitor prompt. do kjob to log out, ctrl-e to get simh prompt, quit to leave simh.
 
-### step3 prep tape file
+### step3 prep utexas23 reconstruction tape file
 
     msc/create-tape-utexas23-reconstruction
 
 this bash script will copy the decwar source code into tape file tapes/utexas23-reconstruction.tap and do a listing of the tape, showing the contents as confirmation.
 
-### step4 boot from disk
+### step4 boot tops10 from disk with auto install of utexas from tape
 
     ./dec10blinken simh/boot-from-disk.ini
 
 have the line 'do utexas.do' uncommented in the ini file to install/reinstall utexas. simh 'expect' usage is not yet top-notch and there are some hacky workarounds. it should finish by setting permissions on decwar exe so its playable by all and assigning the gam: device. 
 
-### step5 telnet in
+### step5 telnet in and run decwar
 
     $ telnet localhost 2030
     Trying ::1...
