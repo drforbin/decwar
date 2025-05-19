@@ -671,7 +671,7 @@ staiow:	iowd	^d128*5,stabuf
 	0
 stfiow:	iowd	^d128*5,stabuf
 	0
-sysppn==1,,27			; ppn for system files
+sysppn==5,,30			; ppn for system files
 debflg:	block	1		; 0 = user PPN; -1 = 55,7; +1 = 77xxx,*
 
 dbuf:	block	3		;disk I/O buffer cntrl blk (news,gripe,help)
@@ -802,7 +802,7 @@ nwsfil:	0,,ichr.b		;buffered input
 	-1,,406			;generate 406 words of buffer space
 	nws,,.FORED		;channel NWS,,open for input
 	.IOASC+UU.PHS		;physical device only
-	sixbit	/DSK/
+	sixbit	/GAM/
 	0,,dbuf			;input buffer control block
 	0,,2			;2 input buffers
 	sixbit /DECWAR/
@@ -815,7 +815,7 @@ hl1fil:	0,,ichr.b		;buffered input
 	-1,,406			;generate 406 words of buffer space
 	hlp,,.FORED		;channel HLP,,open for input
 	.IOASC
-	sixbit /DSK/
+	sixbit /GAM/
 	0,,dbuf			;input buffer control block
 	0,,2			;2 input buffers
 	sixbit /DECWAR/
@@ -831,7 +831,7 @@ hl2fil:	0,,ichr.b
 	-1,,406
 	hlp,,.FORED
 	.IOASC+UU.PHS
-	sixbit /DSK/
+	sixbit /GAM/
 	0,,dbuf
 	0,,2
 	sixbit /DECWAR/
@@ -844,7 +844,7 @@ grpfil:	ogch.,,0
 	0,,0
 	grp,,.FOSAU
 	.IODMP+UU.PHS
-	sixbit /DSK/
+	sixbit /GAM/
 	dbuf,,0
 	0
 	sixbit /DECWAR/
