@@ -11,35 +11,35 @@
 *	call royaln('CSIS86') drforbin(merlyn)
 	oflg   = medium
 	call out (decver, 1)
-	call out ('Are you: ', 1)
-	call out ('1 Beginner', 1)
-	call out ('2 Intermediate', 1)
-	call out ('3 Expert', 1)
-	call out (' ', 1)
-	call out ('Which? ', 0)
-	call gtkn
-	if(vallst(1).ne.1.and.(equal(tknlst(1),'BEGINNER').eq.0)) goto 2
-		scnflg = long
-		oflg   = medium
-		prtype = 0
-		icflg  = kabs
-		goto 4
-2	if(vallst(1).ne.2.and.(equal(tknlst(1),'INTERMEDIATE').eq.0)) 
-     +		goto 3
-		scnflg = long
-		prtype = -1
-		icflg  = krel
-		oflg   = medium
-		goto 4
-3	if(vallst(1).ne.3.and.(equal(tknlst(1),'EXPERT').eq.0)) goto 4
-		scnflg = short
-		prtype = -1
-		icflg  = krel
-		oflg   = short
-4	continue
-	call type (1)
-	call type (2)
-	call summar
+c	call out ('Are you: ', 1)
+c	call out ('1 Beginner', 1)
+c	call out ('2 Intermediate', 1)
+c	call out ('3 Expert', 1)
+c	call out (' ', 1)
+c	call out ('Which? ', 0)
+c	call gtkn
+c	if(vallst(1).ne.1.and.(equal(tknlst(1),'BEGINNER').eq.0)) goto 2
+c		scnflg = long
+c		oflg   = medium
+c		prtype = 0
+c		icflg  = kabs
+c		goto 4
+c2	if(vallst(1).ne.2.and.(equal(tknlst(1),'INTERMEDIATE').eq.0)) 
+c     +		goto 3
+c		scnflg = long
+c		prtype = -1
+c		icflg  = krel
+c		oflg   = medium
+c		goto 4
+c3	if(vallst(1).ne.3.and.(equal(tknlst(1),'EXPERT').eq.0)) goto 4
+c		scnflg = short
+c		prtype = -1
+c		icflg  = krel
+c		oflg   = short
+c4	continue
+c	call type (1)
+c	call type (2)
+c	call summar
 1	continue
 	call pregam			!enter Pre-game stage
 	call ttyon
