@@ -9,6 +9,7 @@ cp $UTEXAS/*.MAC ./tmp
 cp $UTEXAS/hlp/DECWAR.HLP ./tmp
 cp $UTEXAS/hlp/DECWAR.NWS ./tmp
 cp $UTEXAS/hlp/DECWAR.GRP ./tmp
+cp msc/decwar.ini ./tmp
 
 ./back10 -cf ./tapes/$UTEXAS.tap ./tmp/*
 ./back10 -lf ./tapes/$UTEXAS.tap

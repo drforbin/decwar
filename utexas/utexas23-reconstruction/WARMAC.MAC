@@ -763,11 +763,11 @@ inibeg:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /DSK/
+	sixbit /GAM/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
-	sixbit /BEG/
+	sixbit /INI/
 	0
 	-1			;use logged in PPN
 	z
@@ -776,11 +776,11 @@ iniint:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /DSK/
+	sixbit /GAM/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
-	sixbit /INT/
+	sixbit /INI/
 	0
 	-1			;use logged in PPN
 	z
@@ -789,14 +789,15 @@ iniexp:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /DSK/
+	sixbit /GAM/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
-	sixbit /EXP/
+	sixbit /INI/
 	0
 	-1			;use logged in PPN
 	z
+	
 	;News file
 nwsfil:	0,,ichr.b		;buffered input
 	-1,,406			;generate 406 words of buffer space
@@ -1210,58 +1211,31 @@ pty:	seto	t1,
 	tdza	t0,t0		;no, FALSE
 	seto	t0,		;yes, TRUE
 	popj	p,
+    
 	subttl	DECINI
-
 ;;;	DECINI -- Switch input from TTY to DECWAR.INI, and back again
 ;	on eof.
-;
 	entry	DECINI
 	sixbit	/DECINI/
 decini:	save	<x1,p1>
-decin0:	skipn	hungup
-	outstr	[asciz "
-Are you:
-1 - Beginner
-2 - Intermediate
-3 - Expert
-
-Which? "]
-	skipe	hungup
-	skipa	p1,["3"]
-	inchwl	p1
-	  jfcl
-	skipn	hungup
+	outstr  [asciz  "
+[Reading Commands From DECWARINI]"]
 	clrbfi
-	  jfcl
-	movei	t1,10		; hibernate to clear the wake state
-	hiber	t1,
-	  jfcl
-	cail	p1,"1"
-	caile	p1,"3"
-	jrst	decin0
 	setom	bufptr		;and get set to read new line
-
-	movei	x1,iniexp	; choose ini file
-	cain	p1,"3"
-	jrst	decin1
-	movei	x1,iniint
-	cain	p1,"2"
-	jrst	decin1
 	movei	x1,inibeg
 decin1:	pushj	p,open.
-	  jrst	deci.1		;no can do, so don't bother
-
+  jrst [outstr  [asciz  "
+NO DECWARINI FILE. setting defaults."]
+        restor <p1,x1>
+        popj  p,
+        ]
 	pushj	p,ttyon		;clear ^O
 	pushj	p,ocrl.
-
 	pushj	p,seti.		;set up for input from DECWAR.INI
 	setom	iniflg		;getting input from DECWAR.INI
-deci.1:	restor	<p1,x1>
+	deci.1:	restor	<p1,x1>
 	popj	p,
-
-
 ;;;	Here to read a character from DECWAR.INI
-;
 iich.:	pushj	p,ichr.b	;get character from DECWAR.INI
 	jumpl	c,iich.2	;eof, switch back to TTY
 	skipge	ccflg		;^C?
@@ -1271,20 +1245,21 @@ iich.:	pushj	p,ichr.b	;get character from DECWAR.INI
 	jrst	.+2
 	pushj	p,ochr.		;no, echo character
 	popj	p,		;and do normal input stuff
-
 iich.1:	setzm	ccflg		;ok, we've taken care of what ^C asked for
 iich.2:	save	<x1,p1>
 	pushj	p,close.	;close file, get rid of buffers, etc.
-
 	pushj	p,ttyon		;clear ^O
 	pushj	p,dmpbuf
-
 	movei	x1,ttyfil
 	pushj	p,seti.		;set up for input from TTY
 	setzm	iniflg		;no longer getting input from DECWAR.INI
 	setom	blank		;no blank lines yet
 	restor	<p1,x1>
-	pjrst	ichr.		;now get character from TTY
+	setom bufptr
+	clrbfi
+	outstr  [asciz "[Reading Commands From TTY]"]
+	popj  p,
+    
 	subttl	ECHON/ECHOFF/DMPBUF/TTYON
 
 ;;;	ECHON -- turn echoing on

@@ -10,7 +10,7 @@
 	versio = 24					!version number
 *	call royaln('CSIS86') drforbin(merlyn)
 	oflg   = medium
-	call out (decver, 1)
+c	call out (decver, 1)
 c	call out ('Are you: ', 1)
 c	call out ('1 Beginner', 1)
 c	call out ('2 Intermediate', 1)
@@ -47,6 +47,7 @@ c	call summar
 	call aprset($9999)		! set up trap for data out of bounds
 	call place ((100 * team) + who, 1, shpcon(who,KVPOS), 
      +	shpcon(who,KHPOS))
+	call decini
 49	continue
   50	PLAYER = .TRUE.			!regular player, not a Romulan
 d	call timin ('GETCMD')
