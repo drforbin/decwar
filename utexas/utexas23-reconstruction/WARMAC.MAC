@@ -763,39 +763,39 @@ inibeg:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /GAM/
+	sixbit /DSK/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
 	sixbit /INI/
 	0
-	-1			;use logged in PPN
+	0			;use logged in PPN
 	z
 
 iniint:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /GAM/
+	sixbit /DSK/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
 	sixbit /INI/
 	0
-	-1			;use logged in PPN
+	0			;use logged in PPN
 	z
 
 iniexp:	0,,iich.		;buffered input
 	-1,,203			;generate 203 words of buffer space
 	ini,,.FORED		;channel INI,,open for input
 	.IOASC+UU.PHS
-	sixbit /GAM/
+	sixbit /DSK/
 	0,,dibuf
 	0,,2
 	sixbit /DECWAR/
 	sixbit /INI/
 	0
-	-1			;use logged in PPN
+	0			;use logged in PPN
 	z
 	
 	;News file
