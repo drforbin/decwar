@@ -1,0 +1,6 @@
+set cons telnet=1026
+at rp0 dskb.dsk
+at rp1 dskc.dsk
+at rp2 dskd.dsk
+boot rp
+

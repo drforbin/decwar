@@ -1,0 +1,2 @@
+#!/bin/bash
+tar czvf project-utexas-archive-20250506.tar.gz tapes bts dec10 dec10blinken dec10test back10

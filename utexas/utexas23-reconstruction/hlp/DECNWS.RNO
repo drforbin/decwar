@@ -1,0 +1,210 @@
+.ps 60,70.npa
+.br;[DECWAR Version 2.2, 25-Dec-79]
+.ls.lm 5
+
+.le;New Pre-game feature implemented.  Users now will have the
+ability to 'inspect' a game (relative strengths of the two sides,
+who is on which side, etc.) before entering the game itself.  Gripes
+can also be submitted from the pre-game, and the Help and News files
+can be inspected.  See HELP PREGAME for details.
+
+.els.sk
+_.
+
+.br;[DECWAR Version 2.1, 18-Nov-79]
+.ls.lm 5
+
+.le;TRACTOR command fixed.
+
+.le;Ships will no longer start the game within range of enemy bases
+or planets.
+
+.le;Ships will no longer blindly drive into black holes.  Ships can
+still be DISPLACED into black holes by photon torpedoes and novas,
+however.
+
+.els.sk
+_.
+
+.br;[DECWAR Version 2.0, 10-Jul-79]
+.ls.lm 5
+
+.le;DECWAR.INI is here!  See help on DECINI.
+
+.le;Short, medium, and long output (controls output from hit messages,
+USERS, the LIST commands, POINTS, etc.).  See help on OUTPUT.
+
+.le;You can give multiple commands per line.  See help on INPUT.
+
+.le;New commands LIST and SUMMARY, and expanded commands BASES, PLANETS,
+and TARGETS.  See help on LIST.
+
+.le;New default action for PLANETS (LIST PLANETS 10) and TARGETS (LIST
+TARGETS 10).
+
+.le;The help file has been reworked, and there is now help on all
+commands, plus some helpful hints and a description of the input
+scanner.
+For best results, print GAM:DECWAR.HLP on LPT1 (about 25 pages).
+
+.le;GRIPES are now added to the beginning of the gripe file, and more
+information is recorded with each gripe (version, date, time, ship name,
+user name, TTY speed, PPN, TTY number, job number, and whether or not
+Romulans and/or black holes were included in the game).
+
+.le;There are more SET commands, and the TYPE command has been added.
+See help on SET and TYPE.
+
+.le;You can gag against an individual ship.
+
+.le;Even if everyone gets killed, the old game hangs around for 5 minutes
+before self destructing.
+
+.le;If the teams are too skewed you're forced to join the smaller team.
+
+.le;There are 9 ships on each side instead of 8, and some of the
+ship names have been changed.
+
+.le;There's a clock to keep you amused when waiting for reentry after
+being killed.
+
+.le;The amount of core required has been reduced from 8+58 to 5+46 pages.
+
+.els.sk
+_.
+
+.br;[DECWAR Version 1.4, 3-Apr-79]
+.ls.lm 5
+
+.le;TERMINATE command changed to QUIT.
+.br;SEND command changed to TELL.
+.br;New command SET NAME/PROMPT.  No help available yet.
+
+.le;New players to a game will now have their choice of sides.
+Old players (ones that have met their maker) will join their
+previous team.
+
+.le;A _^C will now exit the game only at command level.
+
+.le;Players no longer will be able to _^C out of game while under
+red alert (you must QUIT to get out).
+
+.le;The Klingon ship RAVEN has been rechristened the MANTA to prevent
+conflicts between Romulan and Raven in computed fires.
+
+.le;Multiple jobs / TTY will no longer circumvent the dead ship
+wait time.
+
+.le;The REPAIR command has two new features.  Using the ALL switch
+will initiate a repair sufficient to completely repair all damaged
+ship devices (with the corresponding pause time, of course).  A user
+may also specify the amount of repair desired by simply appending
+a number to the REPAIR command line.  (See HELP REPAIR for details).
+
+.le;Capturing a fortified (ie, built) planet will now involve an
+extra second of pause time for each BUILD the enemy has completed.
+50 units of ship energy will also be subtracted for each BUILD.
+
+.le;Recently killed players reentering the game before their required
+wait time has been completed can now ask the program to wait the
+remaining time for them (saves timing it yourself).
+
+.le;The default for Romulans in the setup of the game is now TRUE.
+
+.le;NEWS will now pause between notes on each version to query the
+user whether to continue printing the file.
+
+.els.sk
+_.
+.br;[DECWAR Version 1.3, 09-Feb-79]
+.ls.lm 5
+
+.le;Code removing dead and/or derelict ships thoroughly rewritten and
+debugged.  We apologize for the many problems associated with version
+1.2, the present version should now work properly.  Please report any
+further problems with sudden ship removal via the GRIPE command.
+
+.le;A computed Photon Torpedo fire at a ship out of range will simply
+report this fact, rather than miss in the proper direction.  Tracking
+of enemy ships will thus no longer be possible using this method.
+
+.le;Recent problems with continuing a CTRL-C'ed job resolved.
+
+.le;HELP and GRIPE now correctly restore the ship onto the display.
+
+.le;Error returns from CAPTURE and DOCK no longer considered as
+time-consuming moves.
+
+.els.sk
+_.
+.br;[DECWAR Version 1.2, 03-Feb-79]
+.ls.lm 5
+
+.le;Code removing dead and/or derelict ships much improved.  This
+fix should eliminate the full hit queue errors also.
+
+.le;PLANET command, plus dead planet removal code debugged and 
+improved to prevent bizarre results under special conditions.
+
+.le;Critically damaged life-support will now decrement life-support
+reserves after time-consuming moves only.
+
+.le;USERS output shortened, but includes more info.
+
+.le;GRIPErs are now identified in the gripe file.
+
+.els;.sk
+_.
+.br;[DECWAR Version 1.1, 21-Sep-78]
+.ls.lm 5
+
+.le;New command ENERGY, for transferring energy ship-to-ship.  For
+more details, see HELP ENERGY.
+
+.le;New command TRACTOR, for applying tractor beam to friendly ship.
+For more details, see HELP TRACTOR.
+
+.le;POINTS command greatly improved. For more details, see HELP POINTS.
+
+.le;Pauses in REPAIR, PHASERS, and TORPEDOES improved.
+
+.le;GRIPE and HELP now protect user from attack, unless he is already
+under red alert conditions.
+
+.le;Ship condition (green, red, etc.) more closely controlled.
+
+.le;When the first player is choosing the setup options, a <CR>
+entered in response to the questions will produce a regular
+game with no Romulans or black holes.
+
+.le;Output routines greatly improved, changes should be transparent
+to users.
+
+.els;.sk
+_.
+.br;[DECWAR Version 1.0, 8-Sep-78]
+.ls.lm 5
+
+.le;New additions to SCAN command.  See HELP SCAN for details.
+
+.le;New command TIME gives various time info.
+
+.le;The commands BUILD, CAPTURE, DOCK, IMPULSE, MOVE, PHASERS, REPAIR,
+SCAN, and TORPEDOES now take actual physical time (most times are
+dependent on the slowest terminal in the game).  See HELP PAUSES
+for details.
+
+.le;When you get killed, you now have to wait 2 minutes before
+restarting (don't try to cheat, or you'll have to wait even longer).
+
+.le;_^C will now abort stacked commands.  See HELP CTL-C for more
+information.
+
+.le;_^T will tell you what state you're in via a changing program name.
+See HELP CTL-T for more information.
+
+.le;A lone altmode entered in response to the COMMAND prompt will now
+execute the previously entered command.  This is useful when building
+a planet into a base, when docking, repairing, firing torpedoes, etc.
+
+.els

@@ -1,0 +1,48 @@
+.set tty uc
+.let a = "'a"
+.set tty lc
+.if ($a = $a.[1,"/H"]) .goto L1
+!To load DECWAR, type @L/sw/sw...
+!
+!/D	debug using all symbols
+!/F	use FORDDT instead of DDT
+!/E:nam	generate an EXE file (nam defaults to DECWAR.EXE)
+!/G	debug using only global symbols
+!/H	type this text
+!/M:nam	generate a map file (nam defaults to DECWAR.MAP)
+!/Q	quick load, ignores any other switches except /H
+!/S:nam	generate a symbol file (nam defaults to DECWAR.SYM)
+!
+!For most debugging sessions use @L/D
+!For fast debugging sessions use @L/G
+!For fast debugging that doesn''t require symbols use @L/Q
+!To generate the production version use @L/M/S/E
+.mic exit
+L1::
+.if ($a # $a.[1,"/Q"]) .goto L2
+.if ($a # $a.[1,"/D"]) .let d = "/d"
+.if ($a # $a.[1,"/F"]) .let d = "/d:for"
+.if ($a # $a.[1,"/G"]) .let g = "/d"
+.if ($a # $a.[1,"/M"]) .let m = "/map"
+.if ($a # $a.[1,"/M:"]) .let m = $a.["/M:","/"] + "/map"
+.if ($a # $a.[1,"/S"]) .let s = "/syfile"
+.if ($a # $a.[1,"/S:"]) .let s = $a.["/S:","/"] + "/syfile"
+.if ($a # $a.[1,"/E"]) .let e = "/ssave"
+.if ($a # $a.[1,"/E:"]) .let e = $a.["/E:","/"] + "/ssave"
+L2::
+.revive .r link
+*'m
+*'s
+*'d
+*low/seg:low
+*high/seg:hi
+*decwar/seg:def
+*msg
+*warmac
+*sys:forlib/sea/seg:def
+*setup/seg:low
+*setmsg
+*sys:forlib/sea/seg:low
+*'g
+*'e
+*/g

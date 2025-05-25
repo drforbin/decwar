@@ -1,0 +1,20 @@
+erWARMAC.MAC
+_subttl	FORTRAN interface -- param 0l 4k !L1! "f a oL1'
+[Building PARAM.FOR]
+ ewPARAM.FOR
+<fs"';> j
+!L2! 1a"e oL3' .u1 l 2r :q1,.fs;!"s r' .u2
+:q1,q2ss"u l oL2'
+:q1,q2fs==="s -s	 iparameter  q2+9u2 s= 1u3
+1a-^^^"e 0u3 2d i" q2-1u2'
+:.,q2fs	"s q2-1u2
+1a-^o11"e .-q1-1u4 q4-(q4/8*8)-q3"l 1a-^o11"e d q2-1u2''''
+' q2-1j 1a-^o011"n 1a-^o040"n c 1a-^o015"n i ''' l oL2
+!L3! j i	implicit integer (a-z)
+
+ zji
+	real ran,pwr
+
+
+
+ hp ef ^c
