@@ -35,19 +35,9 @@ historic fortran and assembly code running on simh pdp10 and standard tops10. th
 
 # project utexas
 
-thanks to merlyn cousins, there's a [working decwar](https://github.com/drforbin/decwar). it's a little different than the primordial utexas decwar. [project utexas](https://github.com/drforbin/decwar/tree/utexas/utexas) is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
+thanks to merlyn cousins, there's a working decwar. however, it's a little different than the primordial utexas version. project utexas is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
 
-the first reconstruction concerns where the game is installed. at utexas the players typed 'r gam:decwar' and the virtual device 'gam:' was assigned to ppn [5,30]. the install involved commands like 'copy [5,30]decwar.exe<055>=[10,7]decwar.exe' and 'assign gam: dskb:[5,30]'. the tape contents were originally copied into [10,30] and compiled and linked there, you can see that in this [primordial tape listing](https://github.com/drforbin/decwar/blob/utexas/utexas/utexas23-reconstruction/hlp/DECWAR.TAP). for now, project utexas is looking at using [10,7] as it matches with install scripts for fortran, kermit, etc in the utexas simh folder. meanwhile, utexas is simply copying tape contents directly into [5,30] then compiling and linking 'in place'.
-
-compuserve changed the target install directory. they had players coming from various host machines across their network. they brought the players to a central machine with the game installed in [1,27] using commands like 'copy [1,27]decwar.exe<055>=[10,7]decwar.exe'. the players effectively did 'r [1,27]decwar', without a virtual device like 'gam:'.
-
-it's a bit amazing and not completely clear yet why changing this back was so straightforward. problems were expected because compuserve additions to the source code do in fact reference [1,27]. it's possible that the current tops10 configuration in project utexas has something to do with it. it's suspected that the monitor security system is in some sense not fully activated. parts of rcornwell's baseline simh scripts were intentionally left off for a more 'tmp/dev' environment. the objective is not a production tops10 environment, rather a more loose and free sandbox. maybe that's why install in [5,30] 'just works'?
-
-the second reconstruction is even more amazing. at utexas there were up to eighteen players. compuserve changed that to ten players, effectively halving the resources used. since decwar lives in both high and low segment core memory, that was probably a serious concern for their commercial production environment.
-
-the reconstruction was straightforward again, and worked on basically the first try. utexas decwar has eighteen ships and players can again captain 'the buzzard'!
-
-am establishing contact with the briscoe center, as both an academic and alumni. can picture adding a working 'utexas23-reconstruction' catalog item there, but the real idea is to get allies within at least the utexas archival system to pursue discovering original utexas source code. bob hysick is for sure still around, and have tried making contact with him. something more formal with official utexas participation could help with things like that. with allies at utexas and among folks like harris newman and merlyn cousins, it doesn't seem impossible to reach the 'holy grail' of original utexas source code, and even a dusty old mag tape in some mostly forgotten archive somewhere. this is a worthy quest.
+am establishing contact with the briscoe center, as both an academic and alumni. can picture adding a working 'utexas23-reconstruction' catalog item there, but the real idea is to get allies within at least the utexas archival system to pursue discovering original utexas source code. bob hysick is for sure still around, and have tried making contact with him. something more formal with official utexas participation could help with things like that. with allies at utexas and among folks like harris newman and merlyn cousins, it doesn't seem impossible to reach the 'holy grail' of original utexas source code, and even a dusty old mag tape in some mostly forgotten archive.
 
 # utexas structure
 
@@ -70,7 +60,7 @@ am establishing contact with the briscoe center, as both an academic and alumni.
     
 # utexas in action
 
-baseline situation is to be on a raspberry pi that is/can be used for the pidp-10 stuff. pidp-10 is not necessary, but simply guessing most decwar will be associated with pidp-10 raspi. then also have a local clone of the decwar repo. checkout/be in the utexas branch. and 'in the utexas folder' within the utexas branch. so you're seeing the git tracked files, this is the 'utexas folder'. now you want to add some relatively large and static binary files that aren't included in the git tracking, these are downloaded as an archive in the step1.
+baseline situation is to be on a raspberry pi that is/can be used for the pidp-10 stuff. pidp-10 is not necessary, but simply assuming most decwar will be associated with pidp-10 raspi. have a local clone of the decwar repo and be in the utexas folder, everything happens 'inside the utexas folder'. git tracking does not include some relatively large and static binary files that you need to bring in manually, these are downloaded as an archive and taken care of in step1.
 
 ### step1 have the contents of the downloadable archive in your utexas folder
 
