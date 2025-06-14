@@ -422,11 +422,11 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 2501		score(i, who) = 0
 	alive(who) = .TRUE.	!reserve his chosen ship
 
-	group (1,1) = 'ALL'         ;  group (1,2) = "1777
-	group (2,1) = 'KLINGON'     ;  group (2,2) = "1740
-	group (3,1) = 'EMPIRE'      ;  group (3,2) = "1740
-	group (4,1) = 'HUMAN'       ;  group (4,2) = "000037
-	group (5,1) = 'FEDERATION'  ;  group (5,2) = "000037
+	group (1,1) = 'ALL'         ;  group (1,2) = "777777
+	group (2,1) = 'KLINGON'     ;  group (2,2) = "777000
+	group (3,1) = 'EMPIRE'      ;  group (3,2) = "777000
+	group (4,1) = 'HUMAN'       ;  group (4,2) = "000777
+	group (5,1) = 'FEDERATION'  ;  group (5,2) = "000777
 	group (6,1) = 'FRIENDLY'    ;  group (6,2) = group (5-team,2)
 	group (7,1) = 'ENEMY'       ;  group (7,2) = group (2+team,2)
 
