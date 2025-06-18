@@ -6086,14 +6086,15 @@ aprtrp:	setom	addrck		; we had a failure
 	hrlm	t1,stabuf
 	move	p,[iowd pdlsiz,stabuf+^d128]	; in case stack is messed up
 	move	s,[iowd stksiz,stk]
-	pushj	p,gripe		; put data into gripe file
-	move	p,[iowd pdlsiz,pdl]
-	skipe	t1,ftlerr	; if setftl called
-	jrst	0(t1)		; then go there
-	movei	16,[[5]]	; gen one of 5 possible fatal errors
-	move	1,0
-	outstr	@0(1)
 	jrst	monit
+;	pushj	p,gripe		; put data into gripe file
+;	move	p,[iowd pdlsiz,pdl]
+;	skipe	t1,ftlerr	; if setftl called
+;	jrst	0(t1)		; then go there
+;	movei	16,[[5]]	; gen one of 5 possible fatal errors
+;	move	1,0
+;	outstr	@0(1)
+;	jrst	monit
 
 fmsgs:	exp	[asciz	"
 You have blundered into an ancient
