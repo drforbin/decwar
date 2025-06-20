@@ -3505,7 +3505,9 @@ ghit.a:	tdnn	x3,hitql(x2)	; if this one is for this ship
 ;
 	entry	makmsg
 	sixbit	/MAKMSG/
-makmsg:	skipn	dbits
+makmsg:
+	popj	p,
+	skipn	dbits
 	popj	p,		;no guys to inform, so don't
 
 	hlre	p1,-1(arg)	;neg number of args
