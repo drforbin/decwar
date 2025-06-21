@@ -2,41 +2,33 @@ C	This routine is called by SETUP if a player types CTL-C before
 C	he has been completely 'created'.  This prevents the player
 C	from attempting a 'continue' using the existing code.
 C	CC2 is called instead if he has already chosen a side.
-
 	subroutine CC1
 	include 'param/nolist'
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
-
 	numply = numply - 1
 	call unlock (frelok)		! make sure we release the database
 	call exit
-
 	end
 C	This routine is called by SETUP if a player types CTL-C before
 C	he has been completely 'created'.  This prevents the player
 C	from attempting a 'continue' using the existing code.
 C	CC1 is called instead if he hasnt already chosen a side.
-
-
 	subroutine CC2
 	include 'param/nolist'
 	include 'hiseg/nolist'
 	include 'lowseg/nolist'
 	include 'extern/nolist'
-
 	numply = numply - 1
 	numsid(team) = numsid(team) - 1
 	call unlock (frelok)		! make sure we release the database
 	call exit
-
 	end
 C	This routine checks all incoming players to see if they have
 C	previously died in the present game.  If so, they are only
 C	allowed to start the game if they have waited the prescribed
 C	time, or are implementors of the game and know the password.
-
 	subroutine KILCHK
 	include 'param/nolist'
 	include 'hiseg/nolist'
@@ -45,16 +37,12 @@ C	time, or are implementors of the game and know the password.
 	include 'setext/nolist'
 	external cc1
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
-
 	PASFLG = .FALSE.
 	call kqsrch (ttynum, jobnum, ppn, kindex)
 	if (kindex .eq. 0)  return		!This player hasn't been killed
-
 	timlft = KWAIT - etim(kilque(kindex,4))
 	if (timlft .le. 0)  return		!he has been dead long enough
-
 *.......Inform player of remaining time to wait
-
 	call out (kilch4, 0)
 	timlft = KWAIT - etim(kilque(kindex,4))
 	if (timlft .lt. 1000)  timlft = 1000
@@ -62,9 +50,7 @@ C	time, or are implementors of the game and know the password.
 	minute = timlft / 60  ;  second = mod(timlft,60)
 	call odec (minute,0)  ;  call out (kilch5, 0)
 	call odec (second,0)  ;  call out (kilch6, 1)
-
 *.......Countdown to restart, check for password input
-
 	call cctrap(cc1)
 	call out (kilch8, 0)
 	call dmpbuf
@@ -81,13 +67,11 @@ C	time, or are implementors of the game and know the password.
  200	call crlf
 	call echon
 	return
-
  300	call gtkn
 	call echon
 	if (equal(tknlst(1),KPASS) .eq. -2)  return
 C	if (lofchk(0)) call monit drforbin(merlyn)
 	call cc1
-
 	end
 	subroutine PREGAM
 	include 'param/nolist'
@@ -96,41 +80,30 @@ C	if (lofchk(0)) call monit drforbin(merlyn)
 	include 'extern/nolist'
 	include 'setext/nolist'
 	common /local/ jobnum, nam1, nam2, ppn, ttynum, ttyspd
-
 	call jobsta (jobnum, nam1, nam2, ppn, ttynum, ttyspd)
 	if(ccflg) call monit		!added by drforbin for ctrl-C bug
-
   10	call ttyon
 	call out (strtup, 0)		!PREGAME or <CR>
 	call gtkn
 	if (CCFLG .or. hungup)  call monit 
 C	if (lofchk(0)) call monit drforbin(merlyn)-watch above line
 	if (ntok .eq. 0)  return
-
 	if (.not. equal (tknlst(1), 'HONORROLL')) goto 25
 		call shosta (.true.)
 		goto 10
-
 25	if (.not. equal(tknlst(1), 'HELP'))  goto 20
 	call hlpxtr
 	call hlpall
 	call ttyon  ;  goto 10
-
   20	if (.not. equal(tknlst(1), 'PREGAME'))  goto 10
-	
 	call out (pgame1, 1)		!inform player he is in Pre-game
-					!tell him of ACTIVATE command
 	call out ('Use the HO command to view the honor roll.', 1)
 C	if (.not. chkpay(0)) goto 50 drforbin(merlyn)
 	call out('Use the DO command to purchase', 1)
 	call out('documentation for DECWAR.', 1)
-
   50	call xgtcmd (n)          	!get next command to execute
-
 	goto (100,305,200,300,310,400,500,600,710,700,800,810,900, 
      +		1000,1100,1200), n
-
-
  100	call prgnam ('DECWAR')		!activate
 	return
  200	call gripe			!gripe
@@ -164,7 +137,6 @@ C	305	if (chkpay(0)) call pdwdoc drforbin(merlyn)		! print DECWAR.DOC
 	goto 50
 1100	call paswrd			!*password
 	goto 50
-
 1200	if (pasflg) call stazap
 	goto 50
 	end
@@ -175,7 +147,6 @@ C	are initialized.  Later players are told whether the Romulan or
 C	black holes are present in the game, and their high-segment
 C	areas are setup for play.  It is not possible to continue a
 C	game which was CTL-C while still in SETUP.
-
 	subroutine SETUP
 	include 'param/nolist'
 	include 'hiseg/nolist'
@@ -190,7 +161,6 @@ C	game which was CTL-C while still in SETUP.
 	data numply /0/			!these aren't constants!
 	data numsid(1), numsid(2) /0, 0/
 	data tim0 /-1/
-
 	who = 0
 	call	frcchk			! force scan of jobsequence numbers
 	call crlf
@@ -200,8 +170,6 @@ C	game which was CTL-C while still in SETUP.
 	call kilhgh			! remove high seg from swapper
 	call start			! try a run to new segment
 	call exit
-
-
  100	call cctrap			!turn off ^C
 101	call lock (frelok)		! lock out other users
 	if (hungup .or. ccflg) call exit	! get out if ^C or hung up
@@ -209,15 +177,12 @@ C	game which was CTL-C while still in SETUP.
 	numply = numply + 1		!number of players
 	if (CCFLG .or. hungup)  call cc1
 	call cctrap(cc1)
-
 	call setran (daytim (d))
 	if (tim0 .lt. 0)  goto 200
 	if ((numply .ne. 1) .or. ((hitime-daytim(d)) .gt. 0))  goto 1200	!universe already set up?
  200	call blkset (hfz, 0, locf(hlz) - locf(hfz) + 1)
 	tim0 = daytim (d)		!get initial start time
-
 *.......Regular or Tournament game?
-
 	call setqh  ;  call setqm	!set up the hit and message queues
 C	goto 600			!set to enable choice (drforbin)
  300	call out (setu02, 0)
@@ -237,9 +202,7 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (hungup) call cc1
 C	if (lofchk(0)) call cc1 drforbin(merlyn)
  500	call setran (iabs(tknlst(i)))
-
 *.......Romulan option?
-
 600	ROMOPT = .TRUE.		
 C	601	call out (setu06, 1)	!added drforbin
 C	goto 700			!added by drforbin
@@ -252,9 +215,7 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if ((.not. equal(tknlst(1), 'YES')) .and. 
      +	(.not. equal(tknlst(1), 'NO')))  goto 600
 	if (equal (tknlst(1), 'NO'))  ROMOPT = .FALSE.
-
 *.......Initialize universe
-
  700	ROM = .FALSE.
 	do 800 j = 1 , 2
 	do 800 i = 1 , KNBASE
@@ -264,9 +225,7 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	nbase(1) = 10
 	nbase(2) = 10
 	call blkset (alive, 1, KNPLAY)
-
 *.......Determine number of stars and insert bases and planets.
-
 	nstar  = int(51 * ran(0)) * 5 + 100
 	nhole  = int(41.0 * ran(0) + 10)
 c--	nplnet = int(20.0 + ran(0) * 61.0)
@@ -283,7 +242,6 @@ c--	nplnet = int(20.0 + ran(0) * 61.0)
 1000	continue
 	call place (dxstar*100, nstar, dm1, dm2)
 	if (CCFLG .or. hungup)  goto 1400
-
 *.......Black hole option?
 C	all comments below inserted by drforbin
 C	BLHOPT = .FALSE.
@@ -291,7 +249,6 @@ C	if (ran(0) .lt. 0.75) goto 1400
 C	blhopt = .true.
 C	call out (setu07, 1)
 C	goto 1400
-
 1100	call out (setu05, 0)
 	call gtkn
 	if (CCFLG .or. hungup)  goto 1400
@@ -302,25 +259,18 @@ C	if (lofchk(0)) goto 1400 drforbin(merlyn)
 	if (equal (tknlst(1), 'YES'))  BLHOPT = .TRUE.
 	if (BLHOPT)  call place ((DXBHOL*100), nhole, i, j)
 	goto 1400
-
 *.......Inform later players of type of game set up
-
 1200	if (.not. ENDFLG)  goto 1300
 	call kilhgh
 	call out (nogal1,1)
 	call exit
-
 1300	continue
 	if (ROMOPT)  call out (setu06,1)
 	if (BLHOPT)  call out (setu07,1)
-
 *.......Set up individual player
-
 1400	if (CCFLG .or. hungup) call cc1	!let him out if he typed ^C already
 	call cctrap (CC1)	!exit on ^C, but zero the guy out first
-
 *.......Determine which side he will go on.
-
 	ttytyp = 8
 	call kqsrch (ttynum, jobnum, ppn, kindex)
 	if (kindex .eq. 0)  goto 1600
@@ -340,7 +290,6 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 1401	team = team + 1
 	if (team .eq. 3) team = 1
 	goto	1900			! he has defected
-
 1410	if (alive(who) .gt. 0) goto 1420	! keep same ship if possible
 	call out ('Sorry, Captain, but the', 0)
 	call out2w (names(who, 1), names(who, 2))
@@ -353,14 +302,12 @@ C	if (lofchk(0)) call cc1 drforbin(merlyn)
 	if (typlst(1) .eq. keol) call cc1
 	if (equal (tknlst(1), 'YES')) goto 1900
 		call cc1
-
 1420	call cctrap(0)			! clear ^C trap
 	numsid(team) = numsid(team) + 1
 	numshp(team) = numshp(team) + 1
 	call cctrap (cc2)
 	if (ccflg .or. hungup) call cc2	! get out
 	goto 2500
-
 1600	call out (setu16,0)
 	call odec (numsid(1),0)
 	call out (setu17,0)
@@ -413,15 +360,12 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	if (alive(who) .gt. 0)  goto 2500
 	call out (setu15,1)
 	goto 2100
-
 *.......Initialize player's high and low-segments
-
 2500	call unlock(frelok)		! release the interlock
 	call	updcap (who)		! update mission #
 	do 2501 i = 1, knpoin		! zap his score
 2501		score(i, who) = 0
 	alive(who) = .TRUE.	!reserve his chosen ship
-
 	group (1,1) = 'ALL'         ;  group (1,2) = "777777
 	group (2,1) = 'KLINGON'     ;  group (2,2) = "777000
 	group (3,1) = 'EMPIRE'      ;  group (3,2) = "777000
@@ -429,7 +373,6 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	group (5,1) = 'FEDERATION'  ;  group (5,2) = "000777
 	group (6,1) = 'FRIENDLY'    ;  group (6,2) = group (5-team,2)
 	group (7,1) = 'ENEMY'       ;  group (7,2) = group (2+team,2)
-
 	call cctrap (clrbuf)		 !clear input buffer on ^C
 	call jobsta ( 
      +		job(who,KJOB),
@@ -463,13 +406,10 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	shpcon(who,KLFSUP) = 5
 	shpcon(who,KSNRGY) = 50000
 	shpcon(who,KSSHPC) = 1000
-
 	return
-
 	end
 C	This routine processes command strings during the pre-game
 C	(before a side and ship have been chosen).
-
 	subroutine XGTCMD (cmd)
 	include 'param/nolist'
 	include 'hiseg/nolist'
@@ -494,46 +434,37 @@ C	(before a side and ship have been chosen).
      +	  '*Debu', 'g    ',
      +	  '*Pass', 'word ',
      +    '*Zap ', '     '/
-
  100	call crlf
 	CCFLG = .FALSE.
 	call out2c ( 'PG' )  ;  call out2c ( '> ' )
 	call dmpbuf			!dump output buffer
  200	if (input(10000))  goto 400	!command input?
 	goto 200
-
  400	call gtkn
 	if (CCFLG .or. hungup)  call monit		!^C was typed
 C	if (lofchk(0)) call monit drforbin(merlyn)			! time is up!
 	if (typlst(1) .eq. KEOL)  goto 100
 	cmd = 0
-
 	do 700 i = 1, KNPCMD		!identify command
 	  if (.not. (equal(tknlst(1), precmd(1,i))))  goto 700
 	  if (cmd .ne. 0)  goto 800
 	  cmd = i
  700	continue
 	if (cmd)  800,900,1300 !will never take the neg branch
-
  800	call out (ambcom, 0)		!input is ambiguous
 	goto 1200
-
  900	do 1000 i = 1, KNCMD		!a 'main-game command only?
 	  if (equal(tknlst(1), isaydo(1,i)))  goto 1100
 1000	continue
 	call out (unkcom, 0)		!input is trash!
 	goto 1200
-
 1100	call out (maicom, 0)		!input not valid in pre-game
 1200	call out (forhlp, 1)
 	goto 100
-
 1300	return
-
 	end
 C	When DECWAR is STARTed, the startup routine will ensure that
 C	all code through Z is present, else DECWAR will be run over
 C	again.
-
 	subroutine Z
 	end

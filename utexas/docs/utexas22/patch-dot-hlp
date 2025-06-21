@@ -1,9 +1,0 @@
-Notes....Merlyn (drforbin)
-
-pecwar.exe is patched decwar 2.2 as per patch.pdf
-This patch is not mine, and is highly dubious.
-It fixes the help system for help with a particular command but breaks help * and
-help on nonexistent commands among other things.   
- 
-
-
