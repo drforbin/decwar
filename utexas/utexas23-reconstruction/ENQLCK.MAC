@@ -1,0 +1,41 @@
+
+
+
+title enqlck
+
+
+search	uuosym
+
+external   hv.lok
+internal   psilck
+
+t1=1
+p=17
+
+vector:	exp 	havenq
+	exp 	0
+	exp 	0
+	exp 	0
+
+
+havenq: setom	hv.lok
+	wake	-1,
+	debrk.
+
+
+psilck:	movei	t1,vector
+	piini.	t1,		;init psi system
+	jrst	[outstr [asciz /Error in PIINI. . CALL. Exiting/]
+		exit
+		]
+	move 	t1,[exp PS.FAC+PS.FON+[
+			exp .PCQUE
+			xwd 0,0
+			xwd 0,0]]
+	pisys.	t1,		;enable psi system
+	jrst	[outstr [asciz /Error in PISYS. . CALL. Exiting/]
+		exit
+		]
+	popj	p,	 	
+
+	end

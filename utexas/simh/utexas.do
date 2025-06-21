@@ -23,7 +23,7 @@ expect "\r\n/" send "inter\r"; continue
 expect "\r\n/" send "files\r"; continue
 expect "\r\n/" send "rest [,]*.*=*.*\r"; continue
 expect "\r\n/" send "exit\r"; continue
-expect "\r\n." send "compile/comp decwar, high, low, setup, warmac, msg, setmsg\r"; continue
+expect "\r\n." send "compile/comp decwar, high, low, setup, warmac, msg, setmsg, enqlck\r"; continue
 expect "\r\n." send ""; continue
 ; line above is the expect hack, shouldn't be needed but seems to work
 expect "\r\n." send "r link\r"; continue
@@ -32,7 +32,7 @@ expect "\r\n*" send "low/seg:low\r"; continue
 expect "\r\n*" send "high/seg:high\r"; continue
 expect "\r\n*" send "decwar/seg:def\r"; continue
 expect "\r\n*" send "msg\r"; continue
-expect "\r\n*" send "warmac\r"; continue
+expect "\r\n*" send "warmac,enqlck\r"; continue
 expect "\r\n*" send "sys:forlib/sea/seg:def\r"; continue
 expect "\r\n*" send "setup/seg:low\r"; continue
 expect "\r\n*" send "setmsg\r"; continue
