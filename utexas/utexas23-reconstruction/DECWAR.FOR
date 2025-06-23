@@ -2626,10 +2626,10 @@ c	if ((usrprj(0) .ne. "70000) .and. (usrprj(0) .ne. "337) .and.
 c     +		(usrprj(0) .ne. "70006)
 c     +.and. (usrprj(0) .ne. "70725))		!added
 c     +		pasflg = 0
-	if (usrprj(0) .ne. 5) pasflg = 0
-	if (PASFLG)  return			!is he ok?
-	call out (unkcom, 0)			!WHAT password routine!?!
-	if (oflg .ne. short)  call out (forhlp, 1)
+c	if (usrprj(0) .ne. 5) pasflg = 0
+c	if (PASFLG)  return			!is he ok?
+c	call out (unkcom, 0)			!WHAT password routine!?!
+c	if (oflg .ne. short)  call out (forhlp, 1)
 	return
 	end
 C	This routine controls the phaser banks of an individual ship.

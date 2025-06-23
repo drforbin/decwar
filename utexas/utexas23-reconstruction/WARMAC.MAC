@@ -218,7 +218,7 @@ lall
 ;	kmxpln==80		;maximum number of planets
 ;---
 	kndev==9		;number of devices
-	kpass=="S2K"		;password for system (*) commands
+	kpass=="*mink"		;password for system (*) commands
 	knmsg==32		;maximum number of messages in queue
 	msglen==17		;max # of words per msg (header + 80 chars)
 	kngrp==7		;number of defined message groups
@@ -1310,12 +1310,13 @@ iich.2:	save	<x1,p1>
 	setzm	iniflg		;no longer getting input from DECWAR.INI
 	setom	blank		;no blank lines yet
 	restor	<p1,x1>
-	setom bufptr
-	clrbfi
-	outstr  [asciz "[Reading Commands From TTY]"]
-	popj  p,
-    
-	subttl	ECHON/ECHOFF/DMPBUF/TTYON
+;	pjrst	ichr.		;now get character from TTY
+  setom bufptr
+  clrbfi
+  outstr  [asciz "[Reading Commands From TTY]"]
+  popj  p,
+
+	subttl	ECHON/ECHOFF/DMPBUF/TTYON
 
 ;;;	ECHON -- turn echoing on
 ;
@@ -5667,8 +5668,8 @@ chkd.1:	save	<t0,t4,x1,x2,p1,c>
 
 	radix	10
 rngtbl:	0,,0			;empty space
-	1,,5			;federation ship
-	6,,10			;empire ship
+	1,,9			;federation ship
+	10,,18			;empire ship
 	1,,10			;federation base
 	1,,10			;empire base
 	0,,1			;romulan
