@@ -100,7 +100,7 @@ have the line 'do utexas.do' uncommented in the ini file to install/reinstall ut
     KL703 11:01:21 TTY4 system 1025
     Connected to Node KL10(1) Line # 4
     Please LOGIN
-    .login demo
+    .login decwar
     Job 3  KL703  TTY4
     11:01   19-Mar-86   Wednesday
     .r gam:decwar
