@@ -9,7 +9,7 @@ historic fortran and assembly code running on simh pdp10 and standard tops10. th
 - mid 70s, war, fortran two player version written for utexas cdc 6600, author unknown, rewritten by robert schneider
 - 1978, [decwar](https://en.wikipedia.org/wiki/Decwar#Original_versions), assembly and fortran, eighteen player version written for utexas pdp-10, bob hysick and jeff potter. version 1.0 of decwar was released in august 1978. the university would make copies available on tape for the nominal fee of $50, and it soon appeared on pdp-10s around the world. the greatly updated 2.0 was released in july 1979, and another major version, 2.3, on 20 november 1981.
 
-[utexas center for american history](https://briscoecenter.org/) catalog item [v2.2](https://repositories.lib.utexas.edu/items/1aa48343-09ab-4b3b-a9f2-e2e525074a4d) has files migrated from a decus magnetic tape, including a somewhat doubtful patched executable, but no source code. here's the instructions a utexas player saw [june 3, 1980 v2.2 utexas](docs/decwar22-utexas.md). eighteen playable ships, this is also what players at the southwest texas state university computation center, san marcos texas, saw circa 1983 and 1984
+[utexas center for american history](https://briscoecenter.org/) catalog item [v2.2](https://repositories.lib.utexas.edu/items/1aa48343-09ab-4b3b-a9f2-e2e525074a4d) has files migrated from a decus magnetic tape, including a somewhat doubtful patched executable, but no source code. here's the instructions a utexas player saw [june 3, 1980 v2.2 utexas](docs/DECWAR22.HLP). eighteen playable ships, this is also what players at the southwest texas state university computation center, san marcos texas, saw circa 1983 and 1984
 
                  Federation ships               Empire ships
                  ----------------               ------------
@@ -23,7 +23,7 @@ historic fortran and assembly code running on simh pdp10 and standard tops10. th
                     Vulcan                        Panther
                     Yorktown                      Wolf
 
-[utexas center for american history](https://briscoecenter.org/) catalog item [v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4) has files ported by merlyn cousins from harris newman's decwar 2.3 source code to a simh pdp10. newman's 2.3 version reflected changes made to utexas decwar which were made so the game could be installed on a compuserve pdp10, circa 1981. here's the instructions a compuserve player saw [november 20, 1981 v2.3 compuserve](docs/decwar23-compuserve.md). compuserve decwar has ten playable ships
+[utexas center for american history](https://briscoecenter.org/) catalog item [v2.3](https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4) has files ported by merlyn cousins from harris newman's decwar 2.3 source code to a simh pdp10. newman's 2.3 version reflected changes made to utexas decwar which were made so the game could be installed on a compuserve pdp10, circa 1981. here's the instructions a compuserve player saw [november 20, 1981 v2.3 compuserve](docs/DECWAR23CIS.HLP). compuserve decwar has ten playable ships
 
                  Federation ships               Empire ships
                  ----------------               ------------
@@ -44,8 +44,8 @@ am establishing contact with the briscoe center, as both an academic and alumni.
 - docs, various howto and note related docs accumulating around the project
     - [utexas decwar notes collection](docs/readme.md/#utexas-decwar-notes)
     - [utexas tops10 users guide](docs/readme.md/#utexas-tops10-users-guide)
-    - [utexas v2.2 player guide](docs/decwar22-utexas.md)
-    - [compuserve v2.3 player guide](docs/decwar23-compuserve.md)
+    - [utexas v2.2 player guide](docs/DECWAR22.HLP)
+    - [compuserve v2.3 player guide](docs/DECWAR23CIS.HLP)
 - msc, miscellaneous shell scripts and related code
     - [create tape utexas23 reconstruction](msc/create-tape-utexas23-reconstruction)
     - [create archive project utexas](msc/create-archive-project-utexas)
