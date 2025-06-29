@@ -13,7 +13,7 @@
 !	kmxpln==80		;maximum number of planets
 	parameter kndev=9	!number of devices
 	parameter kpass='*MINK'	!password for system (*) commands
-	parameter knmsg=32	!maximum number of messages in queue
+	parameter knmsg=64	!maximum number of messages in queue
 	parameter msglen=17	!max # of words per msg (header + 80 chars)
 	parameter kngrp=7	!number of defined message groups
 	parameter knhit=64	!maximum number of hits in queue

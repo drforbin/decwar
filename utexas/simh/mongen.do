@@ -55,7 +55,7 @@ expect "\r\n\177#"; continue
 expect " Pages min guaranteed among jobs not locked in core(0,0-16384):" send "\r"; continue
 expect "\r\n\177#"; continue
 expect "\r\n\177#"; continue
-expect " High priority queues(0,0-15):" send "5\r"; continue
+expect " High priority queues(0,0-15):" send "15\r"; continue
 expect "MSGSER(Y,N):" send "Y\r"; continue
 expect "PSISER(Y,N):" send "Y\r"; continue
 expect "IPCF(Y,N):" send "Y\r"; continue

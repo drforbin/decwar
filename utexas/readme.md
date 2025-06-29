@@ -1,6 +1,6 @@
 # project utexas
 
-- [backwards in time](#backwards-in-time)
+- [going backwards](#going-backwards)
 - [how-to](#how-to)
   - [step1 and step2, hardware](#step1-have-the-contents-of-the-downloadable-archive-in-your-utexas-folder)
   - [step3 and step4, software](#step3-prep-utexas23-reconstruction-tape-file)
@@ -40,7 +40,7 @@ nutshell summary, from [esr1](http://www.catb.org/~esr/super-star-trek/) and [es
                     Vulcan                        Jackal
                     Yorktown                      Wolf
 
-# backwards in time
+# going backwards
 
 there's been a playable decwar, but it's a little different than the primordial utexas version. project utexas is about reconstruction of the original, converging nearer and nearer towards the primordial code and effectively going backwards in time. if a copy of the original code is discovered, it will hopefully match closely with the utexas reconstruction.
 
@@ -126,6 +126,8 @@ what we'd like to see is eighteen robots playing indefinitely. first step on tha
 - msc, miscellaneous shell scripts and related code
   - [create tape utexas23 reconstruction](msc/create-tape-utexas23-reconstruction)
   - [create archive project utexas](msc/create-archive-project-utexas)
+- robots, automatic players/agents to drive the action
+  - [readme](robots/readme.md)
 - simh, simh scripts
   - [utexas do](simh/utexas.do)
   - [boot from disk](simh/boot-from-disk.ini)

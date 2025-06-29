@@ -219,7 +219,7 @@ lall
 ;---
 	kndev==9		;number of devices
 	kpass=="*mink"		;password for system (*) commands
-	knmsg==32		;maximum number of messages in queue
+	knmsg==64		;maximum number of messages in queue
 	msglen==17		;max # of words per msg (header + 80 chars)
 	kngrp==7		;number of defined message groups
 	knhshp==^d40		; number of hit queue entries per ship
@@ -615,6 +615,27 @@ hand:	block	2		;drforbin
 ;hangta:	block	1		; save for register ta
 
 hv.lok::block	1		; set to -1 when enq. request is granted
+vector:	exp 	havenq
+	exp 	0
+	exp 	0
+	exp 	0
+havenq: setom	hv.lok
+	wake	-1,
+	debrk.
+psilck:	movei	t1,vector
+	piini.	t1,		;init psi system
+	jrst	[outstr [asciz /Error in PIINI. . CALL. Exiting/]
+		exit
+		]
+	move 	t1,[exp PS.FAC+PS.FON+[
+			exp .PCQUE
+			xwd 0,0
+			xwd 0,0]]
+	pisys.	t1,		;enable psi system
+	jrst	[outstr [asciz /Error in PISYS. . CALL. Exiting/]
+		exit
+		]
+	popj	p,	 
 
 LVLTBL:	block	2
 
@@ -1175,7 +1196,7 @@ iswiz:
 	setzm	addrck
 ;below disable CIS code drforbin
 ;	pushj	p,cishng	; enable hangup detect and enq. interrupt
-	pushj	p,psilck##	;added by drforbin for enq. interrupt
+	pushj	p,psilck	;added by drforbin for enq. interrupt
 	movei	t1,intblk	;enable interception of ^C and fatal errors
 	setzm	intblk+2
 	movem	t1,.jbint##
