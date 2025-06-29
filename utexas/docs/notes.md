@@ -689,3 +689,54 @@ most essential - fundamental - https://github.com/rcornwell/sims
 on top of previous, for the software side - https://sky-visions.com/dec/tops10.shtml
 and for broader context, perspective surrounding utexas - https://github.com/obsolescence/pidp10
 these three can be skeleton for expanded utexas user guide
+
+20250629
+
+---------- Forwarded message ---------
+From: Harris Newman <harris.s.newman@gmail.com>
+Date: Sat, Jun 28, 2025 at 8:52 PM
+Subject: Re: history question
+To: Noah Smith <noah@statespace.dev>
+Cc: Eric Freeman <eric.freeman@austin.utexas.edu>
+
+
+I looked on the Texas Scholarworks for the item I gave to UT in 2011, and now it only has 1 file and it's a license:
+https://repositories.lib.utexas.edu/items/e0e0aa09-2dc3-49c5-a919-19210d7916d3
+
+So I went back in time to my emails to Zach about it and found my submission, and although gmail won't easily let me download it, (file type no longer allowed to be sent), I was able to recover it.   I have uploaded it to the internet archive here: https://archive.org/details/decwar-2.3.tar and that should keep it for history.  
+
+In that email I had Bob Hysick's response to Zach concerning decwar's release.  Here is his response:
+"I'd be happy to have Decwar included in the Archive.  I would also be interested in obtaining a copy of the source – anything I had was lost in a purge years ago strongly encouraged by my wife.  (The bulk of the source was an assembler program.  The remainder was Fortran.  There was also a user’s guide, though I don’t recall its format.)
+ 
+Your call made me curious, so I checked the web for Decwar references.  I found some interesting information in a Wikipedia Decwar entry.  That page and referenced pages included details I had forgotten or wasn’t aware of.  But they were short on development history and attribution to the authors.
+ 
+The precursor to Decwar was a game written, I believe, by Jeff Potter and an author whose name I don’t recall (Robert something, perhaps).  It was a turn-based game that we played on teletypes (there’s some ancient history for you!).  The Web told me that game was called War, something I didn’t remember.
+ 
+That was the late 70’s, the time when programming on campus was still largely done with punch cards.  It was the time of Adventure and Zork, the early text-based adventure games that were the inspiration for the likes of Leisure Suit Larry, King’s Quest, and ultimately games like Myst (in fact, I think I recall a Zork reference in Myst).
+ 
+We wanted to take War to the next level: make it real time, improve the interface, increase the number of players, make a number of core game changes, and generally transform and improve game play.  And so, in our spare time between classes and work, we began our task (who needs sleep anyway?).  I worked for the Computation Center on the DEC-10, so I had access to the necessary resources, including a much-coveted 9600 baud CRT.  I took on the task of writing the core in assembler, while Jeff worked on the Fortran component.  Writing in assembler was necessary for much of the low-level access we required, and it allowed for optimizing both CPU and memory use (both were precious resources, especially in the  day when we actually used magnetic core memory).  Besides, back then assembler was the predominant system programming language, and language choices were limited, so it was a natural choice.
+ 
+Over time we accomplished our  goal, producing a number of versions of Decwar.  We spent many late nights in the depths of space, exploring the galaxy and battling foes with futuristic weapons.  It wasn’t much by today’s standards, but back then (more than 30 years ago now!) it was quite an accomplishment."
+
+-Harris
+
+---------- Forwarded message ---------
+From: Noah Smith <noah@statespace.dev>
+Date: Sun, Jun 29, 2025 at 3:40 AM
+Subject: Re: history question
+To: <harris.s.newman@gmail.com>
+Cc: Eric Freeman <eric.freeman@austin.utexas.edu>
+
+
+harris, this is fantastic!!!:) thank you! comments directly from bob hysick - beautiful!:)
+
+have to process this - it's a huge step forward!:) yes we definitely would like to establish contact with bob - we've been thinking that briscoe can help with that. any way we can do that will be great!
+
+and thanks for that link harris - briscoe mentioned that they have three catalog items, and we knew about two - this is the third one! - here are all three together!
+
+https://repositories.lib.utexas.edu/items/1aa48343-09ab-4b3b-a9f2-e2e525074a4d
+https://repositories.lib.utexas.edu/items/e0e0aa09-2dc3-49c5-a919-19210d7916d3
+https://repositories.lib.utexas.edu/items/7e2ccf50-e814-4bce-91d2-a7f6440eabe4
+
+more soon - have to think for a moment!:) 
+ciaociao

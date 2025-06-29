@@ -1,0 +1,159 @@
+#!/bin/python
+import time
+import pexpect
+import sys
+import cli
+from definitions import ships
+from brain import Brain
+
+class Robot:
+
+    def __init__(self, *args, **kwargs):
+        self.args, self.kwargs = args, kwargs
+        self.name = kwargs['name']
+
+    def mode1(self):
+        """try to stay connected"""
+        try: self.connect()
+        except: print('connect failed'); exit()
+        while True:
+            try:
+                self.login()
+                self.start()
+                self.brainloop(once=True)
+            except: print('mode2, exit game and job but not connection')
+            try:
+                self.stop()
+                self.logout()
+            except: print('mode2, disconnect'); break
+            time.sleep(5)
+        try: self.disconnect(); exit()
+        except: print('disconnect failed'); exit()
+
+    def mode2(self):
+        """try to stay in game between ships"""
+        try:
+            self.connect()
+            self.login()
+            self.start()
+            for _ in range(3): self.brainloop()
+        except: 
+            print('mode2 shutting down')
+            try:
+                self.stop()
+                self.logout()
+                self.disconnect()
+            except: pass
+
+    def brainloop(self, once=False):
+        try:
+            brain = Brain(self.name, self.tc)
+            while True: brain.nextstep()
+        except:
+            if once: raise
+            for _ in range(3):
+                try:
+                    time.sleep(1)
+                    self.tc.sendline('')
+                    self.tc.expect('>', timeout=10)
+                    time.sleep(1)
+                    self.tc.sendline('')
+                    self.tc.expect('>', timeout=10)
+                    time.sleep(1)
+                    self.tc.sendline('')
+                    self.tc.expect('>', timeout=10)
+                    self.brainloop()
+                except: pass
+            print('except out of brainloop')
+            raise
+
+    def connect(self):
+        self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, logfile=sys.stdout.buffer, echo=False)
+        time.sleep(1)
+        self.tc.expect('.', timeout=10)
+        self.tc.sendline('')
+        time.sleep(1)
+        self.tc.expect('.', timeout=10)
+
+    def login(self):
+        self.tc.sendline('')
+        time.sleep(1)
+        self.tc.expect('.', timeout=10)
+        self.tc.sendline(f"login {self.kwargs['ppn']}")
+        time.sleep(1)
+        self.tc.expect('.', timeout=10)
+        self.tc.sendline('')
+        time.sleep(1)
+        self.tc.expect('.', timeout=10)
+
+    def start(self):
+        """from tops10, run game and get to command prompt"""
+        self.tc.sendline('r gam:decwar')
+        self.tc.expect('Your name please: ', timeout=10)
+        self.tc.sendline(f'{self.name}')
+        self.tc.expect('line: ', timeout=10)
+        self.tc.sendline('')
+        ndx1 = self.tc.expect(['DECWAR', 'Regular or Tournament', 'Federation or Empire', 'You will join', 'choose another ship?'], timeout=10)
+        if ndx1 > 0:
+            if ndx1 == 1: self.tc.sendline(); self.tc.sendline(); self.tc.sendline()
+            if ndx1 < 3: self.tc.sendline() # join default side
+            if ndx1 == 4: self.tc.sendline('yes')
+            for ship in ships:
+                ndx2 = self.tc.expect(['DECWAR', 'Which vessel'], timeout=10)
+                if ndx2 == 0: break
+                else: self.tc.sendline(ship)
+        self.tc.expect('Commands From TTY', timeout=10)
+        self.tc.sendline('')
+        self.tc.expect('>', timeout=10)
+
+    def stop(self):
+        try:
+            self.tc.sendcontrol('c')
+            time.sleep(1)
+            self.tc.sendcontrol('c')
+            time.sleep(1)
+            ndx2 = self.tc.expect(['Do you really want', 'Use QUIT', '.'], timeout=10)
+            time.sleep(1)
+            if ndx2 == 0:
+                self.tc.sendline('yes')
+            elif ndx2 == 1:
+                self.tc.sendline('quit')
+                time.sleep(1)
+                self.tc.sendline('yes')
+            else:
+                pass
+            time.sleep(1)
+        except:
+            print('exception in stop game')
+            raise
+
+    def logout(self):
+        try:
+            self.tc.sendline('')
+            time.sleep(1)
+            self.tc.expect('.', timeout=10)
+            self.tc.sendline('kjob')
+            time.sleep(1)
+            self.tc.expect('.', timeout=10)
+        except:
+            print('exception in logout')
+            raise
+
+    def disconnect(self):
+        try:
+            self.tc.sendline('')
+            time.sleep(1)
+            self.tc.expect('.', timeout=10)
+            self.tc.sendcontrol(']')
+            time.sleep(1)
+            self.tc.sendline('close')
+            time.sleep(1)
+            self.tc.terminate(force=True)
+        except:
+            print('exception in disconnect')
+            raise
+        
+if __name__ == "__main__":
+    args, kwargs = cli.main()
+    ro = Robot(*args, **kwargs)
+    ro.mode2()
