@@ -205,7 +205,7 @@ lall
 ;;;	General constants used by DECWAR
 
 	knplay==18		;maximum number of players (can't be increased)
-	knloks==^d20		; maximum number of active locks (LOCK./UNLOk.)
+	knloks==^d40		; maximum number of active locks (LOCK./UNLOk.)
 	knstat==10		; number of statistic entries retained
 	knbase==10		;initial number of bases on each side
 	kgalv==75		;maximum Vertical coordinate in galaxy
@@ -501,7 +501,7 @@ lall
 	integer inwait			; -1 if waiting for input
 	integer	hungup			; -1 if user has hungup
 	integer addrck			; -1 if address check has occured
-	integer lkfail			; -1 if a lock request failed
+	integer lkfail			; -1 if failed. setom for -1. setzm for 0.
 	integer	terwid			; holds user's terminal width (chars)
 
 	internal inwait,hungup,addrck
@@ -599,7 +599,7 @@ lall
 
 	debug.==-1		;if nonzero, include error checking and
 				;diagnostic prints
-	dbque.==0		; -1 to check the queues
+	dbque.==-1		; -1 to check the queues
 	dbzer.==0		; -1 to check for storing zero values in setdsp
 	db777.==-1		; -1 to check for storing 7777 in setdsp
 
@@ -675,7 +675,7 @@ tobuf:	block	3		;tty output buffer header block
 
 frebie:	block	1		; -1 if free user running
 ftlerr:	block	1		; holds address of where to go on APR trap
-locked:	block	1		; holds address of most recent LOCK,,UNLOCK
+;locked:	block	1		; holds address of most recent LOCK,,UNLOCK
 svlock:	block	1		; saves lock over hiber etc.
 whohas:	block	3		; job number of user who has a queue
 loktab:	block	knloks		; table of active locks
@@ -1746,16 +1746,16 @@ gtkn:	skipe	hungup	; if job is hung up
 	jrst	gtkn.2
 
 gtkn.1:
-	move	t1,locked	; if we have database locked
-	movem	t1,svlock
-	skipe	t1
-	pushj	p,unlo.
+;	move	t1,locked	; if we have database locked
+;	movem	t1,svlock
+;	skipe	t1
+;	pushj	p,unlo.
 	pushj	p,inli.		;get input line
-	skipe	t1,svlock	; re-grab database if necessary
-	jrst	[pushj	p,lock.
-		 skipe	lkfail
-		 jrst	.-1	; we have to get the lock back
-		 jrst	.+1]
+;	skipe	t1,svlock	; re-grab database if necessary
+;	jrst	[pushj	p,lock.
+;		 skipe	lkfail
+;		 jrst	.-1	; we have to get the lock back
+;		 jrst	.+1]
 	movei	t1,linbuf
 	movem	t1,bufptr
 gtkn.2:	setz	f,
@@ -3678,9 +3678,9 @@ mmsg.2:	ildb	c,p1		;get char
 	move	p1,[point 36,linbuf]
 
 mmsg.3:	move	x1,[-knmsg,,msgql] ;message queue link list
-	pushj	p,rsrv.		;reserve a spot in the message queue
+	pushj	p,rsrv.		; reserve a spot in the message queue
 	skipe	lkfail		; if lock failed,
-	jrst	mmsg.3
+	popj	p,			; abort because rsrv aborted.
 	movei	t1,(x2)
 	imuli	t1,msglen	;get offset into message queue
 	add	t1,[point 7,msgq+1]
@@ -3751,7 +3751,7 @@ gmsg.2:	movei	x4,@1(arg)	;address of array to store message in
 	movei	x1,msgql	;address of message queue link list
 	move	x3,bits-1(t1)	;bit of player to check for
 	pushj	p,srch.		;get index into message queue
-	  jrst	gmsg.1		;no entry -- something went wrong
+	jrst	gmsg.1		;no entry -- something went wrong
 	movei	t1,(x2)
 	imuli	t1,msglen	;get relative index to message
 	addi	t1,msgq		;get absolute index to message
@@ -4005,19 +4005,20 @@ input:	skiple	bufptr		;any part of multiple command line left?
 	jrst	inpt.2		;yes, always return input ready
 	skipg	t1,@0(arg)	;get # of milliseconds to wait for input
 	jrst	inpt.1		;he doesn't want us to wait
-	move	t1,locked	; don't keep database while hibernating
-	movem	t1,svlock
-	skipe	t1
-	pushj	p,unlo.
+;	move	t1,locked	; don't keep database while hibernating
+;	movem	t1,svlock
+;	skipe	t1
+;	pushj	p,unlo.
 	move	t1,@0(arg)
 	hrli	t1,(HB.RTC)	;wake when character is ready
 	hiber	t1,		;wait for command
-	  halt
-	skipe	t1,svlock
-	jrst	[pushj	p,lock.
-		 skipe	lkfail
-		 jrst	.-1
-		 jrst	.+1]
+	jfcl	0,
+;	  halt
+;	skipe	t1,svlock
+;	jrst	[pushj	p,lock.
+;		 skipe	lkfail
+;		 jrst	.-1
+;		 jrst	.+1]
 inpt.1:	setz	0,		;assume wake because of time out
 	skipe	hungup		; if user hung up
 	jrst	inpt.2		; then we will force "input"
@@ -4151,10 +4152,10 @@ etim:	mstime	0,
 pause:
 	skipg	@0(arg)		; if hibernate time .le. 0
 	popj	p,		; then don't hibernate!
-	move	t1,locked
-	movem	t1,svlock
-	skipe	t1
-	pushj	p,unlo.
+;	move	t1,locked
+;	movem	t1,svlock
+;	skipe	t1
+;	pushj	p,unlo.
 	move	t1,@0(arg)
 	jumple	t1,paus.3
 	caile	t1,^d10000		; if > 10 seconds, make it 10 seconds
@@ -4166,20 +4167,21 @@ pause:
 	move	t1,@0(arg)		; get MS again
 	caile	t1,^d10000
 	movei	t1,^d10000
-
-paus.4:	hiber	t1,
-	  halt
-
+paus.4:	
+	hiber	t1,
+	jfcl	0,
+;	halt
 	mstime	t2,		; get current UTC
 ;	  setz	t2,
 	movei	t1,^d1000	; hibernate extra second
 	camge	t2,t3		; if not time to wake up yet
 	jrst	paus.4
-paus.3:	skipe	t1,svlock
-	jrst	[pushj	p,lock.
-		 skipe	lkfail
-		 jrst	.-1
-		 jrst	.+1]
+paus.3:	
+;	skipe	t1,svlock
+;	jrst	[pushj	p,lock.
+;		 skipe	lkfail
+;		 jrst	.-1
+;		 jrst	.+1]
 	popj	p,
 	subttl	PRGNAM/USRNAM
 
@@ -4597,119 +4599,66 @@ pdist:	move	t0,@0(arg)	;get vertical coordinate of first point
 
 
 	subttl	LOCK/LOCK./UNLOCK/UNLO.
-
-;;;	LOCK -- lock a critical data area (don't let anyone else write
-;	into it until you're done).
-;
-;		CALL LOCK (key,str)
-;
-;	where key is a high segment variable unique to the data area
-;	being protected, and str is a string to output (generally the
-;	name of the routine that called LOCK) when the lock is broken
-;	(the lock is broken if it has to try too many times to access
-;	the data -- it is assumed that somebody set the lock and didn't
-;	clear it for some reason after they were done).
-;
+;;;	LOCK -- LOCK (key,str)
+;;;	LOCK. -- input is T1: str,,key
 	entry	lock
 	sixbit	/LOCK/
 lock:
-
-	hrrzi	t1,@0(arg)	;address of key
-	movem	t1,locked
-
-
-;;;	LOCK. -- same as LOCK, but input is T1: str,,key
-;
+	movei	t1,@0(arg)
 lock.:
-	setzm	lkfail		; no failure
-	setzm	hv.lok	; set to -1 if psi gets interrupt
-	andi	t1,777777	; mask off possible trash
-	movei	t2,knloks-1	; see if this lock already active
+	hrrm	t1,queuen
+	hrrm	t1,quereq
+	movei	t2,knloks-1
+	andi	t1,777777
 	came	t1,loktab(t2)
 	sojge	t2,.-1
-	skipl	t2		; if already locked by us,
-	jrst	lock.3
-	movei	t2,knloks-1	; scan for empty slot
-	skipe	loktab(t2)
-	sojge	t2,.-1
-	skipge	t2		; if full
-	move	t0,200000	; then take a fatal error trap right now!
-	movem	t1,loktab(t2)	; remember this lock!
-	hrrm	t1,queuen	; set up enq. code
-	hrrm	t1,quereq
-	move	t2,gameno
-	caie	t1,frelok
-	cain	t1,staupd		; all universes update same files
+	skipl	t2
+	setzm	loktab(t2)
 	setz	t2,
-	dpb	t2,[point 6,queuen,17]
-lock.5:	move	t2,[2,,queue]	; get the queue or return
+	dpb		t2,[point 7,queuen,17]
+	movei	t2,queue
 	enq.	t2,
-	jrst	lock.0
-lock.3:
+	jrst	lk3
+	jrst	lk4
+lk4:setzm	lkfail
+;	setzm	locked
 	popj	p,
-lock.0:
-	caie	t2,1		; if not busy resourse
-	jrst	[caie	t2,13	; then if not out of memory
-		 jrst	[outstr	[asciz "
-Fatal ENQ. error code "]
-			 move	t1,t2		; report the error code
-			 pushj	p,debdec
-			 jrst	monit		; exit stage left!
-			]
-		 movei	t2,^d1000		; hibernate a second
-		 hiber	t2,
-		  jfcl
-		 jrst	lock.5			; and try once again
-		]
-	movei	t2,^d100	; in case input waiting has awakwned us
-	hiber	t2,
-	  jfcl
-	mstime	t1,		;added by drforbin to replace CIS call
-;	calli	t1,-210		; get uct ; drforbin comment out
-;	  setz	t1,
-	setzm	ccflg		; no ^C seen
-	setzm	ccflg.
-	addi	t1,^d4000	; about 4 seconds
-	movei	t2,^d5000	; hibernate for five seconds
-lock.1:	hiber	t2,
-	  jfcl
-	skipe	hv.lok		; if request has been granted,
-	jrst	lock.3		; then exit
-	mstime	t2,		;added by drforbin the replace CIS call
-;	calli	t2,-210		; get current UCT ;drforbin commented out
-;	  movei	t2,^d10000	; force exit if failed
-	camge	t2,t1
-	jrst	[movei	t2,^d1000	; hibernate extra second
-		 jrst	lock.1]
-	skipn	pasflg		; if debugger is running
-	jrst	lock.4
-	outstr	[asciz "
-**** Lockup on queue "]
-	hrrz	t1,queuen
-	pushj	p,fndlok
-	andi	t1,77
-	addi	t1,40
-	skipn	hungup
-	outchr	t1
-	skipn	hungup
-	outstr	[asciz " by job "]
-	movei	t1,queue	; get job number that has the lock
-	movei	t2,whohas
-	enqc.	t1,
-	  setzm	whohas
-	hrrz	t1,whohas
-	cain	t1,-1
-	setz	t1,
-	pushj	p,debdec
-	skipn	hungup
-	outstr	[asciz "
-"]
-lock.4:	skipn	ccflg		; if user got tired and hit ^C
-	jrst	lock.0		; then
-	hrrz	t1,queuen	; release our claim
-	pushj	p,unlo.
-	setom	lkfail		; tell caller we failed
-	jrst	lock.3
+lk3:
+	movei	t1,^d100
+	hiber	t1,		; slow down retries for lkfail
+	jfcl	0,  	; noop
+	setom	lkfail	; -1 for failed
+	popj	p,
+;;;	UNLOCK -- UNLOCK (key)
+;;;	UNLO. -- input is T1: key
+	entry	unlock
+	sixbit	/UNLOCK/
+unlock:
+	movei	t1,@0(arg)
+unlo.:
+	hrrm	t1,queuen
+	hrrm	t1,quereq
+	movei	t2,knloks-1
+	andi	t1,777777
+	came	t1,loktab(t2)
+	sojge	t2,.-1
+	skipl	t2
+	setzm	loktab(t2)
+	setz	t2,
+	dpb		t2,[point 7,queuen,17]
+	movei	t2,queue
+	deq.	t2,
+	jfcl	0,  	; noop
+;	setzm	locked
+	popj	p,
+
+	sixbit /zaplok/
+zaplok::				; double colon must be here!!!
+	movei	x2,knloks-1	; remove all queue entries
+	skipe	t1,loktab(x2)
+	pushj	p,unlo.		; unlock this one
+	sojge	x2,.-2
+	popj	p,
 
 deboct:	idivi	t1,8
 	hrlm	t2,0(p)
@@ -4720,77 +4669,11 @@ debcom:	hlrz	t1,0(p)
 	skipn	hungup
 	outchr	t1
 	popj	p,
-
 debdec:	idivi	t1,^d10
 	hrlm	t2,0(p)
 	skipe	t1
 	pushj	p,debdec
 	jrst	debcom
-
-;;;	UNLOCK -- make a data area available to other jobs again (after
-;	a lock to that area).
-;
-;		CALL UNLOCK (key)
-;
-	entry	unlock
-	sixbit	/UNLOCK/
-unlock:
-	movei	t1,@0(arg)
-	setzm	locked
-	pushj	p,unlo.
-	popj	p,
-
-;;;	UNLO. -- same as lock, but input is T1: key
-;
-kilall::		; kill all current locks outstanding
-	push	p,x2
-	movei	x2,knloks-1
-	skipe	t1,loktab(x2)
-	pushj	p,unlo.
-	sojge	x2,.-2
-	pop	p,x2
-	popj	p,
-
-	sixbit /zaplok/
-zaplok::
-	movei	x2,knloks-1	; remove all queue entries
-	skipe	t1,loktab(x2)
-	pushj	p,unlo.		; unlock this one
-	sojge	x2,.-2
-	popj	p,
-
-unlo.:
-	hrrm	t1,queuen
-	hrrm	t1,quereq
-	movei	t2,knloks-1
-	andi	t1,777777
-	came	t1,loktab(t2)
-	sojge	t2,.-1
-	skipl	t2
-	setzm	loktab(t2)
-	move	t2,gameno		; include game # in lock
-	caie	t1,frelok
-	cain	t1,staupd		; this one is universal
-	setz	t2,
-	dpb	t2,[point 6,queuen,17]
-	movei	t2,queue
-	deq.	t2,
-	cain	t2,24		; = "you don't have it dummy" error code
-	popj	p,
-	outstr	[asciz "
-Failure "]
-	pushj	p,deboct
-	outstr	[asciz " releasing "]
-	hrrz	t1,queuen
-	pushj	p,fndlok
-	andi	t1,77
-	addi	t1,40
-	skipn	hungup
-	outchr	t1
-	skipn	hungup
-	outstr	[asciz "
-"]
-	popj	p,
 
 	subttl	NEWS
 
@@ -4966,7 +4849,7 @@ grip.u:	move	c,linbuf(x1)
 	movei	c,")"
 	pushj	p,ochr.
 grip.b:	pushj	p,crlf
-	hlrz	x1,stabuf		; = locked resource if any
+	hlrz	x1,stabuf
 	movei	x2,6
 	skipe	x1
 	pushj	p,oct.o
@@ -6245,19 +6128,24 @@ dspst1:	addi	x4,knstat
 
 ; Get here on an APR trap (data out of bounds/pdl overflow)
 
-aprtrp:	setom	addrck		; we had a failure
-	movem	0,stabuf+2	; save regs
-	move	0,[1,,stabuf+3]
-	blt	0,stabuf+21
-	hrrz	t1,.jbtpc##	; save address
-	hrrzm	t1,stabuf
-	move	t1,0(t1)
-	movem	t1,stabuf+1
-	move	t1,locked		; preserve current locked address
-	hrlm	t1,stabuf
-	move	p,[iowd pdlsiz,stabuf+^d128]	; in case stack is messed up
-	move	s,[iowd stksiz,stk]
-	jrst	monit
+aprtrp:
+	outstr	[asciz "***** aprtrp 6242 *****"]
+	jrst	monit	
+;	setom	addrck		; we had a failure
+;	movem	0,stabuf+2	; save regs
+;	move	0,[1,,stabuf+3]
+;	blt	0,stabuf+21
+;	hrrz	t1,.jbtpc##	; save address
+;	hrrzm	t1,stabuf
+;	move	t1,0(t1)
+;	movem	t1,stabuf+1
+;	move	t1,locked
+;	hrlm	t1,stabuf
+;	move	p,[iowd pdlsiz,stabuf+^d128]	; in case stack is messed up
+;	move	s,[iowd stksiz,stk]
+;	outstr	[asciz "***** aprtrp 6242 *****"]
+;	jrst	monit
+	
 ;	pushj	p,gripe		; put data into gripe file
 ;	move	p,[iowd pdlsiz,pdl]
 ;	skipe	t1,ftlerr	; if setftl called
