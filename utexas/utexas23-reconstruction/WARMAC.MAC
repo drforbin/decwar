@@ -597,11 +597,11 @@ lall
 	.fbppn==12		;PPN
 	.fbsfd==13		;SFDs
 
-	debug.==-1		;if nonzero, include error checking and
+	debug.==0		;if nonzero, include error checking and
 				;diagnostic prints
-	dbque.==-1		; -1 to check the queues
+	dbque.==0		; -1 to check the queues
 	dbzer.==0		; -1 to check for storing zero values in setdsp
-	db777.==-1		; -1 to check for storing 7777 in setdsp
+	db777.==0		; -1 to check for storing 7777 in setdsp
 
 	subttl	low segment data
 

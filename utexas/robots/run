@@ -11,6 +11,7 @@ class Robot:
     def __init__(self, *args, **kwargs):
         self.args, self.kwargs = args, kwargs
         self.name = kwargs['name']
+        self.id1 = 0
 
     def mode1(self):
         """try to stay connected"""
@@ -46,8 +47,9 @@ class Robot:
             except: pass
 
     def brainloop(self, once=False):
+        self.id1 += 1
         try:
-            brain = Brain(self.name, self.tc)
+            brain = Brain(self.name, self.id1, self.tc)
             while True: brain.nextstep()
         except:
             if once: raise
@@ -68,7 +70,8 @@ class Robot:
             raise
 
     def connect(self):
-        self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, logfile=sys.stdout.buffer, echo=False)
+        # self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, logfile=sys.stdout.buffer, echo=False)
+        self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, echo=False)
         time.sleep(1)
         self.tc.expect('.', timeout=10)
         self.tc.sendline('')
