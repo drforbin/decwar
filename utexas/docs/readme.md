@@ -1,7 +1,8 @@
-# utexas decwar notes
+# project utexas notes
 
 ## sections
 
+- [project utexas log](project-utexas-log.md)
 - [1, boot disk](sec1-boot-disks.md)
 - [2, kermit](sec2-kermit.md)
 - [3, prep source files](sec3-prep-source-files.md)

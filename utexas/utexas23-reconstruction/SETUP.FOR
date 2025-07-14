@@ -89,7 +89,7 @@ C	if (lofchk(0)) call monit drforbin(merlyn)
 C	if (lofchk(0)) call monit drforbin(merlyn)-watch above line
 	if (ntok .eq. 0)  return
 	if (.not. equal (tknlst(1), 'HONORROLL')) goto 25
-		call shosta (.true.)
+c		call shosta (.true.)
 		goto 10
 25	if (.not. equal(tknlst(1), 'HELP'))  goto 20
 	call hlpxtr
@@ -115,8 +115,9 @@ C	305	call pdwdoc		!drforbin edit
      + Documentation!',1)
 C	305	if (chkpay(0)) call pdwdoc drforbin(merlyn)		! print DECWAR.DOC
 	goto 50				! purchase DECWAR documentation
- 310	call shosta (.true.)		! Honor Roll
-	goto 50
+ 310	goto 50
+c 	call shosta (.true.)		! Honor Roll
+c	goto 50
  400	call news			!news
 	goto 50
  500	call points (.FALSE.)		!points
@@ -362,7 +363,7 @@ C	if (lofchk(0)) call cc2 drforbin(merlyn)
 	goto 2100
 *.......Initialize player's high and low-segments
 2500	call unlock(frelok)		! release the interlock
-	call	updcap (who)		! update mission #
+c	call	updcap (who)		! update mission #
 	do 2501 i = 1, knpoin		! zap his score
 2501		score(i, who) = 0
 	alive(who) = .TRUE.	!reserve his chosen ship

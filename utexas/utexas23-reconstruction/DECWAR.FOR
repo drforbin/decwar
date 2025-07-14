@@ -302,8 +302,8 @@ d	call timout('BASBLD')
 	txtem = team - 1
 	call points (.TRUE.)		!show final point totals
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
-     +	txtem, who)
+c	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
+c     +	txtem, who)
 	call free (who)			! release the ship
 	who = 0
 	call exit
@@ -993,8 +993,8 @@ C	and the job is returned to monitor level.
 	txtem = team - 1
 	call points (.TRUE.)
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
-     +		txtem, who)
+c	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
+c     +		txtem, who)
 	call free (who)
 	who = 0
 c--	call shosta(0)			! show current standings
@@ -1185,6 +1185,7 @@ C	hit and message queues between commands.
 	common /local/ dummy(locsiz)
 	common /polocl/ total(4)
 	external monit
+	call unlock (1) ! make sure locks are released
 	call ttyon
 	if (hitflg(who) .ne. 0)  call outhit
 	call ttyon
@@ -1206,7 +1207,7 @@ C	hit and message queues between commands.
 	CCFLG = .FALSE.
 	call prompt  ;  call prgnam ('DECWTI')
 	call dmpbuf			!dump output buffer
-200	call zaplok			! remove any and all current locks
+200	call unlock (1)		!release all locks
 	if (ccflg .or. hungup) goto 210
 	if (input(KCMDTM))  goto 400	!command input?
 	if (hungup) goto 500
@@ -1260,8 +1261,8 @@ C	if (lofchk(0))	goto 500	! drforbin(merlyn) dump user whose time limit is over
 	txtem = team - 1
 	call points (.TRUE.)
 	txtot = total (1)
-	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
-     +	txtem, who)
+c	call updsta (txppn,txnm1,txnm2,txsh1,txsh2,txtot,txtim,txwhy, 
+c     +	txtem, who)
 	call free (who)			!player is dead
 c--	call	shosta(0)
 	who = 0			! return to DECWAR
@@ -2219,19 +2220,23 @@ C	searched for collisions, and the energy consumption computed.
      +	(H1 .eq. shpcon(who,KHPOS)))  goto 2000
 	indxto = (v1-1)*25 + (h1 - 1)/3 + 1
 	indxfm = (shpcon(who, kvpos) - 1)*25 + (shpcon(who, khpos) - 1)/3 + 1
-	call lock (board(indxto))
-	if (lkfail) return 1
-	if (indxto .eq. indxfm) goto 333
-	call lock (board(indxfm))
-	if (.not. lkfail) goto 333
-		call unlock (board(indxto))
-		return 1		! failed to move
-333	call setdsp (shpcon(who,KVPOS), shpcon(who,KHPOS), 0)
+c	call lock (board(indxto))
+c	if (lkfail) return 1
+c	if (indxto .eq. indxfm) goto 1999
+c	call lock (board(indxfm))
+c	if (.not. lkfail) goto 1999
+c		call unlock (board(indxto))
+c		return 1		! failed to move
+1982	call lock (123) ! lock the board
+	if (lkfail) goto 1982
+	if (indxto .eq. indxfm) goto 1999
+1999	call setdsp (shpcon(who,KVPOS), shpcon(who,KHPOS), 0)
 	call setdsp (V1, H1, (team * 100) + who)
 	shpcon(who,KVPOS) = V1
 	shpcon(who,KHPOS) = H1
-	if (indxto .ne. indxfm) call unlock (board(indxfm))
-	call unlock (board(indxto))
+c	if (indxto .ne. indxfm) call unlock (board(indxfm))
+c	call unlock (board(indxto))
+	call unlock (1)
 	if (trstat(who) .eq. 0)  goto 2000
 	tl = disp(shpcon(trstat(who),KVPOS),shpcon(trstat(who),KHPOS))
 	call setdsp (V1-int(disV), H1-int(disH), tl)
@@ -3246,7 +3251,7 @@ d	call timin ('ROMDRV')
 	call pridis (locr(KVPOS), locr(KHPOS), KRANGE, 0, 0)
 	if (PASFLG)  dbits = dbits .or. bits(who)
 	call makhit
-151	if (iran (10) .eq. 1) call tell		! let the Romulan speak!
+151	call tell ! if (iran (10) .eq. 1) call tell ! let the Romulan speak!
 *.......Romulan searches for a target in range
  100	call dist (iplace, nplc, numsec)
 	if (numsec .gt. KRANGE)  goto 9999		!in range?
@@ -3293,7 +3298,7 @@ d	call timin ('ROMDRV')
 	dbits = dbits .and. .not. nomsg
 	call makhit
 *.......Activate bases and planets, rebuild bases a little
-1000	if (iran (50) .le. 1) call tell		! let the Romulan speak!
+1000	call tell ! if (iran (50) .le. 1) call tell ! let the Romulan speak!
 d	call timout ('ROMDRV')
 d	call timin  ('BASPHA')
 	call baspha
@@ -3964,15 +3969,15 @@ C	sub-space radio.
 	include 'lowseg/nolist'
 	include 'extern/nolist'
 	dimension local (17)
-	sntrom = .false.			! .true. if "tel rom; xxx"
-	if (.not. player) goto 1150		! is the Romulan speaking?
-	rmspk = .false.				! no.
+	if (player) goto 100
+	call romspk (local)
+	goto 1190
 *.......Radio operational?
-	if (shpdam(who,KDRAD) .lt. KCRIT)  goto 200
+100	if (shpdam(who,KDRAD) .lt. KCRIT)  goto 200
 	call out (tell01,1)
 	return
 *.......Destination ship or group already specified?
- 200	nomsg = nomsg .and. (.not. bits(who))	!turn radio on
+200	nomsg = nomsg .and. (.not. bits(who))	!turn radio on
 	p = 2
 	if (ntok .gt. 1)  goto 300
 *.......Get destination ship or group name
@@ -3981,64 +3986,37 @@ C	sub-space radio.
 	p = 1
 	if (typlst(1) .eq. KEOL)  return
 *.......Analyze input string
- 300	dbits = 0
+300	dbits = 0
 	do 1100 i = p, ntok
-	  if (equal (tknlst (i), 'ROMULAN')) goto 950
+	  if (equal (tknlst (i), 'ROMULAN')) goto 1100
 *.......Trying to send junk messages using ALTMODE?
-		if (.not. RPTFLG)  goto 100
-		call out (tell09,1)
-		return
-100	  do 400 j = 1, KNPLAY			!valid ship name?
+	  if (.not. RPTFLG)  goto 350
+	  call out (tell09,1)
+	  return
+350	  do 400 j = 1, KNPLAY			!valid ship name?
 	    if (equal (tknlst(i), names(j,1)))  goto 1000
- 400	  continue
+400	  continue
 	  gm = .false.
 	  do 500 j = 1, KNGRP			!valid group name?
 	    if (group(j,1) .eq. 0)  goto 500
 	    if (.not. equal(tknlst(i), group(j,1)))  goto 500
 	    if (gm) goto 800
 	    gm = .true.  ;  gbits = group(j,2)
- 500	  continue
+500	  continue
 	  if (.not. gm)  goto 700		!unrecognized ship or group name?
 	  do 600 j = 1, KNPLAY			!player in game?
 	    if (.not. alive(j))  gbits = gbits .and. -(bits(j) + 1)
- 600	  continue
+600	  continue
 	  dbits = dbits .or. gbits		!save valid ships
 	  goto 1100
- 700	  call out (tell03,0)			!unrecognized player or name
+700	  call out (tell03,0)			!unrecognized player or name
 	  goto 900
- 800	  call out (tell04,0)			!ambiguous group name
- 900	  call outw (tknlst(i))  ;  call crlf
+800	  call out (tell04,0)			!ambiguous group name
+900	  call outw (tknlst(i))  ;  call crlf
 	  goto 1100
-950	  if (.not. rom) goto 955		! is the Romulan dead?
-	  svdb = dbits				! preserve destination bits
-	  call romspk (local)			! speak to the player
-	  call makmsg (local)
-	  sntrom = .true.
-	  dbits = svdb
-	  if (iran (4) .gt. 1) goto 1100	! 25% chance Romulan comes to him
-		ph = shpcon (who, khpos)	! find vacant spot neareby
-		pv = shpcon (who, kvpos)
-		ix = iran(10) - 5
-		do 951 ir = ix, 10
-		  do 951 jr = ix, 10
-			if (.not. ingal (pv+jr, ph+ir)) goto 951
-			if (disp (pv+jr, ph+ir) .ne. 0) goto 951
-			call setdsp (locr(kvpos), locr(khpos), 0)
-			locr(khpos) = ph+ir
-			locr(kvpos) = pv+jr
-			call setdsp (locr(kvpos), locr(khpos), dxrom*100)
-			goto 1100
-951		continue
-		goto 1100			! no empty space????
-955		call out (tell07, 0)		! "can't raise the "
-		call out ('Romulan', 1)
-		goto 1100
 1000	  dbits = dbits .or. bits(j)		!add player to message list
 	  if (j .eq. who)  call out (tell05,1)	!self excluded!!
 1100	continue
-	goto 1190
-1150	rmspk = .true.			! the Romulan speaks!
-	call romspk(local)		! set up target population & msg
 *.......Search message list for problems ....
 1190	mask = 1
 	do 1500 i = 1, KNPLAY
@@ -4046,32 +4024,30 @@ C	sub-space radio.
 	  if ((dbits .and. mask) .eq. 0)  goto 1400	!player on message list?
 	  if (shpdam(i,KDRAD) .ge. KCRIT)  goto 1300	!player's radio broken?
 	  if (alive(i))  goto 1200
-	  if (rmspk) goto 1191
-		call out (tell06, 0)
-		call odisp (iship, 0)
-		call crlf
-1191	  dbits = dbits .and. (.not. mask)
+	  call out (tell06, 0)
+	  call odisp (iship, 0)
+	  call crlf
+	  dbits = dbits .and. (.not. mask)
 	  goto 1400
 1200	  if ((nomsg .and. mask) .eq. 0)  goto 1400	!radio off?
-1300	  if (rmspk) goto 1301
-		call out (tell07, 0)
-		call odisp (iship,0)  ;  call crlf
-1301	  dbits = dbits .and. (.not. mask)
+1300	  call out (tell07, 0)
+	  call odisp (iship,0)  ;  call crlf
+	  dbits = dbits .and. (.not. mask)
 1400	  mask = mask * 2				!update mask
 1500	continue
 	if (player) 
      +	dbits = dbits .and. (.not. bits(who))		!remove self
 	gagmsg = gagmsg .and. (.not. dbits)		!update individual gag
 	if (dbits .ne. 0)  goto 1600			!anyone to send to?
-	if (.not. rmspk .and. .not. sntrom) call out (tell08, 1)
+	call out (tell08, 1)
 	return
 *.......Send message to designated players
-1600	if (rmspk) goto 1650
-	dispfr = who + (team * 100)
+1600	if (player) goto 1650
+ 	call makmsg (local)
+	return
+1650	dispfr = who + (team * 100)
 	call makmsg
 	call crlf
-	return
-1650	call makmsg (local)		! store the Romulan's message
 	return
 	end
 C	This routine prints out useful information concerning the

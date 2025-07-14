@@ -13,47 +13,35 @@ class Robot:
         self.name = kwargs['name']
         self.id1 = 0
 
-    def mode1(self):
-        """try to stay connected"""
-        try: self.connect()
-        except: print('connect failed'); exit()
-        while True:
-            try:
-                self.login()
-                self.start()
-                self.brainloop(once=True)
-            except: print('mode2, exit game and job but not connection')
-            try:
-                self.stop()
-                self.logout()
-            except: print('mode2, disconnect'); break
-            time.sleep(5)
-        try: self.disconnect(); exit()
-        except: print('disconnect failed'); exit()
-
-    def mode2(self):
+    def run(self):
         """try to stay in game between ships"""
         try:
             self.connect()
             self.login()
-            self.start()
-            for _ in range(3): self.brainloop()
+            if 'tmp' in self.name:  # 'tmp' runs are for placeholder telnet connections
+                while True:
+                    self.tc.sendline('dir')
+                    self.tc.expect('>', timeout=10)
+                    time.sleep(5)
+            else:
+                self.rgam()
+                for _ in range(3): self.brainloop()
         except: 
-            print('mode2 shutting down')
+            print(f'robot {self.name} shutdown')
             try:
-                self.stop()
-                self.logout()
+                if not 'tmp' in self.name: self.quit()
+                self.kjob()
                 self.disconnect()
             except: pass
 
-    def brainloop(self, once=False):
+    def brainloop(self):
         self.id1 += 1
         try:
             brain = Brain(self.name, self.id1, self.tc)
             while True: brain.nextstep()
         except:
-            if once: raise
-            for _ in range(3):
+            for _ in range(6):
+                time.sleep(5)
                 try:
                     time.sleep(1)
                     self.tc.sendline('')
@@ -89,7 +77,7 @@ class Robot:
         time.sleep(1)
         self.tc.expect('.', timeout=10)
 
-    def start(self):
+    def rgam(self):
         """from tops10, run game and get to command prompt"""
         self.tc.sendline('r gam:decwar')
         self.tc.expect('Your name please: ', timeout=10)
@@ -109,7 +97,7 @@ class Robot:
         self.tc.sendline('')
         self.tc.expect('>', timeout=10)
 
-    def stop(self):
+    def quit(self):
         try:
             self.tc.sendcontrol('c')
             time.sleep(1)
@@ -130,7 +118,7 @@ class Robot:
             print('exception in stop game')
             raise
 
-    def logout(self):
+    def kjob(self):
         try:
             self.tc.sendline('')
             time.sleep(1)
@@ -159,4 +147,4 @@ class Robot:
 if __name__ == "__main__":
     args, kwargs = cli.main()
     ro = Robot(*args, **kwargs)
-    ro.mode2()
+    ro.run()

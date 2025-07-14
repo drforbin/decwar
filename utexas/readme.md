@@ -119,7 +119,8 @@ what we'd like to see is eighteen robots playing indefinitely. first step on tha
 # folder structure
 
 - docs, various howto and note related docs accumulating around the project
-  - [utexas decwar notes collection](docs/readme.md/#utexas-decwar-notes)
+  - [utexas notes](docs/readme.md/#project-utexas-notes)
+  - [utexas log](docs/project-utexas-log.md/#project-utexas-log)
   - [utexas tops10 users guide](docs/readme.md/#utexas-tops10-users-guide)
   - [utexas v2.2 player guide](docs/DECWAR22.HLP)
   - [compuserve v2.3 player guide](docs/DECWAR23CIS.HLP)

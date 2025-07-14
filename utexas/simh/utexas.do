@@ -7,6 +7,7 @@ expect "%TTY STOMPER - Starting" send "\3"; continue
 expect "\r\n*" continue
 expect "\r\n." continue
 expect "\r\n." continue
+
 expect "\r\n." send "r opr\r"; continue
 expect "OPR>" send "\r"; continue
 expect "OPR>" send "\r"; continue
@@ -15,6 +16,7 @@ expect "Enter text and terminate with ^Z" send "installing software\r\32"; conti
 expect "OPR>" send "\r"; continue
 expect "OPR>" send "exit\r"; continue
 expect "\r\n." send "k/f\r"; continue
+
 expect "\r\n." send -t after=1000k "login 5,30\r"; continue
 expect "\r\n." send "r backup\r"; at %TAP%0 -r tapes/utexas23-reconstruction.tap;  continue
 expect "\r\n/" send "tape mta0:\r"; continue
@@ -47,9 +49,11 @@ expect "\r\n." send "protect decwar.grp <000>\r"; continue
 expect "\r\n." send "protect decwar.ini <000>\r"; continue
 expect "\r\n." send "del *.sta\r"; continue
 expect "\r\n." send "k/f\r"; continue
+
 expect "\r\n." send -t after=1000k "login 1,2\r"; continue
 expect "\r\n." send "assign gam: dskb:[5,30]\r"; continue
 ;expect "\r\n." send "copy [100,100]decwar.ini=[5,30]decwar.ini\r"; continue
 ;expect "\r\n." send "protect [100,100]decwar.ini <000>\r"; continue
-expect "\r\n." send "k/f\r"; continue
-show expect
+;expect "\r\n." send "k/f\r"; continue
+
+;show expect

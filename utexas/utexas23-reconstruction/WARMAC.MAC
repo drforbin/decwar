@@ -219,7 +219,7 @@ lall
 ;---
 	kndev==9		;number of devices
 	kpass=="*mink"		;password for system (*) commands
-	knmsg==64		;maximum number of messages in queue
+	knmsg==32		;maximum number of messages in queue
 	msglen==17		;max # of words per msg (header + 80 chars)
 	kngrp==7		;number of defined message groups
 	knhshp==^d40		; number of hit queue entries per ship
@@ -1200,8 +1200,8 @@ iswiz:
 	movei	t1,intblk	;enable interception of ^C and fatal errors
 	setzm	intblk+2
 	movem	t1,.jbint##
-	movei	t1,aprtrp	; set up to capture APR failures
-	hrrm	t1,.jbapr##
+;	movei	t1,aprtrp	; set up to capture APR failures
+;	hrrm	t1,.jbapr##
 	movei	t1,1b19+1b22
 	aprenb	t1,
 	setom	bufptr		;time to read another line of input
@@ -1236,20 +1236,7 @@ iswiz:
 	sixbit	/MONIT/
 monit:	skipn	hungup
 	output	tty,
-;	hllzs	.jbsa##		; no restarts allowed
-	pushj	p,zaplok	; zap all pending locks
-;	reset			; kill any pending locks
-;	skipe	t1,who		; if ship apparently active
-;this is not needed
-;	jrst	[movei	arg,[who]
-;		 pushj	p,free##	; then free it
-;		 jrst	.+1
-;		]
-;
-;	skipe	t1,jsqwho		; if job has entry in jsqtab
-;	setzm	jsqtab-1(t1)		; then clear it
-;end
-
+	pushj	p,unlo.	; release locks
 	monrt.	;drforbin (add)
 	popj	p,			;Used for TRAP return return
 
@@ -1263,7 +1250,7 @@ exit:
 	hllzs	.JBSA
 	skipn	hungup
 	output	tty,
-	pushj	p,zaplok	; zap all pending locks
+	pushj	p,unlo. ;release all locks
 	exit	0,
 	popj	p,		;WILL NEVER GET HERE		
 
@@ -3233,34 +3220,27 @@ shq.2:	movei	p1,[byte (7) "]",cr,lf,0]
 ;	him.  So, in this case, take the player found in the destination
 ;	of the first (oldest) queue entry, and remove that player from
 ;	all queue entries.
-;
 ;	Input
 ;	  X1[L]	Negative length of queue link list
 ;	  X1[R]	Address of queue link list
 ;	Output
 ;	  X2	Index of reserved entry
-;
 ;	MOVE X1,[-QLEN,,QLNK]
 ;	PUSHJ P,RSRV.
 ;	X2 has index
-;
 rsrv.:	move	t1,[[asciz /RSRV./],,quelok]
 	pushj	p,lock.		;single job access only
 	skipe	lkfail		; if lock request failed,
 	popj	p,		; then don't mess around
 	pushj	p,qrsrv.	; do the reserve
 	popj	p,
-
-
 qrsrv.:
 rsrv.1:	move	t1,x1		;get pointer to queue link list
 	skipn	(t1)		;spot available?
 	jrst	rsrv.4		;yes, go flag it
 	aobjn	t1,.-2
-
 	;Queue is full, so remove the player probably responsible
 	;for it from all queue entries.
-
 	save	<x3>
 	hlrz	t1,-1(x1)	;get index to first (oldest) entry
 	addi	t1,(x1)		;get addr of entry
@@ -3273,23 +3253,20 @@ rsrv.2:	pushj	p,srch.x	;find entry destined for player
 	jrst	rsrv.2		;and all remaining entries
 rsrv.3:	restor	<x3>
 	jrst	rsrv.1		;and start over
-
 	;Found an empty spot in queue.
-
 rsrv.4:	setom	(t1)		;reserve spot in queue
 	subi	t1,(x1)		;get it's index
 	hrrzi	x2,(t1)
-
 	movei	t1,quelok
 	pushj	p,unlo.
 	popj	p,
+	
 	page
 	subttl	Qmanager -- RSRVHQ
 ;	CALL RSRVHQ (q)
 ; Called from FORTRAN level to reserve a spot in the hit queue.
 ; The que spot is returned in q
 ; If unable to reserve a spot, lkfail is set
-
 rsrvhq::
 	setzm	lkfail		; new MAKHIT does not need this routine
 	popj	p,
@@ -4393,19 +4370,19 @@ kilh.2:	popj	p,
 ;;;	KILLOW -- Get rid of once only low segment code (SETUP, etc.)
 ;	and fix up the start address to do a RUN on DECWAR.
 ;
-	extern	a		;kill everything after this dummy subroutine
-	entry	killow
-	sixbit	/KILLOW/
-killow:	skipe	.JBDDT		;DDT loaded?
-	popj	p,		;yes, don't wipe out DDT
-
-	movei	t1,start
-	hrrm	t1,.JBSA	;on a START do a RUN instead
-	movei	t1,a
-	movem	t1,.JBFF
-	core	t1,		;get rid of once only code
-	  warn	<Can't remove once only code>
-	popj	p,
+;	extern	a		;kill everything after this dummy subroutine
+;	entry	killow
+;	sixbit	/KILLOW/
+;killow:	skipe	.JBDDT		;DDT loaded?
+;	popj	p,		;yes, don't wipe out DDT
+;
+;	movei	t1,start
+;	hrrm	t1,.JBSA	;on a START do a RUN instead
+;	movei	t1,a
+;	movem	t1,.JBFF
+;	core	t1,		;get rid of once only code
+;	  warn	<Can't remove once only code>
+;	popj	p,
 
 start::	move	t1,p.dev
 	movem	t1,tmp+0	;device
@@ -4418,6 +4395,7 @@ start::	move	t1,p.dev
 	setzm	tmp+5		;core
 	movei	t1,tmp
 	jrst	rundec		;go run the game (from the low segment)
+
 	subttl	DEBUG
 
 	extern	unkcom,forhlp
@@ -4597,67 +4575,36 @@ pdist:	move	t0,@0(arg)	;get vertical coordinate of first point
 	movei	t0,(t1)		;yes, use horizontal distance instead
 	popj	p,
 
-
 	subttl	LOCK/LOCK./UNLOCK/UNLO.
-;;;	LOCK -- LOCK (key,str)
-;;;	LOCK. -- input is T1: str,,key
+;;;	LOCK / UNLOCK
 	entry	lock
 	sixbit	/LOCK/
 lock:
 	movei	t1,@0(arg)
+	movei	t1,^d1					; user code for enq
+	jrst	lk1
 lock.:
-	hrrm	t1,queuen
-	hrrm	t1,quereq
-	movei	t2,knloks-1
-	andi	t1,777777
-	came	t1,loktab(t2)
-	sojge	t2,.-1
-	skipl	t2
-	setzm	loktab(t2)
-	setz	t2,
-	dpb		t2,[point 7,queuen,17]
-	movei	t2,queue
+	movei	t1,^d2					; user code for enq
+lk1:move	t2,[.ENQAA,,[1B5+1B17+3	; header=1, locks=1, length=3
+			EQ.FCW+.EQFGL			; enqbp is user code, eq.fcc is global lock
+			(t1)]]					; user code	
 	enq.	t2,
-	jrst	lk3
-	jrst	lk4
-lk4:setzm	lkfail
-;	setzm	locked
+	jrst	lk2
+	setzm	lkfail
 	popj	p,
-lk3:
-	movei	t1,^d100
-	hiber	t1,		; slow down retries for lkfail
-	jfcl	0,  	; noop
-	setom	lkfail	; -1 for failed
+lk2:setom	lkfail					; -1 for failed
+	movei	t1,^d25
+	hiber	t1,						; slow down retries for lkfail
+	jfcl	0,  					; noop
 	popj	p,
-;;;	UNLOCK -- UNLOCK (key)
-;;;	UNLO. -- input is T1: key
 	entry	unlock
 	sixbit	/UNLOCK/
 unlock:
 	movei	t1,@0(arg)
 unlo.:
-	hrrm	t1,queuen
-	hrrm	t1,quereq
-	movei	t2,knloks-1
-	andi	t1,777777
-	came	t1,loktab(t2)
-	sojge	t2,.-1
-	skipl	t2
-	setzm	loktab(t2)
-	setz	t2,
-	dpb		t2,[point 7,queuen,17]
-	movei	t2,queue
+	move	t2,[.DEQDA,,0]			; remove all locks held by this job
 	deq.	t2,
-	jfcl	0,  	; noop
-;	setzm	locked
-	popj	p,
-
-	sixbit /zaplok/
-zaplok::				; double colon must be here!!!
-	movei	x2,knloks-1	; remove all queue entries
-	skipe	t1,loktab(x2)
-	pushj	p,unlo.		; unlock this one
-	sojge	x2,.-2
+	jfcl	0,  					; noop
 	popj	p,
 
 deboct:	idivi	t1,8
@@ -4931,7 +4878,7 @@ oct.02:	restore <c>
 	jrst	oct.02
 
 grip.z:	movei	arg,[[1]]
-	pushj	p,shosta		; display to gripe buffer
+;	pushj	p,shosta		; display to gripe buffer
 	jrst	grip.3
 
 grip.2:	cain	x2,grpsiz-1	;any full lines entered?
@@ -5607,610 +5554,19 @@ trac.2:	pushj	p,ocrl.
 	popj	p,
 
 > ;end ifn debug.
-	subttl	updsta/shosta - Player Status register
-
-
-	entry	updcap		; update the "Captain" count for given ship
-updcap:	movei	t1,staupd	; lock the file
-	pushj	p,lock.
-	skipe	lkfail
-	jrst	updcap		; we have to have it!
-	setzm	stabuf
-	move	t1,[stabuf,,stabuf+1]
-	blt	t1,staend	; clear status buffer
-	move	x1,[xwd stared,stared]
-	pushj	p,open.
-	jrst	updcax
-	skipge	le.ppn
-	input	sta,staiow
-	close	sta,
-updcax:
-	skipn	gameno		; if this is a new game
-	aos	stabuf		;	bump the game number
-	move	t1,stabuf	; save game number
-	movem	t1,gameno
-	skipe	frebie		; if free player running
-	jrst	[
-			move	x1,[xwd staupd,staupd]
-			pushj	p,open.
-			jrst	.+1
-			output	sta,staiow
-			close	sta,
-			setzm	stabuf
-			setzm	stabuf
-			move	t1,[stabuf,,stabuf+1]
-			blt	t1,staend
-			move	x1,[xwd stfred,stfred]
-			pushj	p,open.
-			jrst	.+1
-			skipge	le.ppn
-			input	sta,staiow
-			close	sta,
-			move	t1,gameno
-			movem	t1,stabuf
-			jrst	.+1]
-	move	t1,@0(arg)	; get ship number
-	aos	stacap(t1)	; bump the counter
-	move	x1,[xwd staupd,staupd]	; rewrite the file
-	skipe	frebie
-	move	x1,[xwd stfupd,stfupd]
-	pushj	p,open.
-	jrst	updcay
-	output	sta,staiow
-	close	sta,
-updcay:	movei	t1,staupd	; release the file
-	pushj	p,unlo.
-	skipn	hungup
-	output	tty,
-	outstr	[asciz "
-DECWAR game #"]
-	move	x1,gameno
-	movei	x2,0
-	pushj	p,odec.
-	skipn	hungup
-	output	tty,
-	skipn	hungup
-	outstr	[asciz "
-
-This is mission #"]
-	move	t1,@0(arg)
-	move	x1,stacap(t1)
-	movei	x2,0
-	pushj	p,odec.
-	skipn	hungup
-	output	tty,
-	skipn	hungup
-	outstr	[asciz " for the
-"]
-	move	t1,@0(arg)
-	skipn	hungup
-	outstr	@lngshp-1(t1)
-	skipn	hungup
-;	outstr	[asciz "
-;"]
-	skipn	hungup
-	popj	p,
-
-;ALL commented out by drforbin(merlyn). not needed used by CIS for user pay/nopay status
-;	entry	chkpay		; return .true. if user is paying customer
-;chkpay:	seto	0,
-;	hlrz	t1,usppn.
-;	caige	t1,70010
-;	setz	0,
-;	andi	t1,7
-;	cain	t1,3
-;	setz	0,
-;	move	t1,ustat.##
-;	tlne	t1,(1b2)
-;	setz	0,
-;	popj	p,
-
-	entry	pdwdoc
-pdwdoc:	output	tty,
-	movei	t1,[	sixbit 'DSK'
-			sixbit 'PDWDOC'
-			exp 0,0,0,0
-		]
-	run	t1,
-	  jfcl
-	popj	p,	; Well, it should NEVER get here!!!!
-
-	entry	updsta		; update the status file
-updsta:	
-	move	t1,@6(arg)	; if score is too small
-	caige	t1,^d1000
-	popj	p,		; then don't record it!
-	skipn	hungup
-	output	tty,
-	movei	t1,staupd	; lock up the stat file
-	pushj	p,lock.
-	skipe	lkfail
-	jrst	.-3
-	setzm	stabuf
-	move	t1,[stabuf,,stabuf+1]
-	blt	t1,staend
-	move	x1,[xwd stared,stared]	; open the file in input mode
-	pushj	p,open.
-	jrst	updstx
-	skipge	le.ppn			; if no file yet, don't read!
-	input	sta,staiow
-	close	sta,
-	skipn	frebie		; if "free" user
-	jrst	updstx		; then
-	setzm	stabuf
-	move	t1,[stabuf,,stabuf+1]
-	blt	t1,staend
-	move	x1,[xwd stfred,stfred]	; get free stats
-	pushj	p,open.
-	jrst	updstx
-	skipge	le.ppn
-	input	sta,stfiow
-	close	sta,
-updstx:	move	t2,@9(arg)	; = ship #
-	skipn	@7(arg)		; if ship was destroyed
-	jrst	[aos	t1,stakil(t2)	; bump killed count
-		 cain	t1,1		; if this is not first time
-		 jrst	.+1		; then
-	 	 skipn	hungup
-		 output	tty,
-	skipn	hungup
-		 outstr	[asciz "
-
-Don't feel bad; the "]
-	skipn	hungup
-		 outstr	@lngshp-1(t2)
-	skipn	hungup
-		 outstr [asciz "
-has been destroyed "]
-		 move	x1,stakil(t2)
-		 sos	x1		; give count BEFORE this time!
-		 setz	x2,
-		 pushj	p,odec.
-		 skipn	hungup
-		 output	tty,
-	skipn	hungup
-		 outstr	[asciz " times
-out of "]
-		 move	t2,@9(arg)
-		 move	x1,stacap(t2)
-		 setz	x2,
-		 pushj	p,odec.
-		 skipn	hungup
-		 output	tty,
-	skipn	hungup
-		 outstr	[asciz " missions!
-"]
-		 jrst	.+1
-		]
-	movei	x1,stabuf+3	; t2 is pointer into the buffer
-	skipe	@8(arg)		; if Empire team
-	addi	x1,^d256	; then move on to the Empire's database
-;--	skipn	@7(arg)		; if killed in action
-;--	addi	x1,knstat*^d10	; then move up to the Memorial list
-	movei	t2,0(x1)
-	move	t3,@5(arg)	; t3 holds current player's score
-	movei	t1,knstat
-
-updst0:	skipn	0(t2)		; if file entry is null
-	jrst	updst2		; then insert new data
-	camge	t3,6(t2)	; if new lss old
-	jrst	updst1		; then go to next entry
-	came	t3,6(t2)	; if new eql old
-	jrst	updst2		; then
-	move	t4,7(t2)	; if new turns < old turns
-	caml	t4,@6(arg)
-	jrst	updst1		; then
-updst2:	subi	t1,knstat+1
-	save	<t2,x1,x2>
-	movei	x2,0(x1)	; scan for higher score for same PPN
-	move	t3,@0(arg)	; = PPN
-upst2a:	caig	t2,0(x2)	; if at or beyond place of insertion
-	jrst	upst2b		; then do the insertion
-	camn	t3,0(x2)	; if same PPN
-	jrst	[		; then ignore the lower placement
-		 restore <x2,x1,t2>
-		 skipn	@7(arg)		; if killed in action
-		 jrst	updstf		; then update the file
-		 jrst	updst9		; else just exit
-		]
-	addi	x2,^d10		; try next one
-	jrst	upst2a
-
-upst2b:
-	movm	x1,t1
-	skipe	hungup
-	jrst	updst5
-	cain	x1,1		; if #1
-	jrst	[outstr	[asciz "
-Congratulations, Captain! You
-are now in first place!
-"]
-		 jrst	updst5
-		]
-	cain	x1,knstat		; if last place
-	jrst	[skipn	hungup
-		 outstr	[asciz "
-Well, Captain, you at least
-made tenth place!  Try harder
-next time! 
-"]
-		 jrst	updst5
-		]
-	outstr	[asciz "
-You have placed as number "]
-	setz	x2,
-	pushj	p,odec.
-	output	tty,
-	outstr	[asciz "!
-"]
-updst5:	restor <x2,x1,t2>
-	skipe	hungup
-	jrst	upst5a
-	skipn	@7(arg)		; if he got killed
-	outstr	[asciz "...at least the history books
-will remember you....
-for a while!
-"]
-upst5a:	movei	t4,knstat*^d10-1(x1)	; move old entries down one
-updst3:
-	caile	t2,-^d10(t4)		; if moved all entries
-	jrst	updst8			; then go insert new data
-	move	t3,-^d10(t4)
-	movem	t3,0(t4)
-	soja	t4,updst3	; then do next one
-updst8:	move	t3,@0(arg)	; else move new data
-	movem	t3,0(t2)	; PPN
-	move	t3,@1(arg)
-	movem	t3,1(t2)	; Captain's name-1
-	move	t3,@2(arg)
-	movem	t3,2(t2)	;    "      name-2
-	move	t3,@3(arg)
-	movem	t3,3(t2)	; Ship's name-1
-	move	t3,@4(arg)
-	movem	t3,4(t2)	;   "    name-2
-;	movei	t3,400000	;drforbin(CIS remove); get player's time & zone
-;	calli	t3,-211		;drforbin(CIS remove); GTADN. uuo (CIS)
-	date	t3,		;added drforbin
-;	  setzb	t3,t4		;comment drforbin
-	movem	t3,5(t2)	; save time
-	move	t4,@9(arg)
-	move	t3,stacap(t4)	; preserve mission #
-	movem	t3,9(t2)
-	move	t3,@7(arg)	; and killed flag
-	hrlm	t3,9(t2)
-	move	t3,@5(arg)
-	movem	t3,6(t2)	; player's score
-	move	t3,@6(arg)
-	movem	t3,7(t2)	; number of turns
-updstf:	move	x1,[staupd,,staupd]
-	skipe	frebie		; if free user
-	move	x1,[stfupd,,stfupd]	; then update proper file
-	pushj	p,open.
-	  jrst	updst9
-	output	sta,staiow
-	close	sta,
-	jrst	updst9		; go close the file and exit
-
-updst1:	addi	t2,^d10		; point to next entry
-	sojg	t1,updst0
-	skipn	hungup
-	outstr	[asciz "
-Sorry, but you didn't make the
-cut!  Better luck next time!
-"]
-	skipn	@7(arg)		; if killed in action
-	jrst	updstf		; then make sure file is updated
-
-updst9:	movei	t1,staupd	; release the interlock
-	pushj	p,unlo.
-	popj	p,		; return to caller
-
-
-	entry	shosta		; display the status file
-shosta:
-	skipe	frebie
-	skipa	x1,[xwd stfred,stfred]	; read DECWAF.STA
-shopay:	move	x1,[xwd	stared,stared]	; open in read mode
-	pushj	p,open.
-	  popj	p,			; DECWAR.STA not found
-	input	sta,staiow		; read the data
-	close	sta,
-	move	t1,stabuf+3
-	ior	t1,stabuf+3+knstat*^d10	; check for any high rollers
-	ior	t1,stabuf+3+^d256
-	ior	t1,stabuf+3+^d256+knstat*^d10
-	skipn	t1
-	jrst	shockp
-	skipn	hungup
-	output	tty,			; flush TTY: buffer
-	movei	p1,[asciz "
-
-
---------------
-
-The DECWAR Honor Roll
-
-(* indicates Missing in Action)
-
-"]
-	pushj	p,ostr.
-	move	t1,le.nam
-	camn	t1,[sixbit 'DECWAF']
-	jrst	[
-		 movei	p1,[asciz "(**** non-paying users ****)
-
-"]
-		 pushj	p,ostr.
-		 jrst	.+1]
-
-	move	t1,stabuf+9		; if hi Fed >= hi Emp
-	camge	t1,stabuf+9+^d256
-	jrst	shost1			; then
-	pushj	p,dofed			; 	display Fed first
-	pushj	p,doemp
-	jrst	shockp
-
-shost1:	pushj	p,doemp			; else	display Emp first
-	pushj	p,dofed
-
-shockp:
-	skipe	ccflg			; if ^C entered
-	  jrst	[setzm	ccflg		; then exit
-		 popj	p,]
-	skipn	frebie			; if freebie running
-	popj	p,
-	skipn	@0(arg)			; if freebie issued PREgame ST command
-	popj	p,
-	move	t1,le.nam		; if we just did the freebies
-	came	t1,[sixbit "DECWAF"]
-	popj	p,			; then do the income-producers!
-	jrst	shopay
-
-dofed:	skipn	stabuf+3		; if living Federation Captains
-	jrst	dofed0			; then
-	movei	p1,[asciz "
-The Federation has awarded the
-following Captains the Emerald
-Star Cluster for outstanding
-service:
-
-"]
-	pushj	p,ostr.
-	movei	x1,stabuf+3
-	pushj	p,dspsta		; display them
-	skipe	ccflg			; if ^C typed
-	  popj	p,
-dofed0:	skipn	stabuf+3+knstat*^d10	; if any that have expired
-	  popj	p,
-	movei	p1,[asciz "
-
-The Golden Galaxy Medal has been
-awarded in memory of these brave
-Captains:
-
-"]
-	pushj	p,ostr.
-	movei	x1,stabuf+3+knstat*^d10
-	pushj	p,dspsta
-	popj	p,
-
-doemp:	skipn	stabuf+3+^d256		; if any meritorous Empire Captains
-	jrst	doemp0			; then display them
-	movei	p1,[asciz "
-
-The following Captains have served
-their Empire well:
-
-"]
-	pushj	p,ostr.
-	movei	x1,stabuf+3+^d256
-	pushj	p,dspsta
-	skipe	ccflg
-	  popj	p,
-doemp0:	skipn	stabuf+3+^d256+knstat*^d10
-	  popj	p,
-	movei	p1,[asciz "
-
-The Distinguished Service Cross
-has been posthumously awarded
-to the following Captains for
-their outstanding service:
-
-"]
-	pushj	p,ostr.
-	movei	x1,stabuf+3+^d256+knstat*^d10
-	pushj	p,dspsta
-	popj	p,
-
-dspsta:
-	skipe	ccflg			; if ^C typed
-	popj	p,			; then quit
-	save	<x1,x2,x3,x4>
-	movei	x3,1			; begin with #1
-	move	x4,x1			; save pointer
-	movei	p1,[asciz "
-Captain        Service # Credits"];pretty changes drforbin(merlyn)
-	pushj	p,ostr.
-;	ldb	t1,[point 9,1+uster.##,8];edit here drforbin(merlyn)
-;	skipg	@0(arg)			; if doing *Zap then use long form ;drforbin
-;	cail	t1,^d64 ;drforbin
-	jrst	[
-		movei	p1,[asciz " Ship        Runtm Date"]
-		pushj	p,ostr.
-		jrst	.+1
-		]
-	pushj	p,crlf
-dspst0:	skipn	0(x4)			; if no more to do
-	jrst	dspst1			; then exit
-;++
-	movei	c," "
-	hlrz	t1,9(x4)		; if killed in action
-	skipn	t1
-	movei	c,"*"			; then flag it
-	pushj	p,ochr.
-	move	x1,1(x4)		; output Captain's name
-	pushj	p,osix.
-	move	x1,2(x4)
-	pushj	p,osix.
-	pushj	p,ospc.
-	hlrz	x1,0(x4)		; output PPN
-	movei	x2,6
-	pushj	p,ooct.
-	movei	c,"-"
-	pushj	p,ochr.
-	hrrz	x1,0(x4)
-	setz	x2,
-	pushj	p,ooct.
-	subi	x2,5
-	pushj	p,ospc.
-	aojl	x2,.-1
-	move	x1,6(x4)		; points
-	addi	x1,500			; round
-	idivi	x1,^d1000
-	movei	x2,^d6
-	pushj	p,odec.
-;	ldb	t1,[point 9,1+uster.##,8]	; if wide terminal;edit drforbin(merlyn)
-	move	t1,terwid
-	skiple	@0(arg)				; or doing *Zap
-	jrst	.+3
-	caige	t1,^d80		;test;drforbin
-	jrst	dspst2		; then
-	pushj	p,ospc.
-	movei	p1,3(x4)		; output ship's name
-	pushj	p,ostbx.	; output to 10 spaces
-	move	x1,7(x4)		; runtime
-	addi	x1,^d30000		; round to nearest minute
-	idivi	x1,^d60*^d1000	; convert to minutes
-	movei	x2,^d5
-	pushj	p,odec.
-	pushj	p,ospc.
-
-
-;	movei	t1,400000		; get user's time zone
-;	calli	t1,-211-200000
-;	  setz	t1,
-;	movns	t1
-;	add	t1,5(x4)		; date/time
-;	move	t2,[exp 1b10+1b11+1b17]	;convert to string
-;	movei	t3,tmp
-;	calli	t1,-213
-;	jrst	dspst2
-;	movei	p1,tmp
-;	pushj	p,ostr.
-
-	movei	p1,[asciz "   "];drforbin code
-	pushj	p,ostr.
-	move	t1,5(x4)
-	dacon	t1,day#,month#,year#
-	move	x1,day
-	pushj	p,o2dg.
-	movei	p1,[asciz "/"]
-	pushj	p,ostr.
-	move	x1,month
-	pushj	p,o2dg.
-	movei	p1,[asciz "/"]
-	pushj	p,ostr.
-	move	x1,year
-	pushj	p,o2dg.;drforbin end code
-
 	
-dspst2:	pushj	p,crlf
-dspst1:	addi	x4,knstat
-	aos	x3
-	caig	x3,knstat
-	jrst	dspst0
-	restor <x4,x3,x2,x1>
-	skipn	hungup
-	output	tty,
-	popj	p,
-	popj	p,
 	subttl	END
 
 ; Get here on an APR trap (data out of bounds/pdl overflow)
-
 aprtrp:
-	outstr	[asciz "***** aprtrp 6242 *****"]
+	outstr	[asciz "***** aprtrp *****"]
 	jrst	monit	
-;	setom	addrck		; we had a failure
-;	movem	0,stabuf+2	; save regs
-;	move	0,[1,,stabuf+3]
-;	blt	0,stabuf+21
-;	hrrz	t1,.jbtpc##	; save address
-;	hrrzm	t1,stabuf
-;	move	t1,0(t1)
-;	movem	t1,stabuf+1
-;	move	t1,locked
-;	hrlm	t1,stabuf
-;	move	p,[iowd pdlsiz,stabuf+^d128]	; in case stack is messed up
-;	move	s,[iowd stksiz,stk]
-;	outstr	[asciz "***** aprtrp 6242 *****"]
-;	jrst	monit
-	
-;	pushj	p,gripe		; put data into gripe file
-;	move	p,[iowd pdlsiz,pdl]
-;	skipe	t1,ftlerr	; if setftl called
-;	jrst	0(t1)		; then go there
-;	movei	16,[[5]]	; gen one of 5 possible fatal errors
-;	move	1,0
-;	outstr	@0(1)
-;	jrst	monit
-
-fmsgs:	exp	[asciz	"
-You have blundered into an ancient
-Romulan space mine.  Being made of a
-special plastic which is nearly trans-
-parent to nearly all wavelenths of 
-radiation, you are forgiven.
-Perhaps your crew also forgave you
-as their bodies went up in a blast
-of quarks!
-"]
-
-	exp	[asciz "
-A delayed-action virus, picked up
-by your Navigation Officer on
-Xyglion IV during R&R, has 
-spread throughout the entire crew.
-Unfortunately, the medical crew 
-has been unaware of it, and it has
-suddenly and simultaneously killed
-every living thing aboard.
-"]
-
-	exp	[asciz "
-Due to an oversight by the designers,
-the Doomsday device has detonated.
-Unfortunately, the information as to
-what caused it to happen will never
-be relayed home!
-"]
-
-	exp	[asciz "
-Your ship's hull has been eaten through
-by a Space Mole, a creature about the
-size of a grape and composed of pure
-energy.  Fortunately, word of this new
-menace was sent homeward abord a distress
-beacon immediately prior to the final
-disruption of the ship's life support
-systems.
-"]
-
-	exp	[asciz "
-A slight navigational error has placed 
-your ship in a magnetic vortex.  This
-tremendous storm, equivalent to an
-Eartly tornado, has torn your ship
-apart.  The crew died almost instantly.
-Perhaps we will oneday capture the
-Romulan's Vortex Detector and be safe
-from this menace!
-"]
 
 	entry	aprset		; set fatal return for APR trap
 aprset:	movei	0,@0(arg)
 	movem	0,ftlerr
 	popj	p,
+	
 	page
 	subttl *Zap	- clear statistics data files
 	entry	stazap
@@ -6258,8 +5614,8 @@ Can't open file for output!
 	entry	romspk
 romspk:
 	save <arg>
-	skipe	player		; if the Romulan has just reincarnated
-	jrst	rmspk0		; then
+;	skipe	player		; if the Romulan has just reincarnated
+;	jrst	rmspk0		; then
 	movei	arg,[[3]]	; choose who gets the message
 	pushj	p,iran
 	move	t1,0
@@ -6268,12 +5624,13 @@ romspk:
 			000777	; humans (Federation)
 			777000	; klingons (Empire)
 			](t1)
-	jrst	rmspk1
+;	jrst	rmspk1
 
-rmspk0:	move	t1,who		; get bit for the talking player
-	move	t1,bits-1(t1)
-	setzm	tmp		; remember single player!
-rmspk1:	movem	t1,dbits
+;rmspk0:	move	t1,who		; get bit for the talking player
+;	move	t1,bits-1(t1)
+;	setzm	tmp		; remember single player!
+;rmspk1:	
+	movem	t1,dbits
 	movei	t1,dxrom*^d100
 	movem	t1,dispfr	; say that the Romulan is speaking
 	restore <arg>
@@ -6309,7 +5666,7 @@ rmspk1:	movem	t1,dbits
 			point 7,[asciz "human "]
 			point 7,[asciz "klingon "]
 		](p2)
-	pushj	p,rmgply	; else get player-specific quip
+;	pushj	p,rmgply	; else get player-specific quip
 	pushj	p,rmcopy
 	movei	arg,[[5]]	; get object
 	pushj	p,iran
@@ -6335,97 +5692,6 @@ rmcopy:	ildb	c,p2		; copy (p2) to (p1)
 	popj	p,
 	idpb	c,p1
 	jrst	rmcopy
-
-rmgply:	
-	movei	arg,[[3]]	; 33% chance of node-specific quip
-	pushj	p,iran
-	caie	0,1
-	jrst	rmgprn		; else make up random one
-	getlin	t1,		; get terminal name
-	hrlz	t1,t1		; put node name in left half
-	setz	t2,		; search node name table
-rmgpl0:	hllz	t3,nodnam(t2)
-	jumpe	t3,rmgpl1	; jump if node not found
-	came	t1,t3
-	aoja	t2,rmgpl0
-	hrrz	p2,nodnam(t2)	; found it! get quip
-	hrli	p2,(point 7,0)
-	popj	p,
-
-rmgpl1:	hlrz	t1,t1		; check for special node names
-	andi	t1,77		; if 'CLx' or 'CSx'
-	caie	t1,'CL '
-	cain	t1,'CS '
-	jrst	[move	p2,[point 7,[asciz "Columbus "]]
-		 popj	p,]
-	andi	t1,7777		; if 'Qxx'
-	cain	t1,'Q  '
-	jrst	[move	p2,[point 7,[asciz "Tymnet "]]
-		 popj	p,]
-rmgprn:	movei	arg,[[5]]
-	pushj	p,iran
-	cain	0,5
-	jrst	[move	t1,team		; use team basis
-		 move	p2,-1+[	point 7,[asciz "human "]
-				point 7,[asciz "klingon "]
-			](t1)
-		 popj	p,]
-	sos	t1,0
-	move	p2,[	point 7,[asciz "sub-Romulan "]
-			point 7,[asciz "vertebrate "]
-			point 7,[asciz "endo-skeletal "]
-			point 7,[asciz "soft-skinned "]
-		](t1)
-	popj	p,
-
-nodnam:	'AKR',,[asciz "Akron "]
-	'ANA',,[asciz "Anahiem "]
-	'ARL',,[asciz "Arlington "]
-	'ATL',,[asciz "Atlanta "]
-	'BOS',,[asciz "Boston "]
-	'CAN',,[asciz "Canton "]
-	'CGI',,[asciz "Chicago "]
-	'CGO',,[asciz "Chicago "]
-	'CIN',,[asciz "Cincinnatti "]
-	'CSC',,[asciz "ISD "]
-	'CSW',,[asciz "Wats user "]
-	'CLG',,[asciz "Columbus "]
-	'CVL',,[asciz "Cleveland "]
-	'DAL',,[asciz "Dallas "]
-	'DAY',,[asciz "Dayton "]
-	'DEN',,[asciz "Colorado "]
-	'DET',,[asciz "Detroit "]
-	'FTW',,[asciz "Fort Worth "]
-	'HOU',,[asciz "Houston "]
-	'IND',,[asciz "Indianapolis "]
-	'KCI',,[asciz "Kansas "]
-	'KXT',,[asciz "Knoxville "]
-	'LAN',,[asciz "Los Angeles "]
-	'LOU',,[asciz "Louisville "]
-	'MEM',,[asciz "Memphis "]
-	'MIA',,[asciz "Florida "]
-	'MIN',,[asciz "Minneapolis "]
-	'NFK',,[asciz "Norfolk "]
-	'NOL',,[asciz "Lousiana "]
-	'NYC',,[asciz "New York "]
-	'NYF',,[asciz "New York "]
-	'NYN',,[asciz "New York "]
-	'NYW',,[asciz "Wall Street "]
-	'PIT',,[asciz "Pittsburgh "]
-	'PNX',,[asciz "Phoenix "]
-	'QBA',,[asciz "Quebec "]
-	'SEA',,[asciz "Seattle "]
-	'SFA',,[asciz "San Francisco "]
-	'SFM',,[asciz "California "]
-	'SJO',,[asciz "Silicon Gultch "]
-	'SLC',,[asciz "Salt Lake City "]
-	'STL',,[asciz "St. Louis "]
-	'TSA',,[asciz "Tucson "]
-	'TSB',,[asciz "Tucson "]
-	'WES',,[asciz "West Port "]
-	'WQB',,[asciz "Qube "]
-	0					; end of table
-
 	page
 	subttl	updnam	- update program's running name for tracking
 
@@ -6478,113 +5744,4 @@ loknam:	xwd	'PPP',plnlok
 	0
 
 	page
-
-;commented out COmpuserve's modifications (merlyn)
-;subttl cishng - establish a hang-up intercept (CIS monitor)
-;
-;	Search SYSMAC
-;opdef	getnam	[calli	-14]
-;OPDEF	STINI.	[CALLI	-162]
-;OPDEF	SCHNA.	[CALLI	-163]
-;OPDEF	SCHND.	[CALLI	-164]
-;OPDEF	SEVTA.	[CALLI	-165]
-;OPDEF	SEVTD.	[CALLI	-166]
-;OPDEF	DEBRK.	[CALLI	-174]
-;OPDEF	SRISW.	[CALLI	-175]
-;
-;cishng:	DMOVE	TA,[	-1
-;			[	2,,CHNTBL
-;				2,,LVLTBL
-;				0,,0
-;			]
-;		]
-;	STINI.	TA,
-;	  JRST	[OUTSTR	[ASCIZ "
-;? STINI. failed!
-;"]
-;		 jrst	rdwhst]
-;	DMOVE	TA,[	-1
-;			3,,1
-;		]
-;	SEVTA.	TA,
-;	  JRST	SEVFLD
-;	dmove	ta,[	-1
-;			104,,2
-;		]
-;	sevta.	ta,
-;	  jrst	sevfld
-;	DMOVE	TA,[	-1
-;			700000,,0
-;			]
-;	SCHNA.	TA,
-;	  JRST	SCHFLD
-;	popj	p,
-;;;
-;havenq:	setom	hv.lok		; tell lock. routine that we have resource
-;	movem	$v,save$v
-;	seto	$v,
-;	wake	$v,		; wake the lock. routine immediately
-;	  jfcl
-;	move	$v,save$v
-;	debrk.			; return to lock.
-;
-;hang:
-;	setom	hungup	; set hung up flag
-;	skipn	who		; if user has a ship, the he may have resource
-;	jrst	hang.4
-;	movem	$v,hang$v	; save a register
-;	movem	ta,hangta	; and another
-;	movei	$v,knloks-1	; if the user has an interlock set
-;	skipn	loktab($v)
-;	sojge	$v,.-1
-;	jumpl	$v,hang.2	; then
-;	move	$v,lvltbl	; if executing a ttcall
-;hang.0:	move	ta,0($v)	; get the current instruction being executed
-;	camn	ta,[output 0,]	; or "output tty,"
-;	jrst	hang.1
-;	and	ta,[777000,,0]	; mask everything but instruction bits
-;	camn	ta,[xct]	; if doing an execute
-;	jrst	[hrrz	$v,0($v)	; then get the address of that instr.
-;		 cain	$v,$v		; if one of the saved regs
-;		 movei	$v,hang$v	; then map it into proper one
-;		 cain	$v,ta
-;		 movei	$v,hangta
-;		 jrst	hang.0]		; and look at the xct'ed instr.
-;	camn	ta,[ttcall]	; if doing a ttcall
-;hang.1:	aos	lvltbl		; then return to the ttcall + 1
-;	seto	$v,		; wake any hibernate going on
-;	wake	$v,
-;	  jfcl
-;	move	$v,hang$v
-;	move	ta,hangta
-;	debrk.			; return to main code
-;
-;hang.2:	movei	re,[who]	; release the player
-;	pushj	p,free##	; ... but good!
-;rdwhst:
-;hang.4:	debrk.	1,		; clear the interrupt system
-;	  jfcl
-;	reset			; clear bufferd I/O
-;	movei	ra,[	sixbit 'DSK'	; return to DWHOST
-;			sixbit 'DWHOST'
-;			exp 0,0,0,0
-;		]
-;	run	ra,
-;	  halt
-;
-;SCHFLD:	OUTSTR	[ASCIZ "
-;? SCHNA. failed!
-;"]
-;	jrst	rdwhst
-;SEVFLD:	OUTSTR	[ASCIZ "
-;?SEVTA> failed!
-;"]
-;	jrst	rdwhst
-;
-;chntbl:
-;	XWD	1,HANG
-;	xwd	2,havenq
-;
-;	lit		; put lits in hiseg
-
 	end

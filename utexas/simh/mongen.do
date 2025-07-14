@@ -25,6 +25,7 @@ if "%SIM_NAME%" != "KL-10" 'expect "Disk drives(1,1-8)" send "8\r"; continue'
 if "%SIM_NAME%" != "KL-10" 'expect "Tape drives(1,1-4)" send "4\r"; continue'
 if "%SIM_NAME%" != "KL-10" 'expect "TTY lines(0-32)" send "32\r"; continue'
 if "%SIM_NAME%" != "KL-10" 'expect "OPR octal line #(CTY,0-37)" send "CTY\r"; continue'
+
 expect "Account verification(Y,N):" send "Y\r"; continue
 if "%SIM_NAME%" == "KL-10" 'expect "MOS memory(Y,N):" send "N\r"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect "SCA support(Y,N):" send "N\r"; continue'
@@ -36,6 +37,7 @@ if "%SIM_NAME%" == "KL-10" 'expect "\r\n\177#"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect " of DTEs on CPU0(1,1-4):" send "2\r"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect "Type of front end on DTE0 (RSX20F,ANF10,IBM,DECNET):" send "RSX20F\r"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect "Type of front end on DTE1 (RSX20F,ANF10,IBM,DECNET):" send "DECNET\r"; continue'
+
 if "%SIM_NAME%" == "KL-10" 'expect " terminals on front end #0(0,0-128):" send "64\r"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect " line printers on front end #0(0,0-2):" send "1\r"; continue'
 if "%SIM_NAME%" == "KL-10" 'expect "Front end printer 0 lower case(Y,N):" send "Y\r"; continue'
@@ -44,8 +46,9 @@ expect "Data set lines" send "\r"; continue
 expect "\r\n\177#"; continue
 expect " Jobs(1-511):" send "128\r"; continue
 expect "Maximum P of core for each job(0,0-16384):" send "\r"; continue
+
 expect "\r\n\177#"; continue
-if "%SIM_NAME%" == "KL-10" 'expect " K total system core(512-4096):" send "1024\r"; continue'
+if "%SIM_NAME%" == "KL-10" 'expect " K total system core(512-4096):" send "4096\r"; continue'
 if "%SIM_NAME%" != "KL-10" 'expect " K total system core(512-4096):" send "512\r"; continue'
 expect "Clock ticks per second(60,50):" send "60\r"; continue
 if "%SIM_NAME%" == "KL-10" 'expect "\r\n\177#"; continue'
@@ -55,11 +58,13 @@ expect "\r\n\177#"; continue
 expect " Pages min guaranteed among jobs not locked in core(0,0-16384):" send "\r"; continue
 expect "\r\n\177#"; continue
 expect "\r\n\177#"; continue
+
 expect " High priority queues(0,0-15):" send "15\r"; continue
 expect "MSGSER(Y,N):" send "Y\r"; continue
 expect "PSISER(Y,N):" send "Y\r"; continue
 expect "IPCF(Y,N):" send "Y\r"; continue
 expect "ENQ/DEQ(Y,N):" send "Y\r"; continue
+
 if "%SIM_NAME%" == "KL-10" 'expect "LPTs(1,0-3):" send "0\r"; continue'
 if "%SIM_NAME%" != "KL-10" 'expect "LPT(0,0-1):" send "1\r"; continue'
 expect "Lower case(Y,N):" send "Y\r"; continue
