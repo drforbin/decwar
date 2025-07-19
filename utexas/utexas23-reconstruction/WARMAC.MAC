@@ -223,7 +223,7 @@ lall
 	msglen==17		;max # of words per msg (header + 80 chars)
 	kngrp==7		;number of defined message groups
 	knhshp==^d40		; number of hit queue entries per ship
-	knhit==knhshp*^d10	; max number of hit entries
+	knhit==knhshp*^d18	; max number of hit entries, 40 x 18 = 720
 	kncmd==33		;number of available commands
 	knpcmd==12		;number of available commands in PREGAM
 	knpoin==8		;number of different scoring categories
@@ -1200,8 +1200,8 @@ iswiz:
 	movei	t1,intblk	;enable interception of ^C and fatal errors
 	setzm	intblk+2
 	movem	t1,.jbint##
-;	movei	t1,aprtrp	; set up to capture APR failures
-;	hrrm	t1,.jbapr##
+	movei	t1,aprtrp	; set up to capture APR failures
+	hrrm	t1,.jbapr##
 	movei	t1,1b19+1b22
 	aprenb	t1,
 	setom	bufptr		;time to read another line of input
@@ -5560,6 +5560,9 @@ trac.2:	pushj	p,ocrl.
 ; Get here on an APR trap (data out of bounds/pdl overflow)
 aprtrp:
 	outstr	[asciz "***** aprtrp *****"]
+	move	t2,[.DEQDA,,0]			; remove all locks held by this job
+	deq.	t2,
+	jfcl	0,  					; noop
 	jrst	monit	
 
 	entry	aprset		; set fatal return for APR trap

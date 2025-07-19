@@ -16,7 +16,7 @@
 	parameter knmsg=32	!maximum number of messages in queue
 	parameter msglen=17	!max # of words per msg (header + 80 chars)
 	parameter kngrp=7	!number of defined message groups
-	parameter knhit=64	!maximum number of hits in queue
+	parameter knhit=720	!maximum number of hits in queue
 	parameter kncmd=33	!number of available commands
 	parameter knpcmd=16	!number of available commands in PREGAM
 	parameter knpoin=8	!number of different scoring categories

@@ -1,11 +1,15 @@
 # project utexas log
 
+## 20250719 'tell issue' fixed
+
+came back after a few days with fresh eyes and spotted the problem. had already notice a crucial clue weeks ago but didn't understand it at first. strange 'tell messages' arriving with information about phaser and torpedo hits, blank lines, or occasionally even garbage. today noticed that with tell command bypassed these strange messages still arrive. this raised the question, could hit linked list entries be getting written into memory meant for the msg linked list? this is exactly what was happening. for the hit linked list, memory for ten ships was allocated, not for eighteen ships. the msg link list memory followed, and hit entries were getting written into it. simply needed to change the warmac line 'knhit==knhshp*^d10' to 'knhit==knhshp*^d18'. so now our outstanding topics are reduced to one - raspi pidp10 'temporary brain damage' - along with a note to keep in mind about locking unlocking.
+
 ## 20250713 'nice enough' workflow1
 
 workflow1 has evolved enough to make public. nutshell -
 
 - step1 and step2, hardware - once tops10 boot disk is created, it's stable and doesn't need recreation. possible gotcha is discussed below as raspi pidp-10 'temporary brain damage', but seems that simh, mongen, tops10, etc doesn't have any influence.
-- step3 and step3, software - there's now a simh script boot-from-disk-fast.ini which goes directly to the tops10 prompt, without building decwar from tape, and can then run previous decwar build. the old boot-from-disk.ini is for initial decwar build or following builds.
+- step3 and step4, software - there's now a simh script boot-from-disk-fast.ini which goes directly to the tops10 prompt, without building decwar from tape, and can then run previous decwar build. the old boot-from-disk.ini is for initial decwar build or following builds.
 - robot hordes - start-some-robots.sh is for quickly bringing up a game with many robots. the way to shut them all down at once is 'pkill -f python'. to watch the log of a robot use 'tail -f logxyz'. have a terminal running 'tail -f log1' to watch the output from 'superbot nomad' and see all the ships, including the romulan '??' when he's alive.
 
 time to try moving onward to new topics, while continuing to improve the following old topics

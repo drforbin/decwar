@@ -3251,7 +3251,7 @@ d	call timin ('ROMDRV')
 	call pridis (locr(KVPOS), locr(KHPOS), KRANGE, 0, 0)
 	if (PASFLG)  dbits = dbits .or. bits(who)
 	call makhit
-151	call tell ! if (iran (10) .eq. 1) call tell ! let the Romulan speak!
+151	if (iran (10) .eq. 1) call tell ! let the Romulan speak!
 *.......Romulan searches for a target in range
  100	call dist (iplace, nplc, numsec)
 	if (numsec .gt. KRANGE)  goto 9999		!in range?
@@ -3298,7 +3298,7 @@ d	call timin ('ROMDRV')
 	dbits = dbits .and. .not. nomsg
 	call makhit
 *.......Activate bases and planets, rebuild bases a little
-1000	call tell ! if (iran (50) .le. 1) call tell ! let the Romulan speak!
+1000	if (iran (50) .le. 1) call tell ! let the Romulan speak!
 d	call timout ('ROMDRV')
 d	call timin  ('BASPHA')
 	call baspha
@@ -4043,7 +4043,7 @@ C	sub-space radio.
 	return
 *.......Send message to designated players
 1600	if (player) goto 1650
- 	call makmsg (local)
+ 	call makmsg (local) ! comment out to bypass roumulan using makmsg
 	return
 1650	dispfr = who + (team * 100)
 	call makmsg
