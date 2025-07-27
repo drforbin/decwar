@@ -2,6 +2,7 @@ bts/
 dsk/
 tapes/
 tmp/
+/venv*
 
 *.tap
 !*/hlp/decwar.tap
