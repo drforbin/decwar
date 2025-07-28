@@ -1,4 +1,5 @@
 ships = ['e', 'f', 'i', 'l', 'n', 's', 't', 'v', 'y', 'b', 'c', 'd', 'g', 'h', 'j', 'm', 'p', 'w']
+commands = ['move', 'list', 'time', 'targets', 'status']
 robots = {
     'nomad': [
         'I am Nomad',
