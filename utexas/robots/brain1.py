@@ -17,6 +17,7 @@ class Brain1:
         a, b = 2, 4
         time.sleep(1)
         targets = self.targets()
+        self.command_and_response('ba all')
         time.sleep(1)
         # ships = self.list()
         status = self.command_and_response('status')

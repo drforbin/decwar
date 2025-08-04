@@ -1,4 +1,5 @@
 import time
+import sys
 import pexpect
 from definitions import ships
 from brain2 import Brain2
@@ -15,10 +16,13 @@ class Robot2:
     def main(self):
         while self.mode: # main loop
             if self.mode == '1': time.sleep(1) # standby mode
-            elif self.mode == '2': self.brain.nextstep()
+            elif self.mode == '2': 
+                try: self.brain.nextstep()
+                except: break
         self.decwar_exit()
         self.tops10_exit()
         self.telnet_exit()
+        exit()
 
     def set_mode(self, key):
         if key == '0': 
@@ -38,6 +42,7 @@ class Robot2:
     def telnet_entry(self):
         print('telnet entry')
         try:
+            # self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, echo=True, encoding='utf-8', logfile=open(f'l{self.name}.log', 'wt'))
             self.tc = pexpect.spawn(f"telnet {self.kwargs['ip']} {self.kwargs['port']}", timeout=10, echo=False)
             time.sleep(1)
             self.tc.expect('.', timeout=10)

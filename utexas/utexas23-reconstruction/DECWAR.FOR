@@ -963,7 +963,7 @@ C	and the job is returned to monitor level.
 	common /polocl/ total(4)
 	external monit
 	if (ENDFLG)  goto 100			!game already over?
-	if (nplnet .gt. 0)  return		!any planets left?
+c	if (nplnet .gt. 0)  return		!any planets left?
 	if (min0 (nbase(1), nbase(2)) .gt. 0)  return	!any bases left?
 *.......The game is over!!
 	call kilhgh

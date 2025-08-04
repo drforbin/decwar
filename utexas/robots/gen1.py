@@ -136,5 +136,7 @@ class Robot:
         
 if __name__ == "__main__":
     args, kwargs = cli.main()
-    ro = Robot(*args, **kwargs)
-    ro.main()
+    try:
+        ro = Robot(*args, **kwargs)
+        ro.main()
+    except: pass

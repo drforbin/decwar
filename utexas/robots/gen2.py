@@ -9,8 +9,10 @@ rothread = threading.Thread(target=ro.main)
 rothread.start()
 
 def main():
-    ro.set_mode('2')
-    listen_keyboard(on_press=press)
+    try:
+        ro.set_mode('2')
+        listen_keyboard(on_press=press)
+    except: pass
 
 def press(key):
     print(f"'{key}' pressed")
