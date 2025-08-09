@@ -1,11 +1,11 @@
 import math
 
-class EnemyBases:
+class EnemyShips:
     """defeating these are the way to win the game."""
     
     def __init__(self):
-        pass
-    
+        self.clear()
+        
     def update(self, raw):
         if not raw: return 
         vh = []
@@ -19,9 +19,12 @@ class EnemyBases:
                 h = int(tmp4[0].strip())
                 vh.append([v, h])
             except: pass
-        if not vh: return [None, None, None]
-        vhd = [[x[0], x[1], int(math.sqrt(x[0]**2 + x[1]**2))] for x in vh]
-        vhd = sorted(vhd, key=lambda x: x[2])
-        # print(f'enemy base {vhd[0]}')
-        return vhd[0]
+        if vh: 
+            vhd = [[x[0], x[1], int(math.sqrt(x[0]**2 + x[1]**2))] for x in vh]
+            self.vhds = sorted(vhd, key=lambda x: x[2])
+        else: self.clear()
+        return self.vhds[0]
         
+    def clear(self):
+        self.vhds = [[None, None, None]]
+    

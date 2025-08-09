@@ -17,7 +17,7 @@ class Robot2:
         while self.mode: # main loop
             if self.mode == '1': time.sleep(1) # standby mode
             elif self.mode == '2': 
-                try: self.brain.nextstep()
+                try: self.brain.next()
                 except: break
         self.decwar_exit()
         self.tops10_exit()

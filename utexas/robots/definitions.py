@@ -1,5 +1,9 @@
 ships = ['e', 'f', 'i', 'l', 'n', 's', 't', 'v', 'y', 'b', 'c', 'd', 'g', 'h', 'j', 'm', 'p', 'w']
-# commands = ['list', 'time', 'targets', 'status', 'bases', 'shields', 'ph', 'to', 'm', 'sc', 'li', 'po', 'ta']
+
+class Mode:
+    offense = 'offense'
+    defense = 'defense'
+    
 robots = {
     'nomad': [
         'I am Nomad',
