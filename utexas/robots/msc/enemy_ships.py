@@ -1,7 +1,6 @@
 import math
 
 class EnemyShips:
-    """defeating these are the way to win the game."""
     
     def __init__(self):
         self.clear()

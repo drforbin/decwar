@@ -1,11 +1,11 @@
 import random
 import time
-from definitions import robots, Mode
-from concepts.enemybases import EnemyBases
-from concepts.enemyships import EnemyShips
+from .definitions import robots, Mode
+from .enemy_bases import EnemyBases
+from .enemy_ships import EnemyShips
+from .galaxy import Galaxy
 
-class Brain2:
-    superbot = 'nomad'
+class Brain:
 
     def __init__(self, name, braincnt, tc):
         self.name = name
@@ -18,36 +18,46 @@ class Brain2:
         self.age_offense = 50
         self.enemybases = EnemyBases()
         self.enemyships = EnemyShips()
+        self.galaxy = Galaxy()
 
     def next(self):
+        self.backbrain()
+        try:
+            if self.name == 'nomad': self.nomad()
+            if self.mode == Mode.offense: self.offense()
+            elif self.mode == Mode.defense: self.defense()
+        except:
+            try: self.try_to_stay_in_game()
+            except: raise
+    
+    def backbrain(self):
         self.cnt += 1
         self.age = self.cnt - self.last_new_ship_cnt
         if self.age > self.age_offense: self.mode = Mode.offense
-        try:
-            self.speak()
-            if self.name == self.superbot:
-                res = self.command_and_response('time')
-                res = self.command_and_response('po a')
-                res = self.command_and_response('list ships')
-            res = self.command_and_response('targets')
-            if self.mode == Mode.offense:
-                res = self.command_and_response('bases enemy')
-                targ = self.enemybases.update(res)
-                if not targ[2]: self.explore()
-                else:
-                    if targ[2] > 6: self.approach(targ)
-                    else: self.attack(targ)
-            elif self.mode == Mode.defense:
-                res = self.command_and_response('list ships enemy')
-                targ = self.enemyships.update(res)
-                if not targ[2]: self.explore()
-                else:
-                    if targ[2] > 6: self.approach(targ)
-                    else: self.attack(targ)
-        except:
-            try:
-                for _ in range(2): self.tc.sendline(); self.tc.expect('>', timeout=10) # try to stay in game
-            except: raise
+    
+    def nomad(self):
+        if self.age <= 2: self.command_and_response('*password *mink')
+        self.speak()
+        # res = self.command_and_response('time')
+        # res = self.command_and_response('po a')
+        self.galaxy.ships(self.command_and_response('list ships'))
+        self.galaxy.bases(self.command_and_response('list bases'))
+
+    def offense(self):
+        res = self.command_and_response('bases enemy')
+        targ = self.enemybases.update(res)
+        if not targ[2]: self.explore()
+        else:
+            if targ[2] > 6: self.approach(targ)
+            else: self.attack(targ)
+            
+    def defense(self):
+        res = self.command_and_response('list ships enemy')
+        targ = self.enemyships.update(res)
+        if not targ[2]: self.explore()
+        else:
+            if targ[2] > 6: self.approach(targ)
+            else: self.attack(targ)
 
     def speak(self):
         if True:
@@ -101,3 +111,6 @@ class Brain2:
                 print(f'{self.cnt}|{self.age}|{rec}')
             return res
         except: print(f"cmd exception '{command}'")
+
+    def try_to_stay_in_game(self):
+        for _ in range(2): self.tc.sendline(); self.tc.expect('>', timeout=10)  # try to stay in game

@@ -1,5 +1,11 @@
 # project utexas log
 
+## 20250814 gen2 robots
+
+each robot plays d at first. if it lives long enough, it switches to o. this is incentive to stay alive to help win. next up can be an instinct to repair when damaged. beginning to experiment with a 'graphical galaxy' for 'watching' the robots.
+
+as part of playing with using gitlab for decwar/utexas and decwar/galaxy did do a fresh setup on the raspi, which uncovered a few stealth speed bumps along the way. updated the main readme guide section with those, especially the summary paragraphs there.
+
 ## 20250719 'tell issue' fixed
 
 came back after a few days with fresh eyes and spotted the problem. had already notice a crucial clue weeks ago but didn't understand it at first. strange 'tell messages' arriving with information about phaser and torpedo hits, blank lines, or occasionally even garbage. today noticed that with tell command bypassed these strange messages still arrive. this raised the question, could hit linked list entries be getting written into memory meant for the msg linked list? this is exactly what was happening. for the hit linked list, memory for ten ships was allocated, not for eighteen ships. the msg link list memory followed, and hit entries were getting written into it. simply needed to change the warmac line 'knhit==knhshp*^d10' to 'knhit==knhshp*^d18'. so now our outstanding topics are reduced to one - raspi pidp10 'temporary brain damage' - along with a note to keep in mind about locking unlocking.

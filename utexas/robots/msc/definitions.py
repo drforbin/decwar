@@ -1,4 +1,6 @@
 ships = ['e', 'f', 'i', 'l', 'n', 's', 't', 'v', 'y', 'b', 'c', 'd', 'g', 'h', 'j', 'm', 'p', 'w']
+fed = ['e', 'f', 'i', 'l', 'n', 's', 't', 'v', 'y']
+emp = ['b', 'c', 'd', 'g', 'h', 'j', 'm', 'p', 'w']
 
 class Mode:
     offense = 'offense'
